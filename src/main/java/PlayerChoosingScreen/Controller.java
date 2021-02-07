@@ -1,7 +1,9 @@
 package PlayerChoosingScreen;
 
 import Game.Constants;
+import Game.Game;
 import Game.Player;
+import GameScreen.GameScreenController;
 import GameScreen.Player1Holder;
 import GameScreen.Player2Holder;
 import javafx.fxml.FXML;
@@ -19,9 +21,10 @@ public class Controller {
     private TextField username;
     public String NAME_INPUT = null;
     private boolean isPlayer1 = true;
+    private Game game;
 
     @FXML
-    public void ButtonClicked() throws IOException {
+    public void ButtonClicked() throws Exception {
         TextField1();
         if(isPlayer1) {
             writingDetailsToFileForPlayer_ONE();
@@ -33,7 +36,7 @@ public class Controller {
         }
     }
 
-    public void ButtonClicked2() throws IOException {
+    public void ButtonClicked2() throws Exception {
         TextField1();
         if(isPlayer1) {
             writingDetailsToFileForPlayer_ONE();
@@ -44,7 +47,7 @@ public class Controller {
     }
 
 
-    public void ButtonClicked3() throws IOException {
+    public void ButtonClicked3() throws Exception {
         TextField1();
         if(isPlayer1) {
             writingDetailsToFileForPlayer_ONE();
@@ -54,7 +57,7 @@ public class Controller {
         }
     }
 
-    public void ButtonClicked4() throws IOException {
+    public void ButtonClicked4() throws Exception {
         TextField1();
         if(isPlayer1) {
             writingDetailsToFileForPlayer_ONE();
@@ -64,7 +67,7 @@ public class Controller {
         }
     }
 
-    public void ButtonClicked5() throws IOException {
+    public void ButtonClicked5() throws Exception {
         TextField1();
         if(isPlayer1) {
             writingDetailsToFileForPlayer_ONE();
@@ -74,7 +77,7 @@ public class Controller {
         }
     }
 
-    public void ButtonClicked6() throws IOException {
+    public void ButtonClicked6() throws Exception {
         TextField1();
         if(isPlayer1) {
             writingDetailsToFileForPlayer_ONE();
@@ -96,15 +99,17 @@ public class Controller {
         isPlayer1 = false;
     }
 
-    private void writingDetailsToFileForPlayer_TWO() throws IOException {
+    private void writingDetailsToFileForPlayer_TWO() throws Exception {
         Player player2 = new Player(NAME_INPUT, Constants.PLAYER_COLOUR.BLUE);
         Player2Holder player2Holder = Player2Holder.getInstance();
         player2Holder.setPlayer(player2);
 
         Stage stage = (Stage) username.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("../GameScreen/gameScreen.fxml"));
-        Scene scene = new Scene(root, 1300, 700);
+        FXMLLoader loader = new FXMLLoader(Controller.class.getResource("../GameScreen/gameScreen.fxml"));
+        GameScreenController gameScreenController = loader.getController();
+        Scene scene = new Scene(loader.load(), 1300, 700);
         stage.setScene(scene);
+        game = new Game(gameScreenController);
     }
 
     private void moveToSecondScreen() throws IOException{

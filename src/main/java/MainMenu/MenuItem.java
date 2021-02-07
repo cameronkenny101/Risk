@@ -52,8 +52,8 @@ public class MenuItem extends StackPane {
         stage.setScene(scene); */
 
         Stage stage = (Stage) getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("../ChoosePlayerScreen/player1Screen.fxml"));
-        Scene scene = new Scene(root,1023,437);
+        FXMLLoader loader = new FXMLLoader(MenuItem.class.getResource("../ChoosePlayerScreen/player1Screen.fxml"));
+        Scene scene = new Scene(loader.load(),1023,437);
         stage.setScene(scene);
     }
 }

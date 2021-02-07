@@ -6,6 +6,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
 public class Game {
+
+    GameScreenController uiController;
+    public Game(GameScreenController uiController) throws Exception {
+        this.uiController = uiController;
+        uiController.setRegion(4, Constants.PLAYER_COLOUR.RED, 12);
+    }
+
     private Constants.PLAYER_COLOUR[] country_owner = new Constants.PLAYER_COLOUR[Constants.NUM_COUNTRIES];//Tells which players owns which country
     private int[] troop_count = new int[Constants.NUM_COUNTRIES];//States the number of troops per country
 
