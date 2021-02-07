@@ -105,9 +105,10 @@ public class Controller {
         player2Holder.setPlayer(player2);
 
         Stage stage = (Stage) username.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(Controller.class.getResource("../GameScreen/gameScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../GameScreen/gameScreen.fxml"));
+        Parent root = (Parent) loader.load();
         GameScreenController gameScreenController = loader.getController();
-        Scene scene = new Scene(loader.load(), 1300, 700);
+        Scene scene = new Scene(root, 1300, 700);
         stage.setScene(scene);
         game = new Game(gameScreenController);
     }
