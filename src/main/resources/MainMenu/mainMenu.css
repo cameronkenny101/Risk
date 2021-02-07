@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+.root {
+    -fx-background-image: url("city.jpg");
+    -fx-background-size: auto;
+}
+
+.box {
+    -fx-stroke:  #DDDDDD;
+    -fx-stroke-width: 5;
+    -fx-fill: null;
+}
+
+.title {
+    -fx-fill: #DDDDDD;
+    -fx-alignment: center;
+    -fx-font-family: 'VT323', monospace;
+    -fx-font-size: 140;
+    -fx-font-weight: bold;
+}
+
+#itemText {
+    -fx-fill: #DDDDDD;
+    -fx-alignment: center;
+    -fx-font-family: 'VT323', monospace;
+    -fx-font-size: 50;
+    -fx-font-weight: bolder;
+}
+
+#line {
+    -fx-stroke: #DDDDDD;
+}
+
+#menuBox {
+    -fx-fill: black;
+    -fx-opacity: 0.5;
+}

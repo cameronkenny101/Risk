@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+#outputBox {
+    -fx-background-color: black;
+    -fx-text-fill: #0c0;
+    -fx-font-family: 'VT323', monospace;
+    -fx-font-size: 25;
+    -fx-font-weight: bold;
+    -fx-opacity: 1;
+}
+
+#outputBox .content {
+    -fx-background-color: #002B0D;
+}
+
+#outputBox .scroll-pane {
+    -fx-hbar-policy: never;
+    -fx-vbar-policy: never;
+}
+
+#inputBox {
+    -fx-background-color: black;
+    -fx-text-fill: #0c0;
+    -fx-font-family: 'VT323', monospace;
+    -fx-font-size: 25;
+    -fx-font-weight: bold;
+}
+
+.sea {
+    -fx-fill: #5397D1;
+}
+
+.country {
+    -fx-stroke-width: 2;
+}
+
+.country:hover {
+    -fx-stroke-width: 8;
+    -fx-stroke-opacity: 0.3;
+}
+
+.grey-country {
+    -fx-fill: #564848;
+    -fx-stroke: #382f2f;
+}
+
+.grey-country:hover {
+    -fx-fill: #ffffff;
+}
+
+.red-country {
+    -fx-fill: #DD4444;
+    -fx-stroke: #B51F1D;
+}
+
+.red-country:hover {
+    -fx-fill: #FE8C8C;
+}
+
+.blue-country {
+    -fx-fill: #4770EA;
+    -fx-stroke: #2B53C6;
+}
+
+.blue-country:hover {
+    -fx-fill: #5c82ea;
+}
+
+.country-text {
+    -fx-border: solid black 3px;
+    -fx-width: 300px;
+    -fx-font-family: Pixel;
+    -fx-font-size: 50;
+}
+
+.orange-country {
+    -fx-fill: #ff9a00;
+    -fx-stroke: #ff7400;
+}
+.orange-country:hover{
+    -fx-fill: #efae71;
+}
+
+.green-country {
+    -fx-fill: #4ACD61;
+    -fx-stroke: #38AC4C ;
+}
+.green-country:hover{
+    -fx-fill: #66FF66;
+}
+
+
+.oceania {
+    -fx-stroke: #FF6EFF;
+}
+
+#circle {
+    -fx-fill: white;
+}
