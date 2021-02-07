@@ -167,8 +167,6 @@ public class GameScreenController {
     //Shows text indicating country name upon hovering
     @FXML
     private void hoverCountry(Event evt) throws Exception {
-        Name.setText(((SVGPath) evt.getSource()).getId());
-        Name.setVisible(true);
         countryNameInTerminal(((SVGPath) evt.getSource()));
     }
 
