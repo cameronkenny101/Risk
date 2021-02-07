@@ -18,16 +18,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Risk");
-        Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
-        Scene scene = new Scene(root, 1300, 800);
+        Parent root = FXMLLoader.load(getClass().getResource("MainMenu/mainMenu.fxml"));
+        Scene scene = new Scene(root, 1000, 600);
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        try (Scanner sc = new Scanner(System.in)) {
-
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
     }
 }
