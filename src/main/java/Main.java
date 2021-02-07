@@ -18,8 +18,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Risk");
-        Parent root = FXMLLoader.load(getClass().getResource("Map/map.fxml"));
-        Scene scene = new Scene(root, 1000, 600);
+        Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
+        Scene scene = new Scene(root, 1200, 800);
         primaryStage.setScene(scene);
         primaryStage.show();
 

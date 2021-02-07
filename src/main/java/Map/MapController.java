@@ -1,6 +1,7 @@
 package Map;
 
 import Game.Constants;
+import Terminal.TerminalController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -171,9 +172,15 @@ public class MapController {
     public void setRegion(int country_id, Constants.PLAYER_COLOUR Colour, int troop_count) throws Exception {
         countries_to_SVG[country_id].getStyleClass().clear();
         switch (Colour) {
-            case RED -> countries_to_SVG[country_id].getStyleClass().add("red-country");
-            case BLUE -> countries_to_SVG[country_id].getStyleClass().add("blue-country");
-            case GREY -> countries_to_SVG[country_id].getStyleClass().add("grey-country");
+            case RED:
+                countries_to_SVG[country_id].getStyleClass().add("red-country");
+                break;
+            case BLUE:
+                countries_to_SVG[country_id].getStyleClass().add("blue-country");
+                break;
+            case GREY:
+                countries_to_SVG[country_id].getStyleClass().add("grey-country");
+                break;
         }
 
         //TODO: Set Troop Count
