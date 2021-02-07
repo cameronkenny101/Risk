@@ -1,6 +1,5 @@
 package MainMenu;
 
-import PlayerChoosingScreen.Controller;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -53,9 +52,8 @@ public class MenuItem extends StackPane {
         stage.setScene(scene); */
 
         Stage stage = (Stage) getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(MenuItem.class.getResource("../ChoosePlayerScreen/player1Screen.fxml"));
-        Controller controller = loader.getController();
-        Scene scene = new Scene(loader.load(),1023,437);
+        Parent root = FXMLLoader.load(getClass().getResource("../ChoosePlayerScreen/player1Screen.fxml"));
+        Scene scene = new Scene(root,1023,437);
         stage.setScene(scene);
     }
 }
