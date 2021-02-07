@@ -73,25 +73,22 @@
     -fx-font-size: 50;
 }
 
-.africa {
-    -fx-stroke: #FF851B;
+.orange-country {
+    -fx-fill: #ff9a00;
+    -fx-stroke: #ff7400;
+}
+.orange-country:hover{
+    -fx-fill: #efae71;
 }
 
-.europe {
-    -fx-stroke: #FFCC33;
+.green-country {
+    -fx-fill: #4ACD61;
+    -fx-stroke: #38AC4C ;
+}
+.green-country:hover{
+    -fx-fill: #66FF66;
 }
 
-.asia {
-    -fx-stroke: #66FF66;
-}
-
-.north-america {
-    -fx-stroke: #FF9966;
-}
-
-.south-america {
-    -fx-stroke: #ffff00;
-}
 
 .oceania {
     -fx-stroke: #FF6EFF;
