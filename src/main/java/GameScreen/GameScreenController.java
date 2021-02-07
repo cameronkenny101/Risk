@@ -1,13 +1,16 @@
-package Map;
+package GameScreen;
 
 import Game.Constants;
-import Terminal.TerminalController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.shape.SVGPath;
 
-public class MapController {
+public class GameScreenController {
     //Africa
     @FXML
     SVGPath Egypt;
@@ -106,11 +109,16 @@ public class MapController {
 
     @FXML
     Label Name;
+    @FXML
+    TextArea output;
+    @FXML
+    TextField input;
 
     private SVGPath[] countries_to_SVG = new SVGPath[Constants.NUM_COUNTRIES];//Returns the controller for the countryid
 
     @FXML
     public void initialize() {
+        setText();
         countries_to_SVG[0] = Ontario;
         countries_to_SVG[1] = Quebec;
         countries_to_SVG[2] = Northwest_Territory;
@@ -161,6 +169,25 @@ public class MapController {
     private void hoverCountry(Event evt) throws Exception {
         Name.setText(((SVGPath) evt.getSource()).getId());
         Name.setVisible(true);
+        countryNameInTerminal(((SVGPath) evt.getSource()));
+    }
+
+    @FXML
+    private void countryNameInTerminal (SVGPath path) {
+        output.clear();
+        output.appendText(path.getId());
+    }
+
+    @FXML
+    private void setText() {
+        input.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                output.appendText("> ");
+                output.appendText(input.getText());
+                output.appendText("\n");
+                input.clear();
+            }
+        });
     }
 
     @FXML

@@ -1,3 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+#outputBox {
+    -fx-background-color: black;
+    -fx-text-fill: #0c0;
+    -fx-font-family: 'VT323', monospace;
+    -fx-font-size: 25;
+    -fx-font-weight: bold;
+    -fx-opacity: 1;
+}
+
+#outputBox .content {
+    -fx-background-color: #002B0D;
+}
+
+#outputBox .scroll-pane {
+    -fx-hbar-policy: never;
+    -fx-vbar-policy: never;
+}
+
+#inputBox {
+    -fx-background-color: black;
+    -fx-text-fill: #0c0;
+    -fx-font-family: 'VT323', monospace;
+    -fx-font-size: 25;
+    -fx-font-weight: bold;
+}
+
 .sea {
     -fx-fill: #5397D1;
 }
@@ -40,7 +68,7 @@
 
 @font-face {
     font-family: Pixel;
-    src: url('Map/pixel.ttf');
+    src: url('GameScreen/pixel.ttf');
 }
 
 .country-text {
