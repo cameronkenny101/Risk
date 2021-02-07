@@ -9,9 +9,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
-
 public class MenuItem extends StackPane {
 
     public MenuItem(String item, int value) {
@@ -34,7 +31,7 @@ public class MenuItem extends StackPane {
             setOnMouseClicked(event -> {
                 try {
                     switchScene();
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             });
@@ -48,10 +45,15 @@ public class MenuItem extends StackPane {
         }
     }
 
-    private void switchScene() throws IOException {
-        Stage stage = (Stage) getScene().getWindow();
+    private void switchScene() throws Exception {
+        /* Stage stage = (Stage) getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("../Main.fxml"));
         Scene scene = new Scene(root, 1300, 800);
+        stage.setScene(scene); */
+
+        Stage stage = (Stage) getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("../ChoosePlayerScreen/player1Screen.fxml"));
+        Scene scene = new Scene(root,1023,437);
         stage.setScene(scene);
     }
 }

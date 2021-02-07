@@ -167,6 +167,7 @@ public class GameScreenController {
     //Shows text indicating country name upon hovering
     @FXML
     private void hoverCountry(Event evt) throws Exception {
+        setRegion(0, Constants.PLAYER_COLOUR.RED, 3);
         countryNameInTerminal(((SVGPath) evt.getSource()));
     }
 
@@ -212,4 +213,6 @@ public class GameScreenController {
 
         countries_to_SVG[country_id].getStyleClass().add("country");
     }
+
+    
 }
