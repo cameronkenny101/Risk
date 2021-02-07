@@ -19,4 +19,9 @@ public class Player {
         }
         this.name = name;
     }
+
+    public Constants.PLAYER_COLOUR getColour() {
+        return colour;
+    }
+
 }
