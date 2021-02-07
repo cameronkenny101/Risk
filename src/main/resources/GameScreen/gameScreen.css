@@ -96,3 +96,7 @@
 .oceania {
     -fx-stroke: #FF6EFF;
 }
+
+#circle {
+    -fx-fill: white;
+}

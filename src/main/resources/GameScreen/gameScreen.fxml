@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<Group id="map" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
+<Group id="map" fx:id="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
        fx:controller="GameScreen.GameScreenController" stylesheets="GameScreen/gameScreen.css">
 
     <!-- Seas-->
