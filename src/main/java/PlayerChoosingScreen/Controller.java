@@ -1,9 +1,9 @@
 package PlayerChoosingScreen;
 
-
 import Game.Constants;
 import Game.Player;
 import GameScreen.Player1Holder;
+import GameScreen.Player2Holder;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,8 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
 public class Controller {
@@ -20,43 +18,70 @@ public class Controller {
     @FXML
     private TextField username;
     public String NAME_INPUT = null;
+    private boolean isPlayer1 = true;
 
     @FXML
     public void ButtonClicked() throws IOException {
         TextField1();
-        writingDetailsToFileForPlayer_ONE("EUROPE");
-        moveToSecondScreen();
+        if(isPlayer1) {
+            writingDetailsToFileForPlayer_ONE();
+            moveToSecondScreen();
+            System.out.println("here");
+        } else {
+            System.out.println("here");
+            writingDetailsToFileForPlayer_TWO();
+        }
     }
 
     public void ButtonClicked2() throws IOException {
         TextField1();
-        writingDetailsToFileForPlayer_ONE("NORTH AMERICA");
-        moveToSecondScreen();
+        if(isPlayer1) {
+            writingDetailsToFileForPlayer_ONE();
+            moveToSecondScreen();
+        } else {
+            writingDetailsToFileForPlayer_TWO();
+        }
     }
 
 
     public void ButtonClicked3() throws IOException {
         TextField1();
-        writingDetailsToFileForPlayer_ONE("Africa");
-        moveToSecondScreen();
+        if(isPlayer1) {
+            writingDetailsToFileForPlayer_ONE();
+            moveToSecondScreen();
+        } else {
+            writingDetailsToFileForPlayer_TWO();
+        }
     }
 
     public void ButtonClicked4() throws IOException {
         TextField1();
-        writingDetailsToFileForPlayer_ONE("SOUTH AMERICA");
-        moveToSecondScreen();
+        if(isPlayer1) {
+            writingDetailsToFileForPlayer_ONE();
+            moveToSecondScreen();
+        } else {
+            writingDetailsToFileForPlayer_TWO();
+        }
     }
 
     public void ButtonClicked5() throws IOException {
         TextField1();
-        writingDetailsToFileForPlayer_ONE("OCEANIA");
-        moveToSecondScreen();
+        if(isPlayer1) {
+            writingDetailsToFileForPlayer_ONE();
+            moveToSecondScreen();
+        } else {
+            writingDetailsToFileForPlayer_TWO();
+        }
     }
 
     public void ButtonClicked6() throws IOException {
         TextField1();
-        writingDetailsToFileForPlayer_ONE("ASIA");
-        moveToSecondScreen();
+        if(isPlayer1) {
+            writingDetailsToFileForPlayer_ONE();
+            moveToSecondScreen();
+        } else {
+            writingDetailsToFileForPlayer_TWO();
+        }
     }
 
     @FXML
@@ -64,22 +89,26 @@ public class Controller {
         NAME_INPUT = username.getText();
     }
 
-    private void writingDetailsToFileForPlayer_ONE(String Area) throws IOException {
+    private void writingDetailsToFileForPlayer_ONE() throws IOException {
         Player player1 = new Player(NAME_INPUT, Constants.PLAYER_COLOUR.RED);
-        File file= new File("DetailsOfPlayer1.txt");
-        FileWriter FILE = new FileWriter(file);
-        FILE.write(NAME_INPUT+"\n"+Area);
-        FILE.close();
-
         Player1Holder player1Holder = Player1Holder.getInstance();
         player1Holder.setPlayer(player1);
+        isPlayer1 = false;
+    }
+
+    private void writingDetailsToFileForPlayer_TWO() throws IOException {
+        Player player2 = new Player(NAME_INPUT, Constants.PLAYER_COLOUR.BLUE);
+        Player2Holder player2Holder = Player2Holder.getInstance();
+        player2Holder.setPlayer(player2);
+
+        Stage stage = (Stage) username.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("../GameScreen/gameScreen.fxml"));
+        Scene scene = new Scene(root, 1300, 700);
+        stage.setScene(scene);
     }
 
     private void moveToSecondScreen() throws IOException{
-        Stage stage = (Stage) username.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("../ChoosePlayerScreen/player2Screen.fxml"));
-        Scene scene = new Scene(root,1023,437);
-        stage.setScene(scene);
+        username.clear();
     }
 
 }
