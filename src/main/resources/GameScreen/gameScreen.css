@@ -66,14 +66,33 @@
     -fx-fill: #5c82ea;
 }
 
-@font-face {
-    font-family: Pixel;
-    src: url('GameScreen/pixel.ttf');
-}
-
 .country-text {
     -fx-border: solid black 3px;
     -fx-width: 300px;
     -fx-font-family: Pixel;
     -fx-font-size: 50;
+}
+
+.africa {
+    -fx-stroke: #FF851B;
+}
+
+.europe {
+    -fx-stroke: #FFCC33;
+}
+
+.asia {
+    -fx-stroke: #66FF66;
+}
+
+.north-america {
+    -fx-stroke: #FF9966;
+}
+
+.south-america {
+    -fx-stroke: #ffff00;
+}
+
+.oceania {
+    -fx-stroke: #FF6EFF;
 }
