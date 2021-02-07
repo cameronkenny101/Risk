@@ -1,0 +1,51 @@
+.sea {
+    -fx-fill: #5397D1;
+}
+
+.country {
+    -fx-stroke-width: 2;
+}
+
+.country:hover {
+    -fx-stroke-width: 8;
+    -fx-stroke-opacity: 0.3;
+}
+
+.grey-country {
+    -fx-fill: #564848;
+    -fx-stroke: #382f2f;
+}
+
+.grey-country:hover {
+    -fx-fill: #ffffff;
+}
+
+.red-country {
+    -fx-fill: #DD4444;
+    -fx-stroke: #B51F1D;
+}
+
+.red-country:hover {
+    -fx-fill: #FE8C8C;
+}
+
+.blue-country {
+    -fx-fill: #4770EA;
+    -fx-stroke: #2B53C6;
+}
+
+.blue-country:hover {
+    -fx-fill: #5c82ea;
+}
+
+@font-face {
+    font-family: Pixel;
+    src: url('Map/pixel.ttf');
+}
+
+.country-text {
+    -fx-border: solid black 3px;
+    -fx-width: 300px;
+    -fx-font-family: Pixel;
+    -fx-font-size: 50;
+}
