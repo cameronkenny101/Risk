@@ -89,11 +89,17 @@
     -fx-fill: #66FF66;
 }
 
-
 .oceania {
     -fx-stroke: #FF6EFF;
 }
 
 #circle {
     -fx-fill: white;
+}
+
+.image {
+    -fx-background-image: url("../ChoosePlayerScreen/PlayerImages/Nap2-removebg-preview.png");
+    -fx-background-position: left top;
+    -fx-background-size: 100 100;
+    -fx-background-repeat: no-repeat;
 }
