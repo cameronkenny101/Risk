@@ -89,8 +89,20 @@
     -fx-fill: #66FF66;
 }
 
-.oceania {
+.purple-country {
+    -fx-fill: #670067;
+    -fx-stroke: #340034;
+}
+.purple-country:hover {
+    -fx-fill: #9a009a;
+}
+
+.pink-country {
     -fx-stroke: #FF6EFF;
+    -fx-fill: #ffc0cb;
+}
+.pink-country:hover {
+    -fx-fill: #ffdae0;
 }
 
 #circle {

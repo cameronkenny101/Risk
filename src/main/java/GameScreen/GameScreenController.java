@@ -212,6 +212,15 @@ public class GameScreenController {
             case GREY:
                 countries_to_SVG[country_id].getStyleClass().add("grey-country");
                 break;
+            case PURPLE:
+                countries_to_SVG[country_id].getStyleClass().add("purple-country");
+                break;
+            case GREEN:
+                countries_to_SVG[country_id].getStyleClass().add("green-country");
+                break;
+            case ORANGE:
+                countries_to_SVG[country_id].getStyleClass().add("orange-country");
+                break;
         }
 
         //TODO: Set Troop Count

@@ -13,7 +13,10 @@ public class Constants {
     public enum PLAYER_COLOUR {
         GREY,
         RED,
-        BLUE
+        BLUE,
+        ORANGE,
+        GREEN,
+        PURPLE,
     }
 
     public static final String[] COUNTRY_NAMES = {
