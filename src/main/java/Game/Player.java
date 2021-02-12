@@ -3,10 +3,12 @@ package Game;
 public class Player {
     private String name;
     private Constants.PLAYER_COLOUR colour;
+    private int commanderID;
 
-    public Player(String name, Constants.PLAYER_COLOUR colour) {
+    public Player(String name, Constants.PLAYER_COLOUR colour, int commanderID) {
         setName(name);
-        this.colour = colour;
+        setColour(colour);
+        setCommanderID(commanderID);
     }
 
     public String getName() {
@@ -22,6 +24,18 @@ public class Player {
 
     public Constants.PLAYER_COLOUR getColour() {
         return colour;
+    }
+
+    public void setColour(Constants.PLAYER_COLOUR colour) {
+        this.colour = colour;
+    }
+
+    public int getCommanderID() {
+        return commanderID;
+    }
+
+    public void setCommanderID(int commanderID) {
+        this.commanderID = commanderID;
     }
 
 }
