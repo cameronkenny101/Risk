@@ -22,7 +22,7 @@
             <Font size="25.0" />
          </font>
       </Text>
-      <TextField fx:id="username" alignment="CENTER" layoutX="390.0" layoutY="115.0" onAction="#TextField1" prefHeight="34.0" prefWidth="202.0" styleClass="text-field1">
+      <TextField fx:id="username" alignment="CENTER" layoutX="390.0" layoutY="115.0" prefHeight="34.0" prefWidth="202.0" styleClass="text-field1">
          <font>
             <Font name="Wide Latin" size="18.0" />
          </font></TextField>
