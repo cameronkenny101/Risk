@@ -126,8 +126,6 @@ public class GameScreenController {
     @FXML
     public void initialize() {
         setText();
-        receivePlayer1();
-        receivePlayer2();
         countries_to_SVG[0] = Ontario;
         countries_to_SVG[1] = Quebec;
         countries_to_SVG[2] = Northwest_Territory;
@@ -238,19 +236,5 @@ public class GameScreenController {
         text.setY(circle.getCenterY() + 2);
 
         root.getChildren().addAll(circle, text);
-    }
-
-    @FXML
-    public void receivePlayer1() {
-        Player player1 = Player1Holder.getInstance().getPlayer();
-        output.appendText("> Player 1 name: " + player1.getName() + "\n");
-        output.appendText("> Player 1 color: " + player1.getColour() + "\n");
-    }
-
-    @FXML
-    public void receivePlayer2() {
-        Player player2 = Player2Holder.getInstance().getPlayer();
-        output.appendText("> Player 2 name: " + player2.getName() + "\n");
-        output.appendText("> Player 2 color: " + player2.getColour() + "\n");
     }
 }

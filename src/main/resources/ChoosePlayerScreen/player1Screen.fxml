@@ -9,9 +9,9 @@
 <Pane accessibleRole="BUTTON" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="1023.0" stylesheets="ChoosePlayerScreen/loginScreen.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="PlayerChoosingScreen.Controller">
    <children>
       <Button layoutX="87.0" layoutY="222.0" mnemonicParsing="false" onAction="#ButtonClicked" prefHeight="137.0" prefWidth="83.0" styleClass="button-blue" />
-      <Button layoutX="230.0" layoutY="222.0" mnemonicParsing="false" onAction="#ButtonClicked2" prefHeight="137.0" prefWidth="83.0" styleClass="button-blue4" />
-      <Button layoutX="377.0" layoutY="226.0" mnemonicParsing="false" onAction="#ButtonClicked3" prefHeight="129.0" prefWidth="83.0" styleClass="button-blue3" />
-      <Button layoutX="538.0" layoutY="226.0" mnemonicParsing="false" onAction="#ButtonClicked4" prefHeight="129.0" prefWidth="83.0" styleClass="button-blue2" />
+      <Button layoutX="230.0" layoutY="222.0" mnemonicParsing="false" onAction="#ButtonClicked" prefHeight="137.0" prefWidth="83.0" styleClass="button-blue4" />
+      <Button layoutX="377.0" layoutY="226.0" mnemonicParsing="false" onAction="#ButtonClicked" prefHeight="129.0" prefWidth="83.0" styleClass="button-blue3" />
+      <Button layoutX="538.0" layoutY="226.0" mnemonicParsing="false" onAction="#ButtonClicked" prefHeight="129.0" prefWidth="83.0" styleClass="button-blue2" />
       <Text fill="WHITE" layoutX="390.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ENTER YOUR NAME">
          <font>
             <Font size="25.0" />
@@ -26,8 +26,8 @@
          <font>
             <Font name="Wide Latin" size="18.0" />
          </font></TextField>
-      <Button layoutX="684.0" layoutY="222.0" mnemonicParsing="false" onAction="#ButtonClicked5" prefHeight="137.0" prefWidth="83.0" styleClass="button-blue5" />
-      <Button layoutX="831.0" layoutY="222.0" mnemonicParsing="false" onAction="#ButtonClicked6" prefHeight="137.0" prefWidth="83.0" styleClass="button-blue6" />
+      <Button layoutX="684.0" layoutY="222.0" mnemonicParsing="false" onAction="#ButtonClicked" prefHeight="137.0" prefWidth="83.0" styleClass="button-blue5" />
+      <Button layoutX="831.0" layoutY="222.0" mnemonicParsing="false" onAction="#ButtonClicked" prefHeight="137.0" prefWidth="83.0" styleClass="button-blue6" />
       <Text fill="WHITE" layoutX="96.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EUROPE">
          <font>
             <Font size="17.0" />
