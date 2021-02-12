@@ -13,21 +13,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
-import java.io.IOException;
-
 public class Controller {
 
     @FXML
     private TextField username;
-    private String[] NAME_INPUT = new String[Constants.NUM_PLAYERS];
-    private int playerNum = 0;
-    private Game game;
+    String[] NAME_INPUT = new String[Constants.NUM_PLAYERS];
+    int playerNum = 0;
+    Game game;
 
     @FXML
     public void ButtonClicked(Event evt) throws Exception {
         Button button = (Button) evt.getSource();
-        TextField(playerNum);
+        TextField(playerNum++);
         username.clear();
     }
 
