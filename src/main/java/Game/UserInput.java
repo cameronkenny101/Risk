@@ -10,17 +10,23 @@ public class UserInput {
     }
 
     public void receiveInput(String question, String input) {
-        if(question.equals("Press enter to choose your 9 cards from the deck") || question.equals("Press enter to let neutrals choose there cards")) {
+        if (question.equals("Press enter to choose your 9 cards from the deck") || question.equals("Press enter to let neutrals choose there cards")) {
             game.start();
         }
-        if(question.equals("Do you want to roll the dice?")){
-            System.out.println("NOT GOT");
-            System.out.println(input + "------------");
 
-            if (input.equals("yes")){
-                int diceRoll=game.dice.rollDice(game.player1, game.uiController);
-                System.out.println(diceRoll);
+
+        if (question.equals("Do you want to roll the Dice?")) {
+            if (input.equals("yes")) {
+                    if(game.player1.getDiceRollNumber() == 0) {
+                        game.dice.rollDice(game.player1);
+                        System.out.println(game.player1.getDiceRollNumber());
+                    }else{
+                        game.dice.rollDice(game.player2);
+                        System.out.println(game.player2);
+                    }
             }
         }
     }
 }
+
+
