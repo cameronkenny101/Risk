@@ -119,7 +119,6 @@ public class GameScreenController {
     TextField input;
     @FXML
     Group root;
-    public String userInput;
     Game game;
 
     private SVGPath[] countries_to_SVG = new SVGPath[Constants.NUM_COUNTRIES];//Returns the controller for the countryid
@@ -168,13 +167,13 @@ public class GameScreenController {
         countries_to_SVG[39] = Egypt;
         countries_to_SVG[40] = East_Africa;
         countries_to_SVG[41] = Madagascar;
-        getText();
+        outputText();
     }
 
 
     //Shows text indicating country name upon hovering
     @FXML
-    private void hoverCountry(Event evt) throws Exception {
+    private void hoverCountry(Event evt) {
         countryNameInTerminal(((SVGPath) evt.getSource()));
     }
 
@@ -183,23 +182,29 @@ public class GameScreenController {
         output.appendText("> " + path.getId() + "\n");
     }
 
-
-    public void getText() {
+    @FXML
+    private void outputText() {
         input.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER) {
                 output.appendText("> ");
                 output.appendText(input.getText());
-                userInput = input.getText();
                 output.appendText("\n");
                 input.clear();
-                try {
-                    game.start();
-                    userInput = "";
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                String in = input.getText();
+                getUserInput(in);
             }
         });
+    }
+
+    private void getUserInput(String in) {
+        // going to bed now, will clean method later
+        // multiple possibilities, attack, fortify, select card, etc.
+        // will work this out when we discuss
+        try {
+            game.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -208,7 +213,7 @@ public class GameScreenController {
     }
 
     //Sets the colour and number of a country on the map
-    public void setRegion(int country_id, Constants.PLAYER_COLOUR Colour, int troop_count) throws Exception {
+    public void setRegion(int country_id, Constants.PLAYER_COLOUR Colour, int troop_count) {
         countries_to_SVG[country_id].getStyleClass().clear();
         switch (Colour) {
             case RED:
