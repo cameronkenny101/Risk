@@ -172,7 +172,6 @@ public class GameScreenController {
         countries_to_SVG[41] = Madagascar;
         output.setEditable(false);
         outputText();
-        userInput = new UserInput(game);
     }
 
 
@@ -209,14 +208,6 @@ public class GameScreenController {
     }
 
     private void getUserInput(String in) {
-        // going to bed now, will clean method later
-        // multiple possibilities, attack, fortify, select card, etc.
-        // will work this out when we discuss
-        /* try {
-            game.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } */
         System.out.println("here2");
         userInput.receiveInput(question, in);
     }
@@ -276,5 +267,6 @@ public class GameScreenController {
 
     public void receiveHandler(Game game) {
         this.game = game;
+        userInput = new UserInput(game);
     }
 }
