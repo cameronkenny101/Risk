@@ -33,18 +33,19 @@ public class Game {
         uiController.output.appendText("> Player 1 color: " + player1.getColour() + "\n");
         uiController.output.appendText("> Player 2 name: " + player2.getName() + "\n");
         uiController.output.appendText("> Player 2 color: " + player2.getColour() + "\n");
-        uiController.output.appendText("> It is player 1's turn to choose there cards! \n");
+        uiController.output.appendText("> It is " + player1.getColour() + " turn to choose there cards! \n");
         uiController.askQuestion("Press enter to choose your 9 cards from the deck");
     }
 
     public void start() {
         if(countryIndex == 0) {
             initCountries(Constants.PLAYER_COLOUR.RED, Constants.INIT_COUNTRIES_PLAYER);
-            uiController.output.appendText("> " + player2.getColour() + " press enter to choose your 9 cards from the deck \n");
+            uiController.output.appendText("> It is " + player2.getColour() + " turn to choose there cards! \n");
+            uiController.askQuestion("Press enter to choose your 9 cards from the deck");
         }
         else if(countryIndex == 9) {
             initCountries(Constants.PLAYER_COLOUR.BLUE, Constants.INIT_COUNTRIES_PLAYER);
-            uiController.output.appendText("> Are you ready for neutrals to select there 6 cards? \n");
+            uiController.askQuestion("Press enter to let neutrals choose there cards");
         } else {
             initCountries(Constants.PLAYER_COLOUR.ORANGE, Constants.INIT_COUNTRIES_NEUTRAL);
             initCountries(Constants.PLAYER_COLOUR.PURPLE, Constants.INIT_COUNTRIES_NEUTRAL);

@@ -208,7 +208,6 @@ public class GameScreenController {
     }
 
     private void getUserInput(String in) {
-        System.out.println("here2");
         userInput.receiveInput(question, in);
     }
 
