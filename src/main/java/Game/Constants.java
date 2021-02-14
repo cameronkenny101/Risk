@@ -20,12 +20,12 @@ public class Constants {
     }
 
     public static final String[] COUNTRY_NAMES = {
-            "Ontario", "Quebec", "Northwest_Territory", "Alberta", "Greenland", "Eastern_United_States", "Western_United_States", "Central_America", "Alaska",
-            "Great_Britain", "Western_Europe", "Southern_Europe", "Ukraine", "Northern_Europe", "Iceland", "Scandinavia",
-            "Afghanistan", "India", "Middle_East", "Japan", "Ural", "Yakutsk", "Kamchatka", "Siam", "Irkutsk", "Siberia", "Mongolia", "China",
-            "Eastern_Australia", "New_Guinea", "Western_Australia", "Indonesia",
+            "Ontario", "Quebec", "Northwest Territory", "Alberta", "Greenland", "Eastern United States", "Western_United_States", "Central_America", "Alaska",
+            "Great Britain", "Western Europe", "Southern Europe", "Ukraine", "Northern Europe", "Iceland", "Scandinavia",
+            "Afghanistan", "India", "Middle East", "Japan", "Ural", "Yakutsk", "Kamchatka", "Siam", "Irkutsk", "Siberia", "Mongolia", "China",
+            "Eastern Australia", "New Guinea", "Western Australia", "Indonesia",
             "Venezuela", "Peru", "Brazil", "Argentina",
-            "Congo", "North_Africa", "South_Africa", "Egypt", "East_Africa", "Madagascar"};  // for reference
+            "Congo", "North Africa", "South Africa", "Egypt", "East Africa", "Madagascar"};  // for reference
     public static final int[][] ADJACENT = {
             {4, 1, 5, 6, 3, 2},    // 0
             {4, 5, 0},

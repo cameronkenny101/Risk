@@ -167,6 +167,7 @@ public class GameScreenController {
         countries_to_SVG[39] = Egypt;
         countries_to_SVG[40] = East_Africa;
         countries_to_SVG[41] = Madagascar;
+        output.setEditable(false);
         outputText();
     }
 
