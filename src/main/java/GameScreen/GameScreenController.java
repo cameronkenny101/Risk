@@ -193,10 +193,10 @@ public class GameScreenController {
                 output.appendText("> ");
                 output.appendText(input.getText());
                 output.appendText("\n");
-                input.clear();
                 System.out.println("here1");
                 String in = input.getText();
                 getUserInput(in);
+                input.clear();
             }
         });
     }
