@@ -2,6 +2,8 @@ package Game;
 
 import GameScreen.GameScreenController;
 
+import Game.Dice;
+
 import java.util.Random;
 
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ public class Game {
 
     GameScreenController uiController;
     Player player1, player2;
+    Dice dice = new Dice();
     Constants.PLAYER_COLOUR[] country_owner = new Constants.PLAYER_COLOUR[Constants.NUM_COUNTRIES];//Tells which players owns which country
     int[] troop_count = new int[Constants.NUM_COUNTRIES];//States the number of troops per country
     int countryIndex = 0;
@@ -47,7 +50,12 @@ public class Game {
             initCountries(Constants.PLAYER_COLOUR.PURPLE, Constants.INIT_COUNTRIES_NEUTRAL);
             initCountries(Constants.PLAYER_COLOUR.GREEN, Constants.INIT_COUNTRIES_NEUTRAL);
             initCountries(Constants.PLAYER_COLOUR.GREY, Constants.INIT_COUNTRIES_NEUTRAL);
-            rollDice(player1,player2);
+
+            dice.rollDice(player1,uiController);
+            dice.rollDice(player2,uiController);
+            dice.compare(dice.rollDice(player1,uiController),dice.rollDice(player2,uiController),uiController
+            ,player1,player2);
+
         }
     }
 
@@ -71,31 +79,5 @@ public class Game {
         }
         Collections.shuffle(randomCountries);
     }
-
-
-    private void rollDice(Player player1, Player player2){
-
-        Random random = new Random();
-
-        int rollDice = 1;
-
-        int player1Dice = random.nextInt(6)+1; //the .nextInt bound sets the bouund to 0-5 so the +1 is to make it 1-6
-        int player2Dice = random.nextInt(6)+1;
-
-        uiController.output.appendText(">"+player1.getColour().toString()+" dice roll: " + player1Dice+"\n");
-        uiController.output.appendText(player2.getColour().toString()+" dice roll: " + player2Dice+"\n");
-
-        if(player1Dice > player2Dice){
-            uiController.output.appendText(">"+player1.getColour().toString() + " will place their armies first \n");
-        }
-        if(player2Dice > player1Dice){
-            uiController.output.appendText(">"+player2.getColour().toString() + " will place their armies first \n");
-        }else{
-            uiController.output.appendText(">"+"Dice are equal roll again \n");
-            rollDice(player1,player2);
-        }
-
-    }
-
 
 }
