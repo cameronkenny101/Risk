@@ -23,7 +23,7 @@ public class Dice {
 
         uiController.output.appendText(">"+player.getColour().toString()+" would you like to roll the dice?\n");
 
-        return random.nextInt(6)+1;
+        return random.nextInt(6) + 1;
     }
 
     public void compare(int playerNumber1,int playerNumber2,GameScreenController uiController,Player player1,Player player2){
