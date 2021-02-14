@@ -2,6 +2,8 @@ package Game;
 
 import GameScreen.GameScreenController;
 
+import java.util.Random;
+
 import java.util.ArrayList;
 
 import java.util.Collections;
@@ -44,6 +46,7 @@ public class Game {
             initCountries(Constants.PLAYER_COLOUR.PURPLE, Constants.INIT_COUNTRIES_NEUTRAL);
             initCountries(Constants.PLAYER_COLOUR.GREEN, Constants.INIT_COUNTRIES_NEUTRAL);
             initCountries(Constants.PLAYER_COLOUR.GREY, Constants.INIT_COUNTRIES_NEUTRAL);
+            rollDice(player1,player2);
         }
     }
 
@@ -70,5 +73,31 @@ public class Game {
             System.out.println(randomCountries.get(i));
         }
     }
+
+
+    private void rollDice(Player player1, Player player2){
+
+        Random random = new Random();
+
+        int rollDice = 1;
+
+        int player1Dice = random.nextInt(6)+1; //the .nextInt bound sets the bouund to 0-5 so the +1 is to make it 1-6
+        int player2Dice = random.nextInt(6)+1;
+
+        uiController.output.appendText(">"+player1.getColour().toString()+" dice roll: " + player1Dice+"\n");
+        uiController.output.appendText(player2.getColour().toString()+" dice roll: " + player2Dice+"\n");
+
+        if(player1Dice > player2Dice){
+            uiController.output.appendText(">"+player1.getColour().toString() + " will place their armies first \n");
+        }
+        if(player2Dice > player1Dice){
+            uiController.output.appendText(">"+player2.getColour().toString() + " will place their armies first \n");
+        }else{
+            uiController.output.appendText(">"+"Dice are equal roll again \n");
+            rollDice(player1,player2);
+        }
+
+    }
+
 
 }
