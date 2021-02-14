@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-# AlphaRisk
-=======
-# Risk
+# AlphaRisk's Risk
 
 ## Running the Project
 
@@ -22,4 +19,3 @@ Clone the repository, then (using Gradle):
 the installed JavaFX and add the required [VM arguments](https://stackoverflow.com/a/60113010/12842278) ```--module-path /path/to/javafx/lib --add-modules javafx
 .controls,javafx
 .fxml,javafx.web```. It is recommended to just build from gradle.
->>>>>>> 85533dcca4729aed029baf35614be1caed19a7e1
