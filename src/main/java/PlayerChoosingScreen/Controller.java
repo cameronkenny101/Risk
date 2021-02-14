@@ -45,9 +45,10 @@ public class Controller {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GameScreen/gameScreen.fxml"));
         Parent root = (Parent) loader.load();
         GameScreenController gameScreenController = loader.getController();
-        Scene scene = new Scene(root, 1300, 700);
+        Scene scene = new Scene(root, 1400, 700);
         stage.setScene(scene);
         game = new Game(gameScreenController, player1, player2);
+        gameScreenController.receiveHandler(game);
     }
 
 }

@@ -12,6 +12,7 @@ public class Game {
     Player player1, player2;
     Constants.PLAYER_COLOUR[] country_owner = new Constants.PLAYER_COLOUR[Constants.NUM_COUNTRIES];//Tells which players owns which country
     int[] troop_count = new int[Constants.NUM_COUNTRIES];//States the number of troops per country
+    int countryIndex = 0;
     ArrayList<Integer> randomCountries = new ArrayList<>();
 
     public Game(GameScreenController uiController, Player player1, Player player2) throws Exception {
@@ -28,17 +29,13 @@ public class Game {
         uiController.output.appendText("> Player 1 color: " + player1.getColour() + "\n");
         uiController.output.appendText("> Player 2 name: " + player2.getName() + "\n");
         uiController.output.appendText("> Player 2 color: " + player2.getColour() + "\n");
+        uiController.output.appendText("> " + player1.getColour() + " type yes to choose your cards \n");
     }
 
     private void initMap() throws Exception {
-        uiController.output.appendText("> Randomly allocating countries\n");
 
-        //Init Red Player
-        for (int i = 0; i < 9; i++) {
-            takeCountry(randomCountries.get(i), Constants.PLAYER_COLOUR.RED);
-            uiController.output.appendText("> Red Takes " + Constants.COUNTRY_NAMES[randomCountries.get(i)] + "\n");
-        }
-        //Init Blue Player
+
+        /* Init Blue Player
         for (int i = 9; i < 18; i++) {
             takeCountry(randomCountries.get(i), Constants.PLAYER_COLOUR.BLUE);
             uiController.output.appendText("> Blue Takes " + Constants.COUNTRY_NAMES[randomCountries.get(i)] + "\n");
@@ -62,6 +59,23 @@ public class Game {
         for (int i = 36; i < 42; i++) {
             takeCountry(randomCountries.get(i), Constants.PLAYER_COLOUR.ORANGE);
             uiController.output.appendText("> Orange Takes " + Constants.COUNTRY_NAMES[randomCountries.get(i)] + "\n");
+        } */
+    }
+
+    public void start() throws Exception {
+        if(countryIndex == 0) {
+            initCountries(Constants.PLAYER_COLOUR.RED, Constants.INIT_COUNTRIES_PLAYER);
+            uiController.output.appendText("> " + player2.getColour() + " type yes to choose your cards \n");
+        }
+        else if(countryIndex == 9)
+            initCountries(Constants.PLAYER_COLOUR.BLUE, Constants.INIT_COUNTRIES_PLAYER);
+    }
+
+    private void initCountries(Constants.PLAYER_COLOUR color, int numCountries) throws Exception {
+        int numOccupyCountries = numCountries + countryIndex;
+        for (; countryIndex < numOccupyCountries; countryIndex++) {
+            takeCountry(randomCountries.get(countryIndex), color);
+            uiController.output.appendText("> " + color + " Picks " + Constants.COUNTRY_NAMES[randomCountries.get(countryIndex)] + "\n");
         }
     }
 

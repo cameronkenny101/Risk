@@ -2,7 +2,6 @@ package GameScreen;
 
 import Game.Constants;
 import Game.Game;
-import Game.Player;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
@@ -120,12 +119,13 @@ public class GameScreenController {
     TextField input;
     @FXML
     Group root;
+    public String userInput;
+    Game game;
 
     private SVGPath[] countries_to_SVG = new SVGPath[Constants.NUM_COUNTRIES];//Returns the controller for the countryid
 
     @FXML
     public void initialize() {
-        setText();
         countries_to_SVG[0] = Ontario;
         countries_to_SVG[1] = Quebec;
         countries_to_SVG[2] = Northwest_Territory;
@@ -168,6 +168,7 @@ public class GameScreenController {
         countries_to_SVG[39] = Egypt;
         countries_to_SVG[40] = East_Africa;
         countries_to_SVG[41] = Madagascar;
+        getText();
     }
 
 
@@ -182,14 +183,21 @@ public class GameScreenController {
         output.appendText("> " + path.getId() + "\n");
     }
 
-    @FXML
-    private void setText() {
+
+    public void getText() {
         input.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER) {
                 output.appendText("> ");
                 output.appendText(input.getText());
+                userInput = input.getText();
                 output.appendText("\n");
                 input.clear();
+                try {
+                    game.start();
+                    userInput = "";
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -245,5 +253,9 @@ public class GameScreenController {
         text.setY(circle.getCenterY() + 2);
 
         root.getChildren().addAll(circle, text);
+    }
+
+    public void receiveHandler(Game game) {
+        this.game = game;
     }
 }
