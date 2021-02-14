@@ -1,5 +1,7 @@
 package Game;
 
+import java.util.Random;
+
 
 public class UserInput {
 
@@ -7,6 +9,7 @@ public class UserInput {
     Player player1, player2;
     Dice dice;
     int troops;
+    int neutralTurnCountdown = Constants.NUM_PLAYERS;
 
     public UserInput(Game game, Player player1, Player player2) {
         this.game = game;
@@ -62,14 +65,18 @@ public class UserInput {
                     game.uiController.askQuestion("How many troops do you want to place");
                 } else if (player.getInitTroops() == 0) {
                     player.setTurn(false);
-                    if (player.getTroops() > 0)
-                        player.setInitTroops(3);
+                    player.setInitTroops(3);
                     nextPlayer.setTurn(true);
-                    if (nextPlayer.getTroops() > 0) {
+                    neutralTurnCountdown--;
+
+                    if(neutralTurnCountdown == 0) {
+                        chooseNeutralTerritory(nextPlayer);
+                    } else if (nextPlayer.getTroops() > 0) {
                         game.uiController.output.appendText("> " + nextPlayer.getName() + ", you will now fortify your territories. You have " + nextPlayer.getTroops() + " troops left. You can place 3 troops at a time\n");
                         game.uiController.askQuestion("How many troops do you want to place");
-                    } else
-                        game.uiController.output.appendText("> Both players have allocated there troops! \n");
+                    } else {
+                        game.uiController.output.appendText("> Everyone has allocated there troops! \n");
+                    }
                 }
             } else {
                 game.uiController.output.appendText("You choose a country you do not own. Try again \n");
@@ -79,6 +86,20 @@ public class UserInput {
             game.uiController.output.appendText("Country not recognised. Try again\n");
             game.uiController.askQuestion("What country do you want to fortify");
         }
+    }
+
+    private void chooseNeutralTerritory(Player nextPlayer) {
+        game.uiController.output.appendText("> Neutral countries allocating troop\n");
+        Random random = new Random();
+        int countryId = random.nextInt(6);
+        game.setCountry(game.ownedGray.get(countryId), Constants.PLAYER_COLOUR.GREY, 1);
+        game.setCountry(game.ownedOrange.get(countryId), Constants.PLAYER_COLOUR.ORANGE, 1);
+        game.setCountry(game.ownedGreen.get(countryId), Constants.PLAYER_COLOUR.GREEN, 1);
+        game.setCountry(game.ownedPurple.get(countryId), Constants.PLAYER_COLOUR.PURPLE, 1);
+        neutralTurnCountdown = Constants.NUM_PLAYERS;
+        game.uiController.output.appendText("> " + nextPlayer.getName() + ", you will now fortify your territories. You have " + nextPlayer.getTroops() + " troops left. You can place 3 troops at a time\n");
+        game.uiController.askQuestion("How many troops do you want to place");
+
     }
 }
 

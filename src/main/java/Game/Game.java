@@ -10,6 +10,10 @@ public class Game {
     Player player1, player2;
     Constants.PLAYER_COLOUR[] country_owner = new Constants.PLAYER_COLOUR[Constants.NUM_COUNTRIES];//Tells which players owns which country
     int[] troop_count = new int[Constants.NUM_COUNTRIES];//States the number of troops per country
+    ArrayList<Integer> ownedOrange = new ArrayList<>(); // Countries Orange neutral owns
+    ArrayList<Integer> ownedPurple = new ArrayList<>(); // Countries Purple neutral owns
+    ArrayList<Integer> ownedGreen = new ArrayList<>(); // Countries Green neutral owns
+    ArrayList<Integer> ownedGray = new ArrayList<>(); // Countries Gray neutral owns
     Dice dice;
     int countryIndex = 0;
     boolean initPhase = true;
@@ -35,18 +39,18 @@ public class Game {
 
     public void start() {
         if(countryIndex == 0) {
-            initCountries(Constants.PLAYER_COLOUR.RED, Constants.INIT_COUNTRIES_PLAYER);
+            initCountries(Constants.PLAYER_COLOUR.RED, Constants.INIT_COUNTRIES_PLAYER, null);
             uiController.output.appendText("> It is " + player2.getColour() + " turn to choose there cards! \n");
             uiController.askQuestion("Press enter to choose your 9 cards from the deck");
         }
         else if(countryIndex == 9) {
-            initCountries(Constants.PLAYER_COLOUR.BLUE, Constants.INIT_COUNTRIES_PLAYER);
+            initCountries(Constants.PLAYER_COLOUR.BLUE, Constants.INIT_COUNTRIES_PLAYER, null);
             uiController.askQuestion("Press enter to let neutrals choose there cards");
         } else {
-            initCountries(Constants.PLAYER_COLOUR.ORANGE, Constants.INIT_COUNTRIES_NEUTRAL);
-            initCountries(Constants.PLAYER_COLOUR.PURPLE, Constants.INIT_COUNTRIES_NEUTRAL);
-            initCountries(Constants.PLAYER_COLOUR.GREEN, Constants.INIT_COUNTRIES_NEUTRAL);
-            initCountries(Constants.PLAYER_COLOUR.GREY, Constants.INIT_COUNTRIES_NEUTRAL);
+            initCountries(Constants.PLAYER_COLOUR.ORANGE, Constants.INIT_COUNTRIES_NEUTRAL, ownedOrange);
+            initCountries(Constants.PLAYER_COLOUR.PURPLE, Constants.INIT_COUNTRIES_NEUTRAL, ownedPurple);
+            initCountries(Constants.PLAYER_COLOUR.GREEN, Constants.INIT_COUNTRIES_NEUTRAL, ownedGreen);
+            initCountries(Constants.PLAYER_COLOUR.GREY, Constants.INIT_COUNTRIES_NEUTRAL, ownedGray);
             uiController.output.appendText("> " + player1.getName() + " must now roll the dice\n");
             uiController.askQuestion("Press enter to roll the dice");
         }
@@ -80,10 +84,12 @@ public class Game {
         }
     }
 
-    private void initCountries(Constants.PLAYER_COLOUR color, int numCountries) {
+    private void initCountries(Constants.PLAYER_COLOUR color, int numCountries, ArrayList<Integer> ownedCountries) {
         int numOccupyCountries = numCountries + countryIndex;
         for (; countryIndex < numOccupyCountries; countryIndex++) {
             takeCountry(randomCountries.get(countryIndex), color, 1);
+            if(ownedCountries != null)
+                ownedCountries.add(randomCountries.get(countryIndex));
             uiController.output.appendText("> " + color + " selects " + Constants.COUNTRY_NAMES.get(countryIndex) + " card\n");
         }
     }
