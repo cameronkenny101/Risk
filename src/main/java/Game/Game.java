@@ -52,8 +52,7 @@ public class Game {
             initCountries(Constants.PLAYER_COLOUR.GREEN, Constants.INIT_COUNTRIES_NEUTRAL);
             initCountries(Constants.PLAYER_COLOUR.GREY, Constants.INIT_COUNTRIES_NEUTRAL);
 
-            uiController.askQuestion("Do you want to roll the dice?");
-
+            dice.rollDiceForSettingArmies(uiController,player1,player2);
 
         }
     }
