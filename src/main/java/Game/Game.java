@@ -21,45 +21,14 @@ public class Game {
         this.player2 = player2;
         fill(randomCountries);
         printPlayerToConsole();
-        initMap();
     }
 
-    private void printPlayerToConsole() throws Exception {
+    private void printPlayerToConsole() {
         uiController.output.appendText("> Player 1 name: " + player1.getName() + "\n");
         uiController.output.appendText("> Player 1 color: " + player1.getColour() + "\n");
         uiController.output.appendText("> Player 2 name: " + player2.getName() + "\n");
         uiController.output.appendText("> Player 2 color: " + player2.getColour() + "\n");
         uiController.output.appendText("> " + player1.getColour() + " type yes to choose your cards \n");
-    }
-
-    private void initMap() throws Exception {
-
-
-        /* Init Blue Player
-        for (int i = 9; i < 18; i++) {
-            takeCountry(randomCountries.get(i), Constants.PLAYER_COLOUR.BLUE);
-            uiController.output.appendText("> Blue Takes " + Constants.COUNTRY_NAMES[randomCountries.get(i)] + "\n");
-        }
-        //Init Neutral 1
-        for (int i = 18; i < 24; i++) {
-            takeCountry(randomCountries.get(i), Constants.PLAYER_COLOUR.GREY);
-            uiController.output.appendText("> Gray Takes " + Constants.COUNTRY_NAMES[randomCountries.get(i)] + "\n");
-        }
-        //Init Neutral 2
-        for (int i = 24; i < 30; i++) {
-            takeCountry(randomCountries.get(i), Constants.PLAYER_COLOUR.GREEN);
-            uiController.output.appendText("> Green Takes " + Constants.COUNTRY_NAMES[randomCountries.get(i)] + "\n");
-        }
-        //Init Neutral 3
-        for (int i = 30; i < 36; i++) {
-            takeCountry(randomCountries.get(i), Constants.PLAYER_COLOUR.PURPLE);
-            uiController.output.appendText("> Pink Takes " + Constants.COUNTRY_NAMES[randomCountries.get(i)] + "\n");
-        }
-        //Init Neutral 4
-        for (int i = 36; i < 42; i++) {
-            takeCountry(randomCountries.get(i), Constants.PLAYER_COLOUR.ORANGE);
-            uiController.output.appendText("> Orange Takes " + Constants.COUNTRY_NAMES[randomCountries.get(i)] + "\n");
-        } */
     }
 
     public void start() throws Exception {
@@ -82,7 +51,7 @@ public class Game {
         int numOccupyCountries = numCountries + countryIndex;
         for (; countryIndex < numOccupyCountries; countryIndex++) {
             takeCountry(randomCountries.get(countryIndex), color);
-            uiController.output.appendText("> " + color + " Picks " + Constants.COUNTRY_NAMES[randomCountries.get(countryIndex)] + "\n");
+            uiController.output.appendText("> " + color + " selects " + Constants.COUNTRY_NAMES[randomCountries.get(countryIndex)] + " card\n");
         }
     }
 
