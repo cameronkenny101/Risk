@@ -1,22 +1,16 @@
 package Game;
 
 import GameScreen.GameScreenController;
-
-import Game.Dice;
-
-import java.util.Random;
-
 import java.util.ArrayList;
-
 import java.util.Collections;
 
 public class Game {
 
     GameScreenController uiController;
     Player player1, player2;
-    Dice dice = new Dice();
     Constants.PLAYER_COLOUR[] country_owner = new Constants.PLAYER_COLOUR[Constants.NUM_COUNTRIES];//Tells which players owns which country
     int[] troop_count = new int[Constants.NUM_COUNTRIES];//States the number of troops per country
+    Dice dice;
     int countryIndex = 0;
     ArrayList<Integer> randomCountries = new ArrayList<>();
 
@@ -24,6 +18,7 @@ public class Game {
         this.uiController = uiController;
         this.player1 = player1;
         this.player2 = player2;
+        dice = new Dice();
         fill(randomCountries);
         printPlayerToConsole();
     }
@@ -51,9 +46,28 @@ public class Game {
             initCountries(Constants.PLAYER_COLOUR.PURPLE, Constants.INIT_COUNTRIES_NEUTRAL);
             initCountries(Constants.PLAYER_COLOUR.GREEN, Constants.INIT_COUNTRIES_NEUTRAL);
             initCountries(Constants.PLAYER_COLOUR.GREY, Constants.INIT_COUNTRIES_NEUTRAL);
+            uiController.askQuestion("Press enter to roll the dice");
+        }
+    }
 
-            dice.rollDiceForSettingArmies(uiController,player1,player2);
-
+    public void setFirstTurn() {
+        if(player1.getDiceNum() == 0) {
+            player1.setDiceNum(dice.rollDice());
+            uiController.output.appendText("> Player 1 rolled a " + player1.getDiceNum() + "\n");
+            uiController.askQuestion("Press enter to roll the dice");
+        } else {
+            player2.setDiceNum(dice.rollDice());
+            uiController.output.appendText("> Player 2 rolled a " + player2.getDiceNum() + "\n");
+            if(dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) > 0)
+                uiController.output.appendText("> Player 1 won the roll. Player 1 will go first \n");
+            else if(dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) < 0)
+                uiController.output.appendText("> Player 2 won the roll. Player 2 will go first \n");
+            else {
+                uiController.output.appendText("> The dice roll was a draw. Try again \n");
+                player1.setDiceNum(0);
+                player2.setDiceNum(0);
+                uiController.askQuestion("Press enter to roll the dice");
+            }
         }
     }
 

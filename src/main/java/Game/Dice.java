@@ -1,36 +1,16 @@
 package Game;
 
-
-import GameScreen.GameScreenController;
-
-import java.util.Random;
-
-import java.util.ArrayList;
-
-import java.util.Collections;
-
 import java.util.Random;
 
 public class Dice {
 
-    public Dice() {
-
-    }
-
-    public int rollDice(Player player,GameScreenController uiController){
+    public int rollDice() {
         Random random = new Random();
-        return random.nextInt(6)+1;
+        return random.nextInt(12)+1;
     }
 
-    public void compare(int playerNumber1,int playerNumber2,GameScreenController uiController,Player player1,Player player2) {
-        if (playerNumber1 > playerNumber2) {
-            uiController.output.appendText(">" + player1.getColour().toString() + " will place first\n");
-        }
-        if (playerNumber2 > playerNumber1) {
-            uiController.output.appendText(">" + player2.getColour().toString() + " will place first\n");
-        } else {
-            uiController.output.appendText(">EQUAL VALUES ROLL AGAIN");
-        }
+    public int bestRoll(int roll1, int roll2) {
+        return Integer.compare(roll1, roll2);
     }
 
 

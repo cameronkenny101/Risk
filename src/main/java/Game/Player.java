@@ -4,7 +4,7 @@ public class Player {
     private String name;
     private Constants.PLAYER_COLOUR colour;
     private int commanderID;
-    private int diceRollNumber = 0;
+    private int diceNum;
 
     public Player(String name, Constants.PLAYER_COLOUR colour, int commanderID) {
         setName(name);
@@ -39,11 +39,11 @@ public class Player {
         this.commanderID = commanderID;
     }
 
-    public int getDiceRollNumber() {
-        return diceRollNumber;
+    public int getDiceNum() {
+        return diceNum;
     }
 
-    public void setDiceRollNumber(int diceRollNumber) {
-        this.diceRollNumber = diceRollNumber;
+    public void setDiceNum(int diceNum) {
+        this.diceNum = diceNum;
     }
 }
