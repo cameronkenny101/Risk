@@ -1,5 +1,8 @@
 package Game;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Constants {
     public static final int NUM_PLAYERS = 2;
     public static final int NUM_NEUTRALS = 4;
@@ -19,13 +22,14 @@ public class Constants {
         PURPLE,
     }
 
-    public static final String[] COUNTRY_NAMES = {
+    public static final ArrayList<String> COUNTRY_NAMES = new ArrayList<String> ( Arrays.asList(
             "Ontario", "Quebec", "Northwest Territory", "Alberta", "Greenland", "Eastern United States", "Western_United_States", "Central_America", "Alaska",
             "Great Britain", "Western Europe", "Southern Europe", "Ukraine", "Northern Europe", "Iceland", "Scandinavia",
             "Afghanistan", "India", "Middle East", "Japan", "Ural", "Yakutsk", "Kamchatka", "Siam", "Irkutsk", "Siberia", "Mongolia", "China",
             "Eastern Australia", "New Guinea", "Western Australia", "Indonesia",
             "Venezuela", "Peru", "Brazil", "Argentina",
-            "Congo", "North Africa", "South Africa", "Egypt", "East Africa", "Madagascar"};  // for reference
+            "Congo", "North Africa", "South Africa", "Egypt", "East Africa", "Madagascar"));  // for reference
+
     public static final int[][] ADJACENT = {
             {4, 1, 5, 6, 3, 2},    // 0
             {4, 5, 0},

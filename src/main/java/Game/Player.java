@@ -5,11 +5,16 @@ public class Player {
     private Constants.PLAYER_COLOUR colour;
     private int commanderID;
     private int diceNum;
+    private int troops;
+    private int initTroops;
+    private boolean isTurn;
 
     public Player(String name, Constants.PLAYER_COLOUR colour, int commanderID) {
         setName(name);
         setColour(colour);
         setCommanderID(commanderID);
+        setTroops(Constants.INIT_UNITS_PLAYER);
+        setInitTroops(3);
     }
 
     public String getName() {
@@ -39,11 +44,35 @@ public class Player {
         this.commanderID = commanderID;
     }
 
+    public int getTroops() {
+        return troops;
+    }
+
+    public void setTroops(int troops) {
+        this.troops = troops;
+    }
+
+    public boolean isTurn() {
+        return isTurn;
+    }
+
+    public void setTurn(boolean turn) {
+        isTurn = turn;
+    }
+
     public int getDiceNum() {
         return diceNum;
     }
 
     public void setDiceNum(int diceNum) {
         this.diceNum = diceNum;
+    }
+
+    public int getInitTroops() {
+        return initTroops;
+    }
+
+    public void setInitTroops(int initTroops) {
+        this.initTroops = initTroops;
     }
 }

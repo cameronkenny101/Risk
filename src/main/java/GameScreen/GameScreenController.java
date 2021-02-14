@@ -193,7 +193,6 @@ public class GameScreenController {
                 output.appendText("> ");
                 output.appendText(input.getText());
                 output.appendText("\n");
-                System.out.println("here1");
                 String in = input.getText();
                 getUserInput(in);
                 input.clear();
@@ -264,8 +263,8 @@ public class GameScreenController {
         root.getChildren().addAll(circle, text);
     }
 
-    public void receiveHandler(Game game) {
+    public void receiveHandler(Game game, UserInput userInput) {
         this.game = game;
-        userInput = new UserInput(game);
+        this.userInput = userInput;
     }
 }

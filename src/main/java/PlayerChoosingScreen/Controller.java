@@ -3,6 +3,7 @@ package PlayerChoosingScreen;
 import Game.Constants;
 import Game.Game;
 import Game.Player;
+import Game.UserInput;
 import GameScreen.GameScreenController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -21,6 +22,7 @@ public class Controller {
     int[] commanderID = new int[Constants.NUM_PLAYERS];
     int playerNum = 0;
     Game game;
+    UserInput userInput;
 
     @FXML
     public void ButtonClicked(Event evt) throws Exception {
@@ -48,7 +50,8 @@ public class Controller {
         Scene scene = new Scene(root, 1400, 700);
         stage.setScene(scene);
         game = new Game(gameScreenController, player1, player2);
-        gameScreenController.receiveHandler(game);
+        userInput = new UserInput(game, player1, player2);
+        gameScreenController.receiveHandler(game, userInput);
     }
 
 }

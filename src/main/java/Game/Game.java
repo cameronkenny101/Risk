@@ -12,6 +12,7 @@ public class Game {
     int[] troop_count = new int[Constants.NUM_COUNTRIES];//States the number of troops per country
     Dice dice;
     int countryIndex = 0;
+    boolean initPhase = true;
     ArrayList<Integer> randomCountries = new ArrayList<>();
 
     public Game(GameScreenController uiController, Player player1, Player player2) {
@@ -51,18 +52,26 @@ public class Game {
     }
 
     public void setFirstTurn() {
-        if(player1.getDiceNum() == 0) {
+        if (player1.getDiceNum() == 0) {
             player1.setDiceNum(dice.rollDice());
             uiController.output.appendText("> Player 1 rolled a " + player1.getDiceNum() + "\n");
             uiController.askQuestion("Press enter to roll the dice");
         } else {
             player2.setDiceNum(dice.rollDice());
             uiController.output.appendText("> Player 2 rolled a " + player2.getDiceNum() + "\n");
-            if(dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) > 0)
+            if (dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) > 0) {
+                player1.setTurn(true);
                 uiController.output.appendText("> Player 1 won the roll. Player 1 will go first \n");
-            else if(dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) < 0)
+                uiController.output.appendText("> Player 1, you will now fortify your territories. You have " + player1.getTroops() +
+                        ". You can place 3 troops at a time\n");
+                uiController.askQuestion("How many troops do you want to place");
+            } else if (dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) < 0) {
+                player2.setTurn(true);
                 uiController.output.appendText("> Player 2 won the roll. Player 2 will go first \n");
-            else {
+                uiController.output.appendText("> Player 2, you will now fortify your territories. You have " + player2.getTroops() +
+                        ". You can place 3 troops at a time\n");
+                uiController.askQuestion("How many troops do you want to place");
+            } else {
                 uiController.output.appendText("> The dice roll was a draw. Try again \n");
                 player1.setDiceNum(0);
                 player2.setDiceNum(0);
@@ -74,15 +83,15 @@ public class Game {
     private void initCountries(Constants.PLAYER_COLOUR color, int numCountries) {
         int numOccupyCountries = numCountries + countryIndex;
         for (; countryIndex < numOccupyCountries; countryIndex++) {
-            takeCountry(randomCountries.get(countryIndex), color);
-            uiController.output.appendText("> " + color + " selects " + Constants.COUNTRY_NAMES[randomCountries.get(countryIndex)] + " card\n");
+            takeCountry(randomCountries.get(countryIndex), color, 1);
+            uiController.output.appendText("> " + color + " selects " + Constants.COUNTRY_NAMES.get(randomCountries.get(countryIndex)) + " card\n");
         }
     }
 
-    public void takeCountry(int country_id, Constants.PLAYER_COLOUR colour) {
-        country_owner[country_id] = colour;
-        troop_count[country_id] = 1;
-        uiController.setRegion(country_id, colour, troop_count[country_id]);
+    public void takeCountry(int countryId, Constants.PLAYER_COLOUR colour, int troops) {
+        country_owner[countryId] = colour;
+        troop_count[countryId] += troops;
+        uiController.setRegion(countryId, colour, troop_count[countryId]);
     }
 
     private void fill(ArrayList<Integer> randomCountries) {
