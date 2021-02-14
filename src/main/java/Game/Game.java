@@ -67,8 +67,15 @@ public class Game {
             initCountries(Constants.PLAYER_COLOUR.RED, Constants.INIT_COUNTRIES_PLAYER);
             uiController.output.appendText("> " + player2.getColour() + " type yes to choose your cards \n");
         }
-        else if(countryIndex == 9)
+        else if(countryIndex == 9) {
             initCountries(Constants.PLAYER_COLOUR.BLUE, Constants.INIT_COUNTRIES_PLAYER);
+            uiController.output.appendText("> Are you ready for neutrals to select territories? \n");
+        } else {
+            initCountries(Constants.PLAYER_COLOUR.ORANGE, Constants.INIT_COUNTRIES_NEUTRAL);
+            initCountries(Constants.PLAYER_COLOUR.PURPLE, Constants.INIT_COUNTRIES_NEUTRAL);
+            initCountries(Constants.PLAYER_COLOUR.GREEN, Constants.INIT_COUNTRIES_NEUTRAL);
+            initCountries(Constants.PLAYER_COLOUR.GREY, Constants.INIT_COUNTRIES_NEUTRAL);
+        }
     }
 
     private void initCountries(Constants.PLAYER_COLOUR color, int numCountries) throws Exception {
