@@ -2,6 +2,7 @@ package GameScreen;
 
 import Game.Constants;
 import Game.Game;
+import Game.UserInput;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
@@ -120,8 +121,10 @@ public class GameScreenController {
     @FXML
     Group root;
     Game game;
+    UserInput userInput;
+    String question;
 
-    private SVGPath[] countries_to_SVG = new SVGPath[Constants.NUM_COUNTRIES];//Returns the controller for the countryid
+    SVGPath[] countries_to_SVG = new SVGPath[Constants.NUM_COUNTRIES];//Returns the controller for the countryId
 
     @FXML
     public void initialize() {
@@ -191,21 +194,22 @@ public class GameScreenController {
                 output.appendText(input.getText());
                 output.appendText("\n");
                 input.clear();
+                System.out.println("here1");
                 String in = input.getText();
                 getUserInput(in);
             }
         });
     }
 
+    @FXML
+    public void askQuestion(String question) {
+        this.question = question;
+        output.appendText("> " + question + "\n");
+    }
+
     private void getUserInput(String in) {
-        // going to bed now, will clean method later
-        // multiple possibilities, attack, fortify, select card, etc.
-        // will work this out when we discuss
-        try {
-            game.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        System.out.println("here2");
+        userInput.receiveInput(question, in);
     }
 
     @FXML
@@ -263,5 +267,6 @@ public class GameScreenController {
 
     public void receiveHandler(Game game) {
         this.game = game;
+        userInput = new UserInput(game);
     }
 }
