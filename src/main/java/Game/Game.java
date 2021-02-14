@@ -95,6 +95,16 @@ public class Game {
         uiController.output.appendText("> " + colour + " puts " + troops + " into " + Constants.COUNTRY_NAMES.get(countryId) + "\n");
     }
 
+    public boolean setCountry(int countryId, Constants.PLAYER_COLOUR colour, int troops) {
+        if(country_owner[countryId] == colour) {
+            troop_count[countryId] += troops;
+            uiController.setRegion(countryId, colour, troop_count[countryId]);
+            uiController.output.appendText("> " + colour + " puts " + troops + " into " + Constants.COUNTRY_NAMES.get(countryId) + "\n");
+            return true;
+        } else
+            return false;
+    }
+
     private void fill(ArrayList<Integer> randomCountries) {
         for(int i = 0; i < Constants.NUM_COUNTRIES; i++) {
             randomCountries.add(i);
