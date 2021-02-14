@@ -46,11 +46,6 @@ public class MenuItem extends StackPane {
     }
 
     private void switchScene() throws Exception {
-        /* Stage stage = (Stage) getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("../Main.fxml"));
-        Scene scene = new Scene(root, 1300, 800);
-        stage.setScene(scene); */
-
         Stage stage = (Stage) getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("../ChoosePlayerScreen/playerScreen.fxml"));
         Scene scene = new Scene(root,1023,437);

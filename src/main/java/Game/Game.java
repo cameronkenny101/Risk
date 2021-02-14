@@ -30,7 +30,8 @@ public class Game {
         uiController.output.appendText("> Player 1 color: " + player1.getColour() + "\n");
         uiController.output.appendText("> Player 2 name: " + player2.getName() + "\n");
         uiController.output.appendText("> Player 2 color: " + player2.getColour() + "\n");
-        uiController.output.appendText("> " + player1.getColour() + " press enter to choose your 9 cards from the deck \n");
+        /*uiController.output.appendText("> It is player 1's turn to choose there cards! \n");
+        uiController.askQuestion("Press enter to choose your 9 cards from the deck"); */
     }
 
     public void start() {
@@ -69,9 +70,6 @@ public class Game {
             randomCountries.add(i);
         }
         Collections.shuffle(randomCountries);
-        for(int i = 0; i < Constants.NUM_COUNTRIES; i++) {
-            System.out.println(randomCountries.get(i));
-        }
     }
 
 
