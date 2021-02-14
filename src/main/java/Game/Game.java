@@ -52,10 +52,8 @@ public class Game {
             initCountries(Constants.PLAYER_COLOUR.GREEN, Constants.INIT_COUNTRIES_NEUTRAL);
             initCountries(Constants.PLAYER_COLOUR.GREY, Constants.INIT_COUNTRIES_NEUTRAL);
 
-            dice.rollDice(player1,uiController);
-            dice.rollDice(player2,uiController);
-            dice.compare(dice.rollDice(player1,uiController),dice.rollDice(player2,uiController),uiController
-            ,player1,player2);
+            uiController.askQuestion("Do you want to roll the dice?");
+
 
         }
     }
