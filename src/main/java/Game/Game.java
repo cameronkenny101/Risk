@@ -47,6 +47,7 @@ public class Game {
             initCountries(Constants.PLAYER_COLOUR.PURPLE, Constants.INIT_COUNTRIES_NEUTRAL);
             initCountries(Constants.PLAYER_COLOUR.GREEN, Constants.INIT_COUNTRIES_NEUTRAL);
             initCountries(Constants.PLAYER_COLOUR.GREY, Constants.INIT_COUNTRIES_NEUTRAL);
+            uiController.output.appendText("> " + player1.getName() + " must now roll the dice\n");
             uiController.askQuestion("Press enter to roll the dice");
         }
     }
@@ -54,22 +55,21 @@ public class Game {
     public void setFirstTurn() {
         if (player1.getDiceNum() == 0) {
             player1.setDiceNum(dice.rollDice());
-            uiController.output.appendText("> Player 1 rolled a " + player1.getDiceNum() + "\n");
+            uiController.output.appendText("> " + player1.getName() + " rolled a " + player1.getDiceNum() + "\n");
+            uiController.output.appendText("> " + player2.getName() + " must now roll the dice \n");
             uiController.askQuestion("Press enter to roll the dice");
         } else {
             player2.setDiceNum(dice.rollDice());
-            uiController.output.appendText("> Player 2 rolled a " + player2.getDiceNum() + "\n");
+            uiController.output.appendText("> " + player2.getName() + " rolled a " + player2.getDiceNum() + "\n");
             if (dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) > 0) {
                 player1.setTurn(true);
-                uiController.output.appendText("> Player 1 won the roll. Player 1 will go first \n");
-                uiController.output.appendText("> Player 1, you will now fortify your territories. You have " + player1.getTroops() +
-                        ". You can place 3 troops at a time\n");
+                uiController.output.appendText("> " + player1.getName() + " won the roll. " + player1.getName() + " will go first \n");
+                uiController.output.appendText("> " + player1.getName() + ", you will now fortify your territories. You can place 3 troops at a time\n");
                 uiController.askQuestion("How many troops do you want to place");
             } else if (dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) < 0) {
                 player2.setTurn(true);
-                uiController.output.appendText("> Player 2 won the roll. Player 2 will go first \n");
-                uiController.output.appendText("> Player 2, you will now fortify your territories. You have " + player2.getTroops() +
-                        ". You can place 3 troops at a time\n");
+                uiController.output.appendText("> " + player2.getName() + " won the roll. " + player2.getName() + " will go first \n");
+                uiController.output.appendText("> " + player2.getName() + ", you will now fortify your territories. You can place 3 troops at a time\n");
                 uiController.askQuestion("How many troops do you want to place");
             } else {
                 uiController.output.appendText("> The dice roll was a draw. Try again \n");
@@ -84,7 +84,7 @@ public class Game {
         int numOccupyCountries = numCountries + countryIndex;
         for (; countryIndex < numOccupyCountries; countryIndex++) {
             takeCountry(randomCountries.get(countryIndex), color, 1);
-            uiController.output.appendText("> " + color + " selects " + Constants.COUNTRY_NAMES.get(randomCountries.get(countryIndex)) + " card\n");
+            uiController.output.appendText("> " + color + " selects " + Constants.COUNTRY_NAMES.get(countryIndex) + " card\n");
         }
     }
 
@@ -92,6 +92,7 @@ public class Game {
         country_owner[countryId] = colour;
         troop_count[countryId] += troops;
         uiController.setRegion(countryId, colour, troop_count[countryId]);
+        uiController.output.appendText("> " + colour + " puts " + troops + " into " + Constants.COUNTRY_NAMES.get(countryId) + "\n");
     }
 
     private void fill(ArrayList<Integer> randomCountries) {

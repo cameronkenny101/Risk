@@ -17,6 +17,7 @@ public class UserInput {
 
     public void receiveInput(String question, String input) {
         Player player = player1.isTurn() ? player1 : player2;
+        Player nextPlayer = player1.isTurn() ? player2 : player1;
 
         if (question.equals("Press enter to choose your 9 cards from the deck") || question.equals("Press enter to let neutrals choose there cards")) {
             game.start();
@@ -42,6 +43,10 @@ public class UserInput {
             if(Constants.COUNTRY_NAMES.contains(input)) {
                 int index = Constants.COUNTRY_NAMES.indexOf(input);
                 game.takeCountry(index, player.getColour(), placeTroops);
+                if(player.getInitTroops() > 0) {
+                    game.uiController.output.appendText("> You have " + player.getInitTroops() + " troops left to move \n");
+                    game.uiController.askQuestion("How many troops do you want to place");
+                }
             } else {
                 game.uiController.output.appendText("Country not recognised. Try again\n");
                 game.uiController.askQuestion("What country do you want to fortify");
