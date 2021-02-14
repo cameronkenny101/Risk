@@ -107,6 +107,11 @@
 
 #circle {
     -fx-fill: white;
+    -fx-font-family: cursive;
+    -fx-font-weight: bold;
+    -fx-border-color: red;
+  //  -fx-stroke: ;
+    -fx-border-width: 50px;
 }
 
 .image {

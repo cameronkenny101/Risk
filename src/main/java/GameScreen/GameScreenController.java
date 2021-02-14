@@ -3,16 +3,21 @@ package GameScreen;
 import Game.Constants;
 import Game.Game;
 import Game.UserInput;
+import com.sun.prism.paint.Color;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.SVGPath;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class GameScreenController {
@@ -257,8 +262,11 @@ public class GameScreenController {
         }
         circle.setId("circle");
         Text text = new Text("" + troop_count);
-        text.setX(circle.getCenterX() - 2);
-        text.setY(circle.getCenterY() + 2);
+        text.setFont(Font.font(null,FontWeight.BOLD,15));
+        text.setX(circle.getCenterX() - 4);
+        text.setY(circle.getCenterY() + 4.5);
+        circle.setStrokeWidth(2);
+       // circle.setStroke(Paint.valueOf("pink"));
 
         root.getChildren().addAll(circle, text);
     }
