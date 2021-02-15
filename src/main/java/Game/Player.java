@@ -13,7 +13,7 @@ public class Player {
         setName(name);
         setColour(colour);
         setCommanderID(commanderID);
-        setTroops(Constants.INIT_UNITS_PLAYER);
+        setTroops(Constants.INIT_UNITS_PLAYER - Constants.INIT_COUNTRIES_PLAYER); // Player must place 1 troop of each country it initializes with
         setInitTroops(3);
     }
 

@@ -42,13 +42,11 @@ public class UserInput {
     private void placeTroops(String input, Player player) {
         troops = Integer.parseInt(input);
 
-        if (troops < 0 || troops > player.getTroops()) {
-            game.uiController.output.appendText("You placed an incorrect number of troops. Try again \n");
-            game.uiController.askQuestion("How many troops do you want to place");
-        } else if (game.initPhase && troops > player.getInitTroops()) {
-            game.uiController.output.appendText("You placed an incorrect number of troops. Try again \n");
-            game.uiController.askQuestion("How many troops do you want to place");
-        } else {
+        if (troops < 0 || troops > player.getTroops())
+            incorrectNumber();
+        else if (game.initPhase && troops > player.getInitTroops())
+            incorrectNumber();
+        else {
             player.setTroops(player.getTroops() - troops);
             if (game.initPhase)
                 player.setInitTroops(player.getInitTroops() - troops);
@@ -60,24 +58,7 @@ public class UserInput {
         if (Constants.COUNTRY_NAMES.contains(input)) {
             int index = Constants.COUNTRY_NAMES.indexOf(input);
             if(game.setCountry(index, player.getColour(), troops)) {
-                if (player.getInitTroops() > 0) {
-                    game.uiController.output.appendText("> You have " + player.getInitTroops() + " troops left to move \n");
-                    game.uiController.askQuestion("How many troops do you want to place");
-                } else if (player.getInitTroops() == 0) {
-                    player.setTurn(false);
-                    player.setInitTroops(3);
-                    nextPlayer.setTurn(true);
-                    neutralTurnCountdown--;
-
-                    if(neutralTurnCountdown == 0) {
-                        chooseNeutralTerritory(nextPlayer);
-                    } else if (nextPlayer.getTroops() > 0) {
-                        game.uiController.output.appendText("> " + nextPlayer.getName() + ", you will now fortify your territories. You have " + nextPlayer.getTroops() + " troops left. You can place 3 troops at a time\n");
-                        game.uiController.askQuestion("How many troops do you want to place");
-                    } else {
-                        game.uiController.output.appendText("> Everyone has allocated there troops! \n");
-                    }
-                }
+                endPlacingTroops(player, nextPlayer);
             } else {
                 game.uiController.output.appendText("You choose a country you do not own. Try again \n");
                 game.uiController.askQuestion("What country do you want to fortify");
@@ -97,9 +78,37 @@ public class UserInput {
         game.setCountry(game.ownedGreen.get(countryId), Constants.PLAYER_COLOUR.GREEN, 1);
         game.setCountry(game.ownedPurple.get(countryId), Constants.PLAYER_COLOUR.PURPLE, 1);
         neutralTurnCountdown = Constants.NUM_PLAYERS;
-        game.uiController.output.appendText("> " + nextPlayer.getName() + ", you will now fortify your territories. You have " + nextPlayer.getTroops() + " troops left. You can place 3 troops at a time\n");
-        game.uiController.askQuestion("How many troops do you want to place");
 
+        if(nextPlayer.getTroops() > 0)
+            askForTroops(nextPlayer);
+        else
+            game.uiController.output.appendText("> Everyone has allocated there troops! \n");
+    }
+
+    private void endPlacingTroops(Player player, Player nextPlayer) {
+        if (player.getInitTroops() > 0) {
+            game.uiController.output.appendText("> You have " + player.getInitTroops() + " troops left to move \n");
+            game.uiController.askQuestion("How many troops do you want to place");
+        } else {
+            player.setTurn(false);
+            player.setInitTroops(3);
+            nextPlayer.setTurn(true);
+            neutralTurnCountdown--;
+            if(neutralTurnCountdown == 0)
+                chooseNeutralTerritory(nextPlayer);
+            else
+                askForTroops(nextPlayer);
+        }
+    }
+
+    private void askForTroops(Player player) {
+        game.uiController.output.appendText("> " + player.getName() + ", you will now fortify your territories. You have " + player.getTroops() + " troops left. You can place 3 troops at a time\n");
+        game.uiController.askQuestion("How many troops do you want to place");
+    }
+
+    private void incorrectNumber() {
+        game.uiController.output.appendText("You placed an incorrect number of troops. Try again \n");
+        game.uiController.askQuestion("How many troops do you want to place");
     }
 }
 
