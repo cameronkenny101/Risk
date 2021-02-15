@@ -6,7 +6,7 @@ public class Dice {
 
     public int rollDice() {
         Random random = new Random();
-        return random.nextInt(12)+1;
+        return random.nextInt(11)+2;
     }
 
     public int bestRoll(int roll1, int roll2) {

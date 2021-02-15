@@ -82,7 +82,7 @@ public class UserInput {
         if(nextPlayer.getTroops() > 0)
             askForTroops(nextPlayer);
         else
-            game.uiController.output.appendText("> Everyone has allocated there troops! \n");
+            game.endInitPhase();
     }
 
     private void endPlacingTroops(Player player, Player nextPlayer) {

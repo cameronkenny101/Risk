@@ -66,19 +66,12 @@ public class Game {
             player2.setDiceNum(dice.rollDice());
             uiController.output.appendText("> " + player2.getName() + " rolled a " + player2.getDiceNum() + "\n");
             if (dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) > 0) {
-                player1.setTurn(true);
-                uiController.output.appendText("> " + player1.getName() + " won the roll. " + player1.getName() + " will go first \n");
-                uiController.output.appendText("> " + player1.getName() + ", you will now fortify your territories. You can place 3 troops at a time\n");
-                uiController.askQuestion("How many troops do you want to place");
+                setTurn(player1);
             } else if (dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) < 0) {
-                player2.setTurn(true);
-                uiController.output.appendText("> " + player2.getName() + " won the roll. " + player2.getName() + " will go first \n");
-                uiController.output.appendText("> " + player2.getName() + ", you will now fortify your territories. You can place 3 troops at a time\n");
-                uiController.askQuestion("How many troops do you want to place");
+                setTurn(player2);
             } else {
                 uiController.output.appendText("> The dice roll was a draw. Try again \n");
-                player1.setDiceNum(0);
-                player2.setDiceNum(0);
+                setDiceToZero();
                 uiController.askQuestion("Press enter to roll the dice");
             }
         }
@@ -111,11 +104,35 @@ public class Game {
             return false;
     }
 
+    public void endInitPhase() {
+        initPhase = false;
+        uiController.output.appendText("> Everyone has allocated there troops! \n");
+        uiController.output.appendText("> We must decide who goes first! \n");
+        uiController.askQuestion("Press enter to roll the dice");
+    }
+
+    private void setTurn(Player player) {
+        player.setTurn(true);
+        setDiceToZero();
+        uiController.output.appendText("> " + player.getName() + " won the roll. " + player.getName() + " will go first \n");
+        if(initPhase) {
+            uiController.output.appendText("> " + player.getName() + ", you will now fortify your territories. You can place 3 troops at a time\n");
+            uiController.askQuestion("How many troops do you want to place");
+        } else {
+            uiController.output.appendText("FINISHED WEEK 2!");
+        }
+    }
+
     private void fill(ArrayList<Integer> randomCountries) {
         for(int i = 0; i < Constants.NUM_COUNTRIES; i++) {
             randomCountries.add(i);
         }
         Collections.shuffle(randomCountries);
+    }
+
+    private void setDiceToZero() {
+        player1.setDiceNum(0);
+        player2.setDiceNum(0);
     }
 
 }
