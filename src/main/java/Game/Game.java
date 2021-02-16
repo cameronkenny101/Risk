@@ -19,6 +19,12 @@ public class Game {
     boolean initPhase = true;
     ArrayList<Integer> randomCountries = new ArrayList<>();
 
+    /**
+     * Used to start up the game and create player objects and a uiController
+     * @param uiController this is used to controll the gameplay on the screen
+     * @param player1
+     * @param player2
+     */
     public Game(GameScreenController uiController, Player player1, Player player2) {
         this.uiController = uiController;
         this.player1 = player1;
@@ -28,6 +34,9 @@ public class Game {
         printPlayerToConsole();
     }
 
+    /**
+     * Used to display basic player info on game start up
+     */
     private void printPlayerToConsole() {
         uiController.output.appendText("> Player 1 name: " + player1.getName() + "\n");
         uiController.output.appendText("> Player 1 color: " + player1.getColour() + "\n");
@@ -37,6 +46,9 @@ public class Game {
         uiController.askQuestion("Press enter to choose your 9 cards from the deck");
     }
 
+    /**
+     * starts the game
+     */
     public void start() {
         if(countryIndex == 0) {
             initCountries(Constants.PLAYER_COLOUR.RED, Constants.INIT_COUNTRIES_PLAYER, null);
@@ -56,6 +68,9 @@ public class Game {
         }
     }
 
+    /**
+     * this is the first operations of the game by getting the two players to roll a dice to see who places their armies first
+     */
     public void setFirstTurn() {
         if (player1.getDiceNum() == 0) {
             player1.setDiceNum(dice.rollDice());
@@ -77,6 +92,12 @@ public class Game {
         }
     }
 
+    /**
+     * Randomly allocates the countries as if the players drew cards from a deck
+     * @param color the colour of the player/neutral
+     * @param numCountries number of countries
+     * @param ownedCountries this is a list of all countires that are already assigned to a player
+     */
     private void initCountries(Constants.PLAYER_COLOUR color, int numCountries, ArrayList<Integer> ownedCountries) {
         int numOccupyCountries = numCountries + countryIndex;
         for (; countryIndex < numOccupyCountries; countryIndex++) {
@@ -87,6 +108,12 @@ public class Game {
         }
     }
 
+    /**
+     * function used to make a country fall under the ownership of another player
+     * @param countryId a countries ID
+     * @param colour // a players colour
+     * @param troops  amount of troops to be stationed
+     */
     public void takeCountry(int countryId, Constants.PLAYER_COLOUR colour, int troops) {
         country_owner[countryId] = colour;
         troop_count[countryId] += troops;
@@ -94,6 +121,13 @@ public class Game {
         uiController.output.appendText("> " + colour + " puts " + troops + " into " + Constants.COUNTRY_NAMES.get(countryId) + "\n");
     }
 
+    /**
+     *
+     * @param countryId
+     * @param colour
+     * @param troops troop number
+     * @return boolean value if the country has been sucessfully reinforced
+     */
     public boolean setCountry(int countryId, Constants.PLAYER_COLOUR colour, int troops) {
         if(country_owner[countryId] == colour) {
             troop_count[countryId] += troops;
@@ -104,6 +138,9 @@ public class Game {
             return false;
     }
 
+    /**
+     * ends the first phases of the game ie the set up
+     */
     public void endInitPhase() {
         initPhase = false;
         uiController.output.appendText("> Everyone has allocated there troops! \n");
@@ -111,6 +148,10 @@ public class Game {
         uiController.askQuestion("Press enter to roll the dice");
     }
 
+    /**
+     * used to give permission to a player to fortify his territories
+     * @param player player that won the roll
+     */
     private void setTurn(Player player) {
         player.setTurn(true);
         setDiceToZero();
@@ -123,6 +164,10 @@ public class Game {
         }
     }
 
+    /**
+     * Fills and allocates unselected countires by the players to neutrals
+     * @param randomCountries
+     */
     private void fill(ArrayList<Integer> randomCountries) {
         for(int i = 0; i < Constants.NUM_COUNTRIES; i++) {
             randomCountries.add(i);
