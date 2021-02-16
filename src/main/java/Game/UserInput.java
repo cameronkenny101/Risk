@@ -18,6 +18,11 @@ public class UserInput {
         this.dice = new Dice();
     }
 
+    /**
+     * This is used to align a question with a given answer
+     * @param question the question that has been displayed to the player on the terminal ie "How many troops do you want to place"
+     * @param input the input of the user ie in response to how many troops question "3" troops
+     */
     public void receiveInput(String question, String input) {
         Player player = player1.isTurn() ? player1 : player2;
         Player nextPlayer = player1.isTurn() ? player2 : player1;
@@ -39,6 +44,11 @@ public class UserInput {
         }
     }
 
+    /**
+     * Used to place process input and call fucntions in Game to place troops
+     * @param input the amount of troops that want to be placed
+     * @param player the player placing them
+     */
     private void placeTroops(String input, Player player) {
         troops = Integer.parseInt(input);
 
