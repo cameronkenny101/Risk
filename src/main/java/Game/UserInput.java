@@ -64,6 +64,12 @@ public class UserInput {
         }
     }
 
+    /**
+     * Used to call functions in Game to fortify a held territory of a player
+     * @param input
+     * @param player
+     * @param nextPlayer
+     */
     private void fortifyCountry(String input, Player player, Player nextPlayer) {
         if (Constants.COUNTRY_NAMES.contains(input)) {
             int index = Constants.COUNTRY_NAMES.indexOf(input);
@@ -79,6 +85,10 @@ public class UserInput {
         }
     }
 
+    /**
+     * This is used for the Neutral (non player) entities to be allocated countries
+     * @param nextPlayer this is used for after the neutrals get their countries, to progress the game and let one of the actual players make moves
+     */
     private void chooseNeutralTerritory(Player nextPlayer) {
         game.uiController.output.appendText("> Neutral countries allocating troop\n");
         Random random = new Random();
@@ -95,6 +105,11 @@ public class UserInput {
             game.endInitPhase();
     }
 
+    /**
+     * Used for when all the inital troop numbers are allocated to countries
+     * @param player the player doing the operations
+     * @param nextPlayer the player waiting for their turn
+     */
     private void endPlacingTroops(Player player, Player nextPlayer) {
         if (player.getInitTroops() > 0) {
             game.uiController.output.appendText("> You have " + player.getInitTroops() + " troops left to move \n");
@@ -111,11 +126,18 @@ public class UserInput {
         }
     }
 
+    /**
+     *  Used to start the troop laying process
+     * @param player the player who's turn it is
+     */
     private void askForTroops(Player player) {
         game.uiController.output.appendText("> " + player.getName() + ", you will now fortify your territories. You have " + player.getTroops() + " troops left. You can place 3 troops at a time\n");
         game.uiController.askQuestion("How many troops do you want to place");
     }
 
+    /**
+     * for when an inavlid number of troops is requested to be placed
+     */
     private void incorrectNumber() {
         game.uiController.output.appendText("You placed an incorrect number of troops. Try again \n");
         game.uiController.askQuestion("How many troops do you want to place");
