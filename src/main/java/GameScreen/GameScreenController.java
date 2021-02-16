@@ -136,7 +136,6 @@ public class GameScreenController {
      *
      */
 
-
     @FXML
     public void initialize() {
         countries_to_SVG[0] = Ontario;
@@ -185,7 +184,6 @@ public class GameScreenController {
         outputText();
     }
 
-
     /**
      * Shows text indicating country name upon hovering
      * @param evt this is used to get the source of the assigned country to be able to parse  a path into countryNameInTerminal function
@@ -195,7 +193,6 @@ public class GameScreenController {
     private void hoverCountry(Event evt) {
         countryNameInTerminal(((SVGPath) evt.getSource()));
     }
-
 
     /**
      * prints the name of the country to terminal
@@ -223,7 +220,6 @@ public class GameScreenController {
         });
     }
 
-
     /**
      * This is used to provide the user a partiular question
      * @param question is a string of such a question
@@ -236,10 +232,23 @@ public class GameScreenController {
         output.appendText("> " + question + "\n");
     }
 
+    /**
+     * This is used to pass in the question previosuly asked , with the user's answer which is then compared to decide
+     * next course of action
+     * @param in input of user
+     *              Example: "North Africa" / "2" (troops)
+     */
     private void getUserInput(String in) {
         userInput.receiveInput(question, in);
     }
 
+    /**
+     * Stops the name of the player being visible on the side of the input i.e ">ALEX how many troops would you like to place"
+     * becomes
+     * ">how many troops would you like to place"
+     * @param event The particular event in code that triggers this function
+     *              Example: Pressing ENTER after dice roll etc
+     */
     @FXML
     private void removeLabel(Event event) {
         Name.setVisible(false);
