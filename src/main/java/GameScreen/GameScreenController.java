@@ -196,11 +196,19 @@ public class GameScreenController {
         countryNameInTerminal(((SVGPath) evt.getSource()));
     }
 
+
+    /**
+     * prints the name of the country to terminal
+     * @param path this is used to access the country's ID variable in the path object
+     */
     @FXML
     private void countryNameInTerminal(SVGPath path) {
         output.appendText("> " + path.getId() + "\n");
     }
 
+    /**
+     * waits until the user presses the ENTER button to begin processing the input entered into the terminal on the right side of the screen
+     */
     @FXML
     private void outputText() {
         input.setOnKeyPressed(keyEvent -> {
@@ -214,6 +222,13 @@ public class GameScreenController {
             }
         });
     }
+
+
+    /**
+     * This is used to provide the user a partiular question
+     * @param question is a string of such a question
+     *                 Example:"How many troops do you want to place"
+     */
 
     @FXML
     public void askQuestion(String question) {
