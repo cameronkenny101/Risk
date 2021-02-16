@@ -254,6 +254,11 @@ public class GameScreenController {
     private void displayTroops(SVGPath path, int troop_count, Constants.PLAYER_COLOUR Colour) {
         Bounds bounds = path.getBoundsInLocal();
         Circle circle = new Circle(10);
+
+        if(troop_count >= 10){
+            circle = new Circle(15);    //makes circle bigger if the toop count is too large
+        }
+
         circle.setCenterX(bounds.getCenterX());
         circle.setCenterY(bounds.getCenterY());
         // Quick fix for center of argentina
@@ -284,8 +289,15 @@ public class GameScreenController {
 
         Text text = new Text("" + troop_count);
         text.setFont(Font.font(null,FontWeight.BOLD,15));
-        text.setX(circle.getCenterX() - 4);
-        text.setY(circle.getCenterY() + 4.5);
+
+        if(troop_count<10) {                    //sets the number circles to a default small size
+            text.setX(circle.getCenterX() - 4);
+            text.setY(circle.getCenterY() + 4.5);
+        }else{
+            text.setX(circle.getCenterX() - 9); //makes the circles bigger to accommodate double digit figures
+            text.setY(circle.getCenterY() + 4);
+        }
+
         circle.setStrokeWidth(2);
 
         root.getChildren().addAll(circle, text);
