@@ -131,6 +131,12 @@ public class GameScreenController {
 
     SVGPath[] countries_to_SVG = new SVGPath[Constants.NUM_COUNTRIES];//Returns the controller for the countryId
 
+    /**
+     * This initialises and assigns names to the countries
+     *
+     */
+
+
     @FXML
     public void initialize() {
         countries_to_SVG[0] = Ontario;
@@ -180,7 +186,11 @@ public class GameScreenController {
     }
 
 
-    //Shows text indicating country name upon hovering
+    /**
+     * Shows text indicating country name upon hovering
+     * @param evt this is used to get the source of the assigned country to be able to parse  a path into countryNameInTerminal function
+     *
+     */
     @FXML
     private void hoverCountry(Event evt) {
         countryNameInTerminal(((SVGPath) evt.getSource()));
