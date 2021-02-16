@@ -254,10 +254,15 @@ public class GameScreenController {
         Name.setVisible(false);
     }
 
-    //Sets the colour and number of a country on the map
+    /**Sets the colour and number of a country on the map
+     *
+     * @param country_id this is the index of a given country  in the countries_to_SVG[]
+     * @param Colour this is the player's color
+     * @param troop_count amount of troops that will be placed
+     */
     public void setRegion(int country_id, Constants.PLAYER_COLOUR Colour, int troop_count) {
         countries_to_SVG[country_id].getStyleClass().clear();
-        switch (Colour) {
+        switch (Colour) {                   //This switch statement makes the a given country turn a different colour depending on what player owns it
             case RED:
                 countries_to_SVG[country_id].getStyleClass().add("red-country");
                 break;
@@ -279,11 +284,18 @@ public class GameScreenController {
         }
 
         //TODO: Set Troop Count
+        //^^ was not sure to delete this comment or not -mark
         displayTroops(countries_to_SVG[country_id], troop_count,Colour);
 
         countries_to_SVG[country_id].getStyleClass().add("country");
     }
 
+    /**
+     * Funciton for dispalying the troop count of a given country in a white bubble in it's centre
+     * @param path //used to get dimesions of a country
+     * @param troop_count amount of troops to be displayed
+     * @param Colour colour of a player / neutral
+     */
     @FXML
     private void displayTroops(SVGPath path, int troop_count, Constants.PLAYER_COLOUR Colour) {
         Bounds bounds = path.getBoundsInLocal();
@@ -300,7 +312,7 @@ public class GameScreenController {
             circle.setCenterX(circle.getCenterX() - 25);
         }
 
-        switch (Colour){
+        switch (Colour){        //similar to switch in setRegion, this assigns the css classes of the bubbles displaying the troop count
             case RED:
                 circle.setId("red-circle");
                 break;
