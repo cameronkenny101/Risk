@@ -96,7 +96,7 @@ public class Game {
      * Randomly allocates the countries as if the players drew cards from a deck
      * @param color the colour of the player/neutral
      * @param numCountries number of countries
-     * @param ownedCountries this is a list of all countires that are already assigned to a player
+     * @param ownedCountries this is a list of all countries that are already assigned to a player
      */
     private void initCountries(Constants.PLAYER_COLOUR color, int numCountries, ArrayList<Integer> ownedCountries) {
         int numOccupyCountries = numCountries + countryIndex;
@@ -111,8 +111,8 @@ public class Game {
     /**
      * function used to make a country fall under the ownership of another player
      * @param countryId a countries ID
-     * @param colour // a players colour
-     * @param troops  amount of troops to be stationed
+     * @param colour a players colour
+     * @param troops amount of troops to be stationed
      */
     public void takeCountry(int countryId, Constants.PLAYER_COLOUR colour, int troops) {
         country_owner[countryId] = colour;

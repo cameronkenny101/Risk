@@ -71,9 +71,9 @@ public class UserInput {
      * @param nextPlayer
      */
     private void fortifyCountry(String input, Player player, Player nextPlayer) {
-        if (Constants.COUNTRY_NAMES.contains(input)) {
-            int index = Constants.COUNTRY_NAMES.indexOf(input);
-            if(game.setCountry(index, player.getColour(), troops)) {
+        int countryIndex = shortCountryName(input);
+        if (countryIndex >= 0) {
+            if(game.setCountry(countryIndex, player.getColour(), troops)) {
                 endPlacingTroops(player, nextPlayer);
             } else {
                 game.uiController.output.appendText("You choose a country you do not own. Try again \n");
@@ -136,11 +136,47 @@ public class UserInput {
     }
 
     /**
-     * for when an inavlid number of troops is requested to be placed
+     * for when an invalid number of troops is requested to be placed
      */
     private void incorrectNumber() {
         game.uiController.output.appendText("You placed an incorrect number of troops. Try again \n");
         game.uiController.askQuestion("How many troops do you want to place");
+    }
+
+    private int shortCountryName(String country) {
+        int smallestNum = Integer.MAX_VALUE;
+        int index = -1;
+        int count = 0;
+
+        for(String countries : Constants.COUNTRY_NAMES) {
+            int levenshtein = LevenshteinDistance(country, countries);
+            if(smallestNum > levenshtein) {
+                smallestNum = levenshtein;
+                index = count;
+            }
+            count++;
+        }
+        return index;
+    }
+
+    private int LevenshteinDistance(String a, String b) {
+        a = a.toLowerCase();
+        b = b.toLowerCase();
+
+        int[] prev = new int[b.length() + 1];
+        for(int i = 0; i < b.length() + 1; i++)
+            prev[i] = i;
+
+        for(int i = 1; i <= a.length(); i++) {
+            prev[0] = i;
+            int nw = i - 1;
+            for (int j = 1; j <= b.length(); j++) {
+                int cj = Math.min(1 + Math.min(prev[j], prev[j - 1]), a.charAt(i - 1) == b.charAt(j - 1) ? nw : nw + 1);
+                nw = prev[j];
+                prev[j] = cj;
+            }
+        }
+        return prev[b.length()];
     }
 }
 
