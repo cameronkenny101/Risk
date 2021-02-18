@@ -221,7 +221,7 @@ public class GameScreenController {
     }
 
     /**
-     * This is used to provide the user a partiular question
+     * This is used to provide the user a particular question
      * @param question is a string of such a question
      *                 Example:"How many troops do you want to place"
      */
@@ -233,7 +233,7 @@ public class GameScreenController {
     }
 
     /**
-     * This is used to pass in the question previosuly asked , with the user's answer which is then compared to decide
+     * This is used to pass in the question previously asked, with the user's answer which is then compared to decide
      * next course of action
      * @param in input of user
      *              Example: "North Africa" / "2" (troops)
@@ -291,8 +291,8 @@ public class GameScreenController {
     }
 
     /**
-     * Funciton for dispalying the troop count of a given country in a white bubble in it's centre
-     * @param path //used to get dimesions of a country
+     * Funciton for displaying the troop count of a given country in a white bubble in it's centre
+     * @param path //used to get dimensions of a country
      * @param troop_count amount of troops to be displayed
      * @param Colour colour of a player / neutral
      */
