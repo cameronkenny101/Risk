@@ -21,7 +21,7 @@ public class Game {
 
     /**
      * Used to start up the game and create player objects and a uiController
-     * @param uiController this is used to controll the gameplay on the screen
+     * @param uiController this is used to control the gameplay on the screen
      * @param player1
      * @param player2
      */
@@ -126,7 +126,7 @@ public class Game {
      * @param countryId
      * @param colour
      * @param troops troop number
-     * @return boolean value if the country has been sucessfully reinforced
+     * @return boolean value if the country has been successfully reinforced
      */
     public boolean setCountry(int countryId, Constants.PLAYER_COLOUR colour, int troops) {
         if(country_owner[countryId] == colour) {
@@ -165,7 +165,7 @@ public class Game {
     }
 
     /**
-     * Fills and allocates unselected countires by the players to neutrals
+     * Fills and allocates unselected countries by the players to neutrals
      * @param randomCountries
      */
     private void fill(ArrayList<Integer> randomCountries) {

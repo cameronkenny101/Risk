@@ -45,7 +45,7 @@ public class UserInput {
     }
 
     /**
-     * Used to place process input and call fucntions in Game to place troops
+     * Used to place process input and call functions in Game to place troops
      * @param input the amount of troops that want to be placed
      * @param player the player placing them
      */
@@ -106,7 +106,7 @@ public class UserInput {
     }
 
     /**
-     * Used for when all the inital troop numbers are allocated to countries
+     * Used for when all the initial troop numbers are allocated to countries
      * @param player the player doing the operations
      * @param nextPlayer the player waiting for their turn
      */
