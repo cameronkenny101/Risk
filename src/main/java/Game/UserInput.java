@@ -9,6 +9,7 @@ public class UserInput {
     Player player1, player2;
     Dice dice;
     int troops;
+    int countryIndex;
     int neutralTurnCountdown = Constants.NUM_PLAYERS;
 
     public UserInput(Game game, Player player1, Player player2) {
@@ -39,6 +40,9 @@ public class UserInput {
                 placeTroops(input, player);
                 break;
             case "What country do you want to fortify":
+                askForCountry(input, player);
+                break;
+            case "Are you sure you want to fortify this country?":
                 fortifyCountry(input, player, nextPlayer);
                 break;
         }
@@ -71,16 +75,11 @@ public class UserInput {
      * @param nextPlayer
      */
     private void fortifyCountry(String input, Player player, Player nextPlayer) {
-        int countryIndex = shortCountryName(input);
-        if (countryIndex >= 0) {
-            if(game.setCountry(countryIndex, player.getColour(), troops)) {
-                endPlacingTroops(player, nextPlayer);
-            } else {
-                game.uiController.output.appendText("You choose a country you do not own. Try again \n");
-                game.uiController.askQuestion("What country do you want to fortify");
-            }
+        if(input.equals("yes")) {
+            game.setCountry(countryIndex, player.getColour(), troops);
+            endPlacingTroops(player, nextPlayer);
         } else {
-            game.uiController.output.appendText("Country not recognised. Try again\n");
+            game.uiController.output.appendText("> You chose not to fortify this country \n");
             game.uiController.askQuestion("What country do you want to fortify");
         }
     }
@@ -142,6 +141,18 @@ public class UserInput {
         game.uiController.output.appendText("You placed an incorrect number of troops. Try again \n");
         game.uiController.askQuestion("How many troops do you want to place");
     }
+
+    private void askForCountry(String country, Player player) {
+        this.countryIndex = shortCountryName(country);
+        if(game.country_owner[countryIndex] == player.getColour()) {
+            game.uiController.output.appendText("> You selected the country " + Constants.COUNTRY_NAMES.get(countryIndex) + "\n");
+            game.uiController.askQuestion("Are you sure you want to fortify this country? (yes/no)");
+        } else {
+            game.uiController.output.appendText(Constants.COUNTRY_NAMES.get(countryIndex) + " You choose a country you do not own. \n");
+            game.uiController.askQuestion("What country do you want to fortify");
+        }
+    }
+
 
     private int shortCountryName(String country) {
         int smallestNum = Integer.MAX_VALUE;
