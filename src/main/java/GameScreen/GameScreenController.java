@@ -291,7 +291,7 @@ public class GameScreenController {
     }
 
     /**
-     * Funciton for displaying the troop count of a given country in a white bubble in it's centre
+     * Function for displaying the troop count of a given country in a white bubble in it's centre
      * @param path //used to get dimensions of a country
      * @param troop_count amount of troops to be displayed
      * @param Colour colour of a player / neutral
