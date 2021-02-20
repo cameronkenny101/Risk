@@ -109,71 +109,38 @@
     -fx-fill: white;
     -fx-font-family: cursive;
     -fx-font-weight: bold;
-    -fx-stroke: red ;
-
+    -fx-stroke-width: 5;
 }
 
-#red-circle{
-    -fx-fill: white;
-    -fx-font-family: cursive;
-    -fx-font-weight: bold;
-    -fx-stroke-width: 5;
+.red-circle{
     -fx-stroke: #770202;
-
 }
 
-#blue-circle{
-    -fx-fill: white;
-    -fx-font-family: cursive;
-    -fx-font-weight: bold;
-    -fx-stroke-width: 5;
+.blue-circle{
     -fx-stroke: #0c0ca4;
 
 }
 
-#pink-circle{
-    -fx-fill: white;
-    -fx-font-family: cursive;
-    -fx-font-weight: bold;
-    -fx-stroke-width: 5;
-    -fx-stroke: #7e5656;
-
+.pink-circle{
+    -fx-stroke: #7e5656
 }
 
-#purple-circle {
-    -fx-fill: white;
-    -fx-font-family: cursive;
-    -fx-font-weight: bold;
-    -fx-stroke-width: 5;
+.purple-circle {
     -fx-stroke: #2d012d;
-
 }
 
-#orange-circle {
-    -fx-fill: white;
-    -fx-font-family: cursive;
-    -fx-font-weight: bold;
-    -fx-stroke-width: 5;
+.orange-circle {
     -fx-stroke: #d76200;
 
 }
 
-#green-circle {
-    -fx-fill: white;
-    -fx-font-family: cursive;
-    -fx-font-weight: bold;
-    -fx-stroke-width: 5;
+.green-circle {
     -fx-stroke: #046604;
 
 }
 
-#grey-circle {
-    -fx-fill: white;
-    -fx-font-family: cursive;
-    -fx-font-weight: bold;
-    -fx-stroke-width: 5;
+.grey-circle {
     -fx-stroke: #000000;
-
 }
 
 .image {
