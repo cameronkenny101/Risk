@@ -42,7 +42,7 @@ public class UserInput {
             case "What country do you want to fortify":
                 askForCountry(input, player);
                 break;
-            case "Are you sure you want to fortify this country?":
+            case "Are you sure you want to fortify this country? (yes/no)":
                 fortifyCountry(input, player, nextPlayer);
                 break;
         }
