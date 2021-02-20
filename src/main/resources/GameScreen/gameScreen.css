@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 #outputBox {
     -fx-background-color: black;
     -fx-text-fill: #0c0;
@@ -77,15 +77,17 @@
     -fx-fill: #ff9a00;
     -fx-stroke: #ff7400;
 }
-.orange-country:hover{
+
+.orange-country:hover {
     -fx-fill: #efae71;
 }
 
 .green-country {
     -fx-fill: #4ACD61;
-    -fx-stroke: #38AC4C ;
+    -fx-stroke: #38AC4C;
 }
-.green-country:hover{
+
+.green-country:hover {
     -fx-fill: #66FF66;
 }
 
@@ -93,6 +95,7 @@
     -fx-fill: #670067;
     -fx-stroke: #340034;
 }
+
 .purple-country:hover {
     -fx-fill: #9a009a;
 }
@@ -101,46 +104,53 @@
     -fx-stroke: #FF6EFF;
     -fx-fill: #ffc0cb;
 }
+
 .pink-country:hover {
     -fx-fill: #ffdae0;
 }
 
-#circle{
+
+/*Styling for the Numbers*/
+#circle {
     -fx-fill: white;
-    -fx-font-family: cursive;
+    -fx-stroke-width: 2;
+}
+
+#circle-text {
+    -fx-font-family: "Pacifico";
     -fx-font-weight: bold;
-    -fx-stroke-width: 5;
+    -fx-font-size: 15;
 }
 
-.red-circle{
-    -fx-stroke: #770202;
+.red-circle {
+    -fx-stroke: #B51F1D;
 }
 
-.blue-circle{
-    -fx-stroke: #0c0ca4;
+.blue-circle {
+    -fx-stroke: #2B53C6;
 
 }
 
-.pink-circle{
-    -fx-stroke: #7e5656
+.pink-circle {
+    -fx-stroke: #FF6EFF;
 }
 
 .purple-circle {
-    -fx-stroke: #2d012d;
+    -fx-stroke: #340034;
 }
 
 .orange-circle {
-    -fx-stroke: #d76200;
+    -fx-stroke: #ff7400;
 
 }
 
 .green-circle {
-    -fx-stroke: #046604;
+    -fx-stroke: #38AC4C;
 
 }
 
 .grey-circle {
-    -fx-stroke: #000000;
+    -fx-stroke: #382f2f;
 }
 
 .image {

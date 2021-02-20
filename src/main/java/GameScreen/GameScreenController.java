@@ -133,7 +133,6 @@ public class GameScreenController {
 
     /**
      * This initialises and assigns names to the countries
-     *
      */
 
     @FXML
@@ -186,8 +185,8 @@ public class GameScreenController {
 
     /**
      * Shows text indicating country name upon hovering
-     * @param evt this is used to get the source of the assigned country to be able to parse  a path into countryNameInTerminal function
      *
+     * @param evt this is used to get the source of the assigned country to be able to parse  a path into countryNameInTerminal function
      */
     @FXML
     private void hoverCountry(Event evt) {
@@ -196,6 +195,7 @@ public class GameScreenController {
 
     /**
      * prints the name of the country to terminal
+     *
      * @param path this is used to access the country's ID variable in the path object
      */
     @FXML
@@ -222,6 +222,7 @@ public class GameScreenController {
 
     /**
      * This is used to provide the user a particular question
+     *
      * @param question is a string of such a question
      *                 Example:"How many troops do you want to place"
      */
@@ -235,8 +236,9 @@ public class GameScreenController {
     /**
      * This is used to pass in the question previously asked, with the user's answer which is then compared to decide
      * next course of action
+     *
      * @param in input of user
-     *              Example: "North Africa" / "2" (troops)
+     *           Example: "North Africa" / "2" (troops)
      */
     private void getUserInput(String in) {
         userInput.receiveInput(question, in);
@@ -246,6 +248,7 @@ public class GameScreenController {
      * Stops the name of the player being visible on the side of the input i.e ">ALEX how many troops would you like to place"
      * becomes
      * ">how many troops would you like to place"
+     *
      * @param event The particular event in code that triggers this function
      *              Example: Pressing ENTER after dice roll etc
      */
@@ -254,10 +257,11 @@ public class GameScreenController {
         Name.setVisible(false);
     }
 
-    /**Sets the colour and number of a country on the map
+    /**
+     * Sets the colour and number of a country on the map
      *
-     * @param country_id this is the index of a given country  in the countries_to_SVG[]
-     * @param Colour this is the player's color
+     * @param country_id  this is the index of a given country  in the countries_to_SVG[]
+     * @param Colour      this is the player's color
      * @param troop_count amount of troops that will be placed
      */
     public void setRegion(int country_id, Constants.PLAYER_COLOUR Colour, int troop_count) {
@@ -282,26 +286,24 @@ public class GameScreenController {
                 countries_to_SVG[country_id].getStyleClass().add("orange-country");
                 break;
         }
-
-        //TODO: Set Troop Count
-        //^^ was not sure to delete this comment or not -mark
-        displayTroops(countries_to_SVG[country_id], troop_count,Colour);
+        displayTroops(countries_to_SVG[country_id], troop_count, Colour);
 
         countries_to_SVG[country_id].getStyleClass().add("country");
     }
 
     /**
      * Function for displaying the troop count of a given country in a white bubble in it's centre
-     * @param path //used to get dimensions of a country
+     *
+     * @param path        //used to get dimensions of a country
      * @param troop_count amount of troops to be displayed
-     * @param Colour colour of a player / neutral
+     * @param Colour      colour of a player / neutral
      */
     @FXML
     private void displayTroops(SVGPath path, int troop_count, Constants.PLAYER_COLOUR Colour) {
         Bounds bounds = path.getBoundsInLocal();
         Circle circle = new Circle(10);
 
-        if(troop_count >= 10){
+        if (troop_count >= 10) {
             circle = new Circle(15);    //makes circle bigger if the toop count is too large
         }
 
@@ -312,9 +314,9 @@ public class GameScreenController {
             circle.setCenterX(circle.getCenterX() - 25);
         }
         circle.setId("circle");
-        switch (Colour){        //similar to switch in setRegion, this assigns the css classes of the bubbles displaying the troop count
+        switch (Colour) {        //similar to switch in setRegion, this assigns the css classes of the bubbles displaying the troop count
             case RED:
-                circle.getStyleClass().add("red-circle");
+                circle.getStyleClass().add("red-country");
                 break;
             case BLUE:
                 circle.getStyleClass().add("blue-circle");
@@ -334,12 +336,11 @@ public class GameScreenController {
         }
 
         Text text = new Text("" + troop_count);
-        text.setFont(Font.font(null,FontWeight.BOLD,15));
-
-        if(troop_count<10) {                    //sets the number circles to a default small size
+        text.setId("circle-text");
+        if (troop_count < 10) {                    //sets the number circles to a default small size
             text.setX(circle.getCenterX() - 4);
             text.setY(circle.getCenterY() + 4.5);
-        }else{
+        } else {
             text.setX(circle.getCenterX() - 9); //makes the circles bigger to accommodate double digit figures
             text.setY(circle.getCenterY() + 4);
         }
