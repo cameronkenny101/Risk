@@ -129,65 +129,65 @@ public class GameScreenController {
     UserInput userInput;
     String question;
 
-    SVGPath[] countries_to_SVG = new SVGPath[Constants.NUM_COUNTRIES];//Returns the controller for the countryId
+    CountryUI[] countries = new CountryUI[Constants.NUM_COUNTRIES];//Stores the relevant UI information for all 42 countries
 
     /**
      * This initialises and assigns names to the countries
-     *
      */
-
     @FXML
     public void initialize() {
-        countries_to_SVG[0] = Ontario;
-        countries_to_SVG[1] = Quebec;
-        countries_to_SVG[2] = Northwest_Territory;
-        countries_to_SVG[3] = Alberta;
-        countries_to_SVG[4] = Greenland;
-        countries_to_SVG[5] = Eastern_United_States;
-        countries_to_SVG[6] = Western_United_States;
-        countries_to_SVG[7] = Central_America;
-        countries_to_SVG[8] = Alaska;
-        countries_to_SVG[9] = Great_Britain;
-        countries_to_SVG[10] = Western_Europe;
-        countries_to_SVG[11] = Southern_Europe;
-        countries_to_SVG[12] = Ukraine;
-        countries_to_SVG[13] = Northern_Europe;
-        countries_to_SVG[14] = Iceland;
-        countries_to_SVG[15] = Scandinavia;
-        countries_to_SVG[16] = Afghanistan;
-        countries_to_SVG[17] = India;
-        countries_to_SVG[18] = Middle_East;
-        countries_to_SVG[19] = Japan;
-        countries_to_SVG[20] = Ural;
-        countries_to_SVG[21] = Yakutsk;
-        countries_to_SVG[22] = Kamchatka;
-        countries_to_SVG[23] = Siam;
-        countries_to_SVG[24] = Irkutsk;
-        countries_to_SVG[25] = Siberia;
-        countries_to_SVG[26] = Mongolia;
-        countries_to_SVG[27] = China;
-        countries_to_SVG[28] = Eastern_Australia;
-        countries_to_SVG[29] = New_Guinea;
-        countries_to_SVG[30] = Western_Australia;
-        countries_to_SVG[31] = Indonesia;
-        countries_to_SVG[32] = Venezuela;
-        countries_to_SVG[33] = Peru;
-        countries_to_SVG[34] = Brazil;
-        countries_to_SVG[35] = Argentina;
-        countries_to_SVG[36] = Congo;
-        countries_to_SVG[37] = North_Africa;
-        countries_to_SVG[38] = South_Africa;
-        countries_to_SVG[39] = Egypt;
-        countries_to_SVG[40] = East_Africa;
-        countries_to_SVG[41] = Madagascar;
+        countries[0] = new CountryUI(Ontario);
+        countries[1] = new CountryUI(Quebec);
+        countries[2] = new CountryUI(Northwest_Territory);
+        countries[3] = new CountryUI(Alberta);
+        countries[4] = new CountryUI(Greenland);
+        countries[5] = new CountryUI(Eastern_United_States);
+        countries[6] = new CountryUI(Western_United_States);
+        countries[7] = new CountryUI(Central_America);
+        countries[8] = new CountryUI(Alaska);
+        countries[9] = new CountryUI(Great_Britain);
+        countries[10] = new CountryUI(Western_Europe);
+        countries[11] = new CountryUI(Southern_Europe);
+        countries[12] = new CountryUI(Ukraine);
+        countries[13] = new CountryUI(Northern_Europe);
+        countries[14] = new CountryUI(Iceland);
+        countries[15] = new CountryUI(Scandinavia);
+        countries[16] = new CountryUI(Afghanistan);
+        countries[17] = new CountryUI(India);
+        countries[18] = new CountryUI(Middle_East);
+        countries[19] = new CountryUI(Japan);
+        countries[20] = new CountryUI(Ural);
+        countries[21] = new CountryUI(Yakutsk);
+        countries[22] = new CountryUI(Kamchatka);
+        countries[23] = new CountryUI(Siam);
+        countries[24] = new CountryUI(Irkutsk);
+        countries[25] = new CountryUI(Siberia);
+        countries[26] = new CountryUI(Mongolia);
+        countries[27] = new CountryUI(China);
+        countries[28] = new CountryUI(Eastern_Australia);
+        countries[29] = new CountryUI(New_Guinea);
+        countries[30] = new CountryUI(Western_Australia);
+        countries[31] = new CountryUI(Indonesia);
+        countries[32] = new CountryUI(Venezuela);
+        countries[33] = new CountryUI(Peru);
+        countries[34] = new CountryUI(Brazil);
+        countries[35] = new CountryUI(Argentina);
+        countries[36] = new CountryUI(Congo);
+        countries[37] = new CountryUI(North_Africa);
+        countries[38] = new CountryUI(South_Africa);
+        countries[39] = new CountryUI(Egypt);
+        countries[40] = new CountryUI(East_Africa);
+        countries[41] = new CountryUI(Madagascar);
+
+
         output.setEditable(false);
         outputText();
     }
 
     /**
      * Shows text indicating country name upon hovering
-     * @param evt this is used to get the source of the assigned country to be able to parse  a path into countryNameInTerminal function
      *
+     * @param evt this is used to get the source of the assigned country to be able to parse  a path into countryNameInTerminal function
      */
     @FXML
     private void hoverCountry(Event evt) {
@@ -196,6 +196,7 @@ public class GameScreenController {
 
     /**
      * prints the name of the country to terminal
+     *
      * @param path this is used to access the country's ID variable in the path object
      */
     @FXML
@@ -222,6 +223,7 @@ public class GameScreenController {
 
     /**
      * This is used to provide the user a particular question
+     *
      * @param question is a string of such a question
      *                 Example:"How many troops do you want to place"
      */
@@ -235,8 +237,9 @@ public class GameScreenController {
     /**
      * This is used to pass in the question previously asked, with the user's answer which is then compared to decide
      * next course of action
+     *
      * @param in input of user
-     *              Example: "North Africa" / "2" (troops)
+     *           Example: "North Africa" / "2" (troops)
      */
     private void getUserInput(String in) {
         userInput.receiveInput(question, in);
@@ -246,6 +249,7 @@ public class GameScreenController {
      * Stops the name of the player being visible on the side of the input i.e ">ALEX how many troops would you like to place"
      * becomes
      * ">how many troops would you like to place"
+     *
      * @param event The particular event in code that triggers this function
      *              Example: Pressing ENTER after dice roll etc
      */
@@ -254,67 +258,84 @@ public class GameScreenController {
         Name.setVisible(false);
     }
 
-    /**Sets the colour and number of a country on the map
+    /**
+     * Sets the colour and number of a country on the map
      *
-     * @param country_id this is the index of a given country  in the countries_to_SVG[]
-     * @param Colour this is the player's color
+     * @param country_id  this is the index of a given country  in the countries_to_SVG[]
+     * @param Colour      this is the player's color
      * @param troop_count amount of troops that will be placed
      */
     public void setRegion(int country_id, Constants.PLAYER_COLOUR Colour, int troop_count) {
-        countries_to_SVG[country_id].getStyleClass().clear();
+        SVGPath countryPath = countries[country_id].getCountryPath();
+        countryPath.getStyleClass().clear();
+        countryPath.getStyleClass().add("country");
         switch (Colour) {                   //This switch statement makes the a given country turn a different colour depending on what player owns it
             case RED:
-                countries_to_SVG[country_id].getStyleClass().add("red-country");
+                countryPath.getStyleClass().add("red-country");
                 break;
             case BLUE:
-                countries_to_SVG[country_id].getStyleClass().add("blue-country");
+                countryPath.getStyleClass().add("blue-country");
                 break;
             case GREY:
-                countries_to_SVG[country_id].getStyleClass().add("grey-country");
+                countryPath.getStyleClass().add("grey-country");
                 break;
             case PURPLE:
-                countries_to_SVG[country_id].getStyleClass().add("purple-country");
+                countryPath.getStyleClass().add("purple-country");
                 break;
             case GREEN:
-                countries_to_SVG[country_id].getStyleClass().add("green-country");
+                countryPath.getStyleClass().add("green-country");
                 break;
             case ORANGE:
-                countries_to_SVG[country_id].getStyleClass().add("orange-country");
+                countryPath.getStyleClass().add("orange-country");
                 break;
         }
-
-        //TODO: Set Troop Count
-        //^^ was not sure to delete this comment or not -mark
-        displayTroops(countries_to_SVG[country_id], troop_count,Colour);
-
-        countries_to_SVG[country_id].getStyleClass().add("country");
+        displayTroops(country_id, troop_count, Colour);
     }
 
     /**
      * Function for displaying the troop count of a given country in a white bubble in it's centre
-     * @param path //used to get dimensions of a country
+     *
+     * @param country_id  //Tells us to the country to use
      * @param troop_count amount of troops to be displayed
-     * @param Colour colour of a player / neutral
+     * @param Colour      colour of a player / neutral
      */
     @FXML
-    private void displayTroops(SVGPath path, int troop_count, Constants.PLAYER_COLOUR Colour) {
+    private void displayTroops(int country_id, int troop_count, Constants.PLAYER_COLOUR Colour) {
+        SVGPath path = countries[country_id].getCountryPath();
         Bounds bounds = path.getBoundsInLocal();
-        Circle circle = new Circle(10);
+        Circle circle = countries[country_id].getTroopCircle();
+        Text text = countries[country_id].getTroopNumber();
 
-        if(troop_count >= 10){
-            circle = new Circle(15);    //makes circle bigger if the toop count is too large
+
+        //Create new circle if one doesn't exist
+        if (circle == null && text == null) {
+            text = new Text();
+            countries[country_id].setTroopNumber(text);
+
+            circle = new Circle(10);
+            countries[country_id].setTroopCircle(circle);
+
+            circle.setCenterX(bounds.getCenterX());
+            circle.setCenterY(bounds.getCenterY());
+            // Quick fix for center of argentina
+            if (path.getContent().equals("M227 487c1,0 3,-1 5,-2 0,2 1,5 1,8 6,2 5,8 10,10 1,-2 2,-4 3,-5 1,0 2,-1 3,-1 3,4 4,3 9,1 0,1 0,2 0,3 1,0 3,0 5,0 4,7 9,7 16,10 -1,4 -2,7 -4,11 4,-1 8,-1 12,-2 2,-4 2,-4 5,-6 1,1 1,2 2,3 -4,3 -10,8 -11,13 2,0 4,0 7,0 0,2 0,2 0,6 5,1 6,4 10,8 0,2 0,2 -3,2 0,1 0,2 -1,4 -8,3 -12,-1 -19,-1 5,5 5,5 7,8 0,0 1,0 1,-1 0,3 0,6 0,8 -3,2 -13,3 -16,5 -1,6 -1,6 -2,9 -2,0 -4,0 -6,0 0,-1 -1,-1 -1,-2 0,1 0,3 0,4 0,1 1,2 2,3 -3,1 -3,1 -3,2 1,0 2,0 2,0 0,1 0,2 0,3 0,0 -1,0 -2,0 0,1 0,2 1,3 -4,4 -4,4 -4,9 1,0 2,1 3,1 -1,3 -1,5 -1,8 -1,0 -2,1 -3,1 1,3 -2,8 -2,11 1,1 3,3 4,4 0,1 -1,1 -2,2 1,1 1,2 1,3 1,0 2,0 3,0 0,1 0,2 0,3 6,3 12,6 18,10 -14,4 -13,3 -26,0 1,-1 1,-1 1,-2 -1,0 -2,0 -3,0 0,-2 0,-3 0,-4 -2,0 -4,0 -5,0 0,-1 0,-2 0,-3 0,0 -1,1 -2,1 -1,-1 -3,-1 -5,-2 0,-2 0,-3 0,-4 -9,-5 -9,-14 -10,-23 -3,0 -3,0 -4,-2 1,-1 1,-2 1,-3 -1,0 -1,0 -2,0 0,-1 0,-3 0,-4 2,0 2,0 2,-1 -1,0 -1,0 -2,0 0,-2 0,-4 0,-6 1,0 2,0 4,0 0,-4 0,-9 0,-13 -1,0 -2,-1 -3,-1 5,-28 6,-61 4,-89 M309 631c-2,0 -3,-1 -4,-2 -1,-3 -1,-6 -1,-9 7,-7 9,-5 18,-4 0,1 0,3 1,5 -6,2 -7,3 -10,9 -2,1 -3,1 -4,1z M295 630c-1,-2 -1,-2 -4,-3 0,0 0,-1 0,-2 1,0 2,-1 4,-1 -1,-1 -2,-3 -3,-4 3,-2 6,-3 9,-4 0,3 0,7 1,10 -3,3 -3,3 -7,4z")) {
+                circle.setCenterX(circle.getCenterX() - 25);
+            }
+
+            root.getChildren().addAll(circle, text);
         }
+        assert circle != null;
+        assert text != null;
 
-        circle.setCenterX(bounds.getCenterX());
-        circle.setCenterY(bounds.getCenterY());
-        // Quick fix for center of argentina
-        if (path.getContent().equals("M227 487c1,0 3,-1 5,-2 0,2 1,5 1,8 6,2 5,8 10,10 1,-2 2,-4 3,-5 1,0 2,-1 3,-1 3,4 4,3 9,1 0,1 0,2 0,3 1,0 3,0 5,0 4,7 9,7 16,10 -1,4 -2,7 -4,11 4,-1 8,-1 12,-2 2,-4 2,-4 5,-6 1,1 1,2 2,3 -4,3 -10,8 -11,13 2,0 4,0 7,0 0,2 0,2 0,6 5,1 6,4 10,8 0,2 0,2 -3,2 0,1 0,2 -1,4 -8,3 -12,-1 -19,-1 5,5 5,5 7,8 0,0 1,0 1,-1 0,3 0,6 0,8 -3,2 -13,3 -16,5 -1,6 -1,6 -2,9 -2,0 -4,0 -6,0 0,-1 -1,-1 -1,-2 0,1 0,3 0,4 0,1 1,2 2,3 -3,1 -3,1 -3,2 1,0 2,0 2,0 0,1 0,2 0,3 0,0 -1,0 -2,0 0,1 0,2 1,3 -4,4 -4,4 -4,9 1,0 2,1 3,1 -1,3 -1,5 -1,8 -1,0 -2,1 -3,1 1,3 -2,8 -2,11 1,1 3,3 4,4 0,1 -1,1 -2,2 1,1 1,2 1,3 1,0 2,0 3,0 0,1 0,2 0,3 6,3 12,6 18,10 -14,4 -13,3 -26,0 1,-1 1,-1 1,-2 -1,0 -2,0 -3,0 0,-2 0,-3 0,-4 -2,0 -4,0 -5,0 0,-1 0,-2 0,-3 0,0 -1,1 -2,1 -1,-1 -3,-1 -5,-2 0,-2 0,-3 0,-4 -9,-5 -9,-14 -10,-23 -3,0 -3,0 -4,-2 1,-1 1,-2 1,-3 -1,0 -1,0 -2,0 0,-1 0,-3 0,-4 2,0 2,0 2,-1 -1,0 -1,0 -2,0 0,-2 0,-4 0,-6 1,0 2,0 4,0 0,-4 0,-9 0,-13 -1,0 -2,-1 -3,-1 5,-28 6,-61 4,-89 M309 631c-2,0 -3,-1 -4,-2 -1,-3 -1,-6 -1,-9 7,-7 9,-5 18,-4 0,1 0,3 1,5 -6,2 -7,3 -10,9 -2,1 -3,1 -4,1z M295 630c-1,-2 -1,-2 -4,-3 0,0 0,-1 0,-2 1,0 2,-1 4,-1 -1,-1 -2,-3 -3,-4 3,-2 6,-3 9,-4 0,3 0,7 1,10 -3,3 -3,3 -7,4z")) {
-            circle.setCenterX(circle.getCenterX() - 25);
+
+        text.setText("" + troop_count);
+        if (troop_count >= 10) {
+            circle.setRadius(15);    //makes circle bigger if the troop count is too large
         }
         circle.setId("circle");
-        switch (Colour){        //similar to switch in setRegion, this assigns the css classes of the bubbles displaying the troop count
+        switch (Colour) {        //similar to switch in setRegion, this assigns the css classes of the bubbles displaying the troop count
             case RED:
-                circle.getStyleClass().add("red-circle");
+                circle.getStyleClass().add("red-country");
                 break;
             case BLUE:
                 circle.getStyleClass().add("blue-circle");
@@ -332,25 +353,57 @@ public class GameScreenController {
                 circle.getStyleClass().add("orange-circle");
                 break;
         }
-
-        Text text = new Text("" + troop_count);
-        text.setFont(Font.font(null,FontWeight.BOLD,15));
-
-        if(troop_count<10) {                    //sets the number circles to a default small size
+        text.setId("circle-text");
+        if (troop_count < 10) {                    //sets the number circles to a default small size
             text.setX(circle.getCenterX() - 4);
             text.setY(circle.getCenterY() + 4.5);
-        }else{
+        } else {
             text.setX(circle.getCenterX() - 9); //makes the circles bigger to accommodate double digit figures
             text.setY(circle.getCenterY() + 4);
         }
-
-        circle.setStrokeWidth(2);
-
-        root.getChildren().addAll(circle, text);
     }
 
     public void receiveHandler(Game game, UserInput userInput) {
         this.game = game;
         this.userInput = userInput;
+    }
+
+
+    /**
+     * Stores all the UI components of a country
+     */
+    private class CountryUI {
+
+        SVGPath countryPath = null;
+        Circle troopCircle = null;
+        Text troopNumber = null;
+
+        CountryUI(SVGPath countryPath) {
+            this.countryPath = countryPath;
+        }
+
+        public SVGPath getCountryPath() {
+            return countryPath;
+        }
+
+        public void setCountryPath(SVGPath countryPath) {
+            this.countryPath = countryPath;
+        }
+
+        public Circle getTroopCircle() {
+            return troopCircle;
+        }
+
+        public void setTroopCircle(Circle troopCircle) {
+            this.troopCircle = troopCircle;
+        }
+
+        public Text getTroopNumber() {
+            return troopNumber;
+        }
+
+        public void setTroopNumber(Text troopNumber) {
+            this.troopNumber = troopNumber;
+        }
     }
 }
