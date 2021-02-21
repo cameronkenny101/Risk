@@ -147,6 +147,12 @@
     -fx-stroke: #382f2f;
 }
 
+#continent {
+    -fx-font-family: 'Pacifico', monospace;
+    -fx-font-size: 25;
+    -fx-font-weight: bold;
+}
+
 .image {
     -fx-background-image: url("../ChoosePlayerScreen/PlayerImages/Nap2-removebg-preview.png");
     -fx-background-position: left top;
