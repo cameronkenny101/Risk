@@ -3,6 +3,7 @@ package Game;
 import GameScreen.GameScreenController;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 
 public class Game {
 
@@ -15,16 +16,10 @@ public class Game {
     ArrayList<Integer> ownedGreen = new ArrayList<>(); // Countries Green neutral owns
     ArrayList<Integer> ownedGray = new ArrayList<>(); // Countries Gray neutral owns
     Dice dice;
+    GameLogic logic;
     int countryIndex = 0;
     boolean initPhase = true;
     ArrayList<Integer> randomCountries = new ArrayList<>();
-
-    /**
-     * Default Constructor that i created for use in testing -mark
-     */
-    public Game(){
-
-    }
 
     /**
      * Used to start up the game and create player objects and a uiController
@@ -37,8 +32,15 @@ public class Game {
         this.player1 = player1;
         this.player2 = player2;
         dice = new Dice();
+        logic = new GameLogic();
         fill(randomCountries);
         printPlayerToConsole();
+    }
+
+    public Game(Player player1, Player player2) {
+        this.player1 = player1;
+        this.player2 = player2;
+        dice = new Dice();
     }
 
     /**
@@ -122,8 +124,7 @@ public class Game {
      * @param troops amount of troops to be stationed
      */
     public void takeCountry(int countryId, Constants.PLAYER_COLOUR colour, int troops) {
-        country_owner[countryId] = colour;
-        troop_count[countryId] += troops;
+        logic.takeCountryLogic(country_owner, troop_count, countryId, colour, troops);
         uiController.setRegion(countryId, colour, troop_count[countryId]);
         uiController.output.appendText("> " + colour + " puts " + troops + " into " + Constants.COUNTRY_NAMES.get(countryId) + "\n");
     }
