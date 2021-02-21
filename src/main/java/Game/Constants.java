@@ -23,7 +23,7 @@ public class Constants {
     }
 
     public static final ArrayList<String> COUNTRY_NAMES = new ArrayList<>( Arrays.asList(
-            "Ontario", "Quebec", "Northwest Territory", "Alberta", "Greenland", "Eastern United States", "Western_United_States", "Central_America", "Alaska",
+            "Ontario", "Quebec", "Northwest Territory", "Alberta", "Greenland", "Eastern United States", "Western United States", "Central America", "Alaska",
             "Great Britain", "Western Europe", "Southern Europe", "Ukraine", "Northern Europe", "Iceland", "Scandinavia",
             "Afghanistan", "India", "Middle East", "Japan", "Ural", "Yakutsk", "Kamchatka", "Siam", "Irkutsk", "Siberia", "Mongolia", "China",
             "Eastern Australia", "New Guinea", "Western Australia", "Indonesia",
