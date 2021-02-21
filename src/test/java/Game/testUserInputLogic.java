@@ -21,14 +21,14 @@ public class testUserInputLogic extends TestCase {
     }
 
     @Test
-    public void testShortCountryName(){ //this test by proxy also tests the Levenstein algorithm
+    public void testShortCountryName(){ //this test by proxy also tests the Levenshtein algorithm
         UserInputLogic userInputLogic = new UserInputLogic();
         assertEquals(14,userInputLogic.shortCountryName("Icelan")); //Iceland
         assertEquals(8,userInputLogic.shortCountryName("Alas")); //Alaska
         assertEquals(27,userInputLogic.shortCountryName("Ch")); //China
         assertEquals(33,userInputLogic.shortCountryName("P")); //Peru
-        assertEquals(17,userInputLogic.shortCountryName("Ind")); //see if it handles ambigous
-        //inputs , this could  be interupted by somone to mean India or Indonesia , the algorithm goes
+        assertEquals(17,userInputLogic.shortCountryName("Ind")); //see if it handles ambiguous
+        //inputs , this could  be interrupted by someone to mean India or Indonesia , the algorithm goes
         //with India due to it being shorter
 
 
