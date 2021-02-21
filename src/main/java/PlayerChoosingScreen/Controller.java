@@ -28,15 +28,21 @@ public class Controller {
     public void ButtonClicked(Event evt) throws Exception {
         Button button = (Button) evt.getSource();
         commanderID[playerNum] = Integer.parseInt(button.getId());
-        TextField(playerNum++);
+        TextField();
         username.clear();
+        System.out.println(playerNum);
     }
 
     @FXML
-    public void TextField(int playerNum) throws Exception {
-        name[playerNum] = username.getText();
-        if(playerNum == Constants.NUM_PLAYERS - 1)
-            writingDetailsForPlayers();
+    public void TextField() throws Exception {
+        if(username.getText().equals("")) {
+            username.clear();
+        } else {
+            name[playerNum] = username.getText();
+            if (playerNum == Constants.NUM_PLAYERS - 1)
+                writingDetailsForPlayers();
+            playerNum++;
+        }
     }
 
     private void writingDetailsForPlayers() throws Exception {
