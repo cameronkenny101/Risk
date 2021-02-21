@@ -3,7 +3,6 @@ package Game;
 import GameScreen.GameScreenController;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Locale;
 
 public class Game {
 
@@ -35,12 +34,6 @@ public class Game {
         logic = new GameLogic();
         fill(randomCountries);
         printPlayerToConsole();
-    }
-
-    public Game(Player player1, Player player2) {
-        this.player1 = player1;
-        this.player2 = player2;
-        dice = new Dice();
     }
 
     /**

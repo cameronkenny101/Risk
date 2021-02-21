@@ -366,6 +366,8 @@ public class GameScreenController {
                 circle.setCenterX(circle.getCenterX() - 25);
             }
 
+
+
             root.getChildren().addAll(circle, text);
         }
         assert circle != null;

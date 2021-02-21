@@ -201,7 +201,7 @@
 
     <VBox translateX="1020" prefWidth="400">
 
-        <TextArea fx:id="output" id="outputBox" prefHeight="600" wrapText="true"/>
+        <TextArea fx:id="output" id="outputBox" prefHeight="660" wrapText="true"/>
         <TextField fx:id="input" id="inputBox"/>
 
     </VBox>

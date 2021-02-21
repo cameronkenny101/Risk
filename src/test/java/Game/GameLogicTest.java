@@ -10,7 +10,6 @@ public class GameLogicTest extends TestCase {
     @Test
     public void testTakeCountry(){
         Player player1 = new Player("Mark", Constants.PLAYER_COLOUR.RED, 4);
-        Player player2 = new Player("Cam", Constants.PLAYER_COLOUR.BLUE, 2);
         Constants.PLAYER_COLOUR[] country_owner = {Constants.PLAYER_COLOUR.RED, Constants.PLAYER_COLOUR.ORANGE};
         int[] troopCount = {2, 4};
         logic.takeCountryLogic(country_owner, troopCount, 1, player1.getColour(), 2);
