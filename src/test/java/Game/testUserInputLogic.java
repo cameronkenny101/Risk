@@ -27,6 +27,11 @@ public class testUserInputLogic extends TestCase {
         assertEquals(8,userInputLogic.shortCountryName("Alas")); //Alaska
         assertEquals(27,userInputLogic.shortCountryName("Ch")); //China
         assertEquals(33,userInputLogic.shortCountryName("P")); //Peru
+
+        assertNotSame(14,userInputLogic.shortCountryName("Mada"));
+        assertNotSame(13,userInputLogic.shortCountryName("Ukraine"));
+        assertNotSame(1,userInputLogic.shortCountryName("New"));
+        assertNotSame(4,userInputLogic.shortCountryName("Mong"));
     }
 
 
