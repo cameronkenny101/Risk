@@ -1,8 +1,6 @@
 package Game;
 
-import org.junit.jupiter.api.Test;
-
-public class UserInputLogic{
+public class UserInputLogic {
 
 
     protected void nextTurn(Player player,Player nextPlayer){
