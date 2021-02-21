@@ -31,12 +31,13 @@ public class testUserInputLogic extends TestCase {
         //inputs , this could  be interrupted by someone to mean India or Indonesia , the algorithm goes
         //with India due to it being shorter
         assertEquals(10,userInputLogic.shortCountryName("Western E"));
+        assertEquals(10,userInputLogic.shortCountryName("Western U"));
 
 
         assertNotSame(14,userInputLogic.shortCountryName("Mada"));
         assertNotSame(13,userInputLogic.shortCountryName("Ukraine"));
         assertNotSame(1,userInputLogic.shortCountryName("New"));
-        assertNotSame(4,userInputLogic.shortCountryName("Mong"));
+        assertNotSame(6,userInputLogic.shortCountryName("Mong"));
 
     }
 
