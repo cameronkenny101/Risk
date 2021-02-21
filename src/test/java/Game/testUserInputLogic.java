@@ -21,7 +21,7 @@ public class testUserInputLogic extends TestCase {
     }
 
     @Test
-    public void testShortCountryName(){
+    public void testShortCountryName(){ //this test by proxy also tests the Levenstein algorithm
         UserInputLogic userInputLogic = new UserInputLogic();
         assertEquals(14,userInputLogic.shortCountryName("Icelan")); //Iceland
         assertEquals(8,userInputLogic.shortCountryName("Alas")); //Alaska
