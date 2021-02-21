@@ -2,7 +2,6 @@ package Game;
 
 import GameScreen.GameScreenController;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Game {
 
@@ -32,7 +31,7 @@ public class Game {
         this.player2 = player2;
         dice = new Dice();
         logic = new GameLogic();
-        fill(randomCountries);
+        logic.setRandomCountries(randomCountries, Constants.NUM_COUNTRIES);
         printPlayerToConsole();
     }
 
@@ -88,7 +87,7 @@ public class Game {
                 setTurn(player2);
             } else {
                 uiController.output.appendText("> The dice roll was a draw. Try again \n");
-                setDiceToZero();
+                logic.setDiceToZero(player1, player2);
                 uiController.askQuestion("Press enter to roll the dice");
             }
         }
@@ -127,16 +126,13 @@ public class Game {
      * @param countryId
      * @param colour
      * @param troops troop number
-     * @return boolean value if the country has been successfully reinforced
      */
-    public boolean setCountry(int countryId, Constants.PLAYER_COLOUR colour, int troops) {
+    public void setCountry(int countryId, Constants.PLAYER_COLOUR colour, int troops) {
         if(country_owner[countryId] == colour) {
-            troop_count[countryId] += troops;
+            logic.takeCountryLogic(country_owner, troop_count, countryId, colour, troops);
             uiController.setRegion(countryId, colour, troop_count[countryId]);
             uiController.output.appendText("> " + colour + " puts " + troops + " into " + Constants.COUNTRY_NAMES.get(countryId) + "\n");
-            return true;
-        } else
-            return false;
+        }
     }
 
     /**
@@ -155,7 +151,7 @@ public class Game {
      */
     private void setTurn(Player player) {
         player.setTurn(true);
-        setDiceToZero();
+        logic.setDiceToZero(player1, player2);
         uiController.output.appendText("> " + player.getName() + " won the roll. " + player.getName() + " will go first \n");
         if(initPhase) {
             uiController.output.appendText("> " + player.getName() + ", you will now fortify your territories. You can place 3 troops at a time\n");
@@ -163,22 +159,6 @@ public class Game {
         } else {
             uiController.output.appendText("FINISHED WEEK 2!");
         }
-    }
-
-    /**
-     * Fills and allocates unselected countries by the players to neutrals
-     * @param randomCountries
-     */
-    private void fill(ArrayList<Integer> randomCountries) {
-        for(int i = 0; i < Constants.NUM_COUNTRIES; i++) {
-            randomCountries.add(i);
-        }
-        Collections.shuffle(randomCountries);
-    }
-
-    private void setDiceToZero() {
-        player1.setDiceNum(0);
-        player2.setDiceNum(0);
     }
 
 }
