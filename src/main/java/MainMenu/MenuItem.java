@@ -9,6 +9,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.net.URL;
+
 public class MenuItem extends StackPane {
 
     public MenuItem(String item, int value) {
@@ -27,7 +30,7 @@ public class MenuItem extends StackPane {
             rectangle.setFill(Color.BLACK);
         });
 
-        if(value == 0) {
+        if (value == 0) {
             setOnMouseClicked(event -> {
                 try {
                     switchScene();
@@ -36,8 +39,17 @@ public class MenuItem extends StackPane {
                 }
             });
         }
-
-        if(value == 3) {
+        /*Github Link*/
+        if (value == 2) {
+            setOnMouseClicked(event -> {
+                try {
+                    Desktop.getDesktop().browse(new URL("https://github.com/UCD-COMP20050/AlphaRisk").toURI());
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            });
+        }
+        if (value == 3) {
             setOnMouseClicked(event -> {
                 Stage stage = (Stage) getScene().getWindow();
                 stage.close();
@@ -48,7 +60,7 @@ public class MenuItem extends StackPane {
     private void switchScene() throws Exception {
         Stage stage = (Stage) getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("../ChoosePlayerScreen/playerScreen.fxml"));
-        Scene scene = new Scene(root,1023,437);
+        Scene scene = new Scene(root, 1023, 437);
         stage.setScene(scene);
     }
 }
