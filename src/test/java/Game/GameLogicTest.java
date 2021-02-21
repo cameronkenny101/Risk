@@ -48,7 +48,6 @@ public class GameLogicTest extends TestCase {
         ArrayList<Integer> list = new ArrayList<>();
         logic.setRandomCountries(list, 3);
         assertNotNull(list);
-        assertNotEquals(list.get(0), list.get(1), list.get(2));
         assertTrue(list.get(0) >= 0 && list.get(0) <= 2);
         assertTrue(list.get(1) >= 0 && list.get(1) <= 2);
         assertTrue(list.get(2) >= 0 && list.get(2) <= 2);
