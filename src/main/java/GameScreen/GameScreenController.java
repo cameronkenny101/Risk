@@ -113,7 +113,7 @@ public class GameScreenController {
     SVGPath Venezuela;
 
 
-    // Continent Texts
+    // Continent Labels
     @FXML
     Text Africa;
     @FXML
@@ -127,8 +127,10 @@ public class GameScreenController {
     @FXML
     Text Europe;
 
+    //Country Hover Text
     @FXML
-    Label Name;
+    Text countryNameOnHover;
+
     @FXML
     public TextArea output;
     @FXML
@@ -230,6 +232,11 @@ public class GameScreenController {
         bounds = New_Guinea.getBoundsInLocal();
         Australia.setY(bounds.getMaxY() + 30);
         Australia.setX(bounds.getCenterX() - 25);
+
+        //Set Bounds for on hover country
+        bounds = South_Africa.getBoundsInLocal();
+        countryNameOnHover.setY(bounds.getMaxY() + 50);
+        countryNameOnHover.setX(bounds.getCenterX() - 100);
     }
 
     /**
@@ -239,17 +246,9 @@ public class GameScreenController {
      */
     @FXML
     private void hoverCountry(Event evt) {
-        countryNameInTerminal(((SVGPath) evt.getSource()));
-    }
-
-    /**
-     * prints the name of the country to terminal
-     *
-     * @param path this is used to access the country's ID variable in the path object
-     */
-    @FXML
-    private void countryNameInTerminal(SVGPath path) {
-        output.appendText("> " + path.getId() + "\n");
+        SVGPath path = (SVGPath) evt.getSource();
+        countryNameOnHover.setText(path.getId());
+        countryNameOnHover.setVisible(true);
     }
 
     /**
@@ -300,7 +299,7 @@ public class GameScreenController {
      */
     @FXML
     private void removeLabel(Event event) {
-        Name.setVisible(false);
+        countryNameOnHover.setVisible(false);
     }
 
     /**
