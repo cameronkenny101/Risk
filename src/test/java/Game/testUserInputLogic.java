@@ -30,6 +30,7 @@ public class testUserInputLogic extends TestCase {
         assertEquals(17,userInputLogic.shortCountryName("Ind")); //see if it handles ambiguous
         //inputs , this could  be interrupted by someone to mean India or Indonesia , the algorithm goes
         //with India due to it being shorter
+        assertEquals(10,userInputLogic.shortCountryName("Western E"));
 
 
         assertNotSame(14,userInputLogic.shortCountryName("Mada"));
