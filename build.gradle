@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'alpharisk'
-version 'assignment-1'
+version 'assignment-2'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
