@@ -1,6 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-
+/*@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');*/
+@font-face {
+    font-family: VT323;
+    src: url('../Fonts/VT323.ttf');
+}
+/*@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');*/
+@font-face {
+    font-family: Pacifico;
+    src: url('../Fonts/Pacifico.ttf');
+}
 #outputBox {
     -fx-background-color: black;
     -fx-text-fill: #0c0;
