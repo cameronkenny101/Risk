@@ -112,6 +112,21 @@ public class GameScreenController {
     @FXML
     SVGPath Venezuela;
 
+
+    // Continent Texts
+    @FXML
+    Text Africa;
+    @FXML
+    Text Asia;
+    @FXML
+    Text NA;
+    @FXML
+    Text SA;
+    @FXML
+    Text Australia;
+    @FXML
+    Text Europe;
+
     @FXML
     Label Name;
     @FXML
@@ -175,8 +190,46 @@ public class GameScreenController {
         countries[41] = new CountryUI(Madagascar);
 
 
+        setContinentLabels();//Sets the continent Labels on top of the Map
         output.setEditable(false);
         outputText();
+    }
+
+    /**
+     * Sets the label of each continent in the map
+     */
+    private void setContinentLabels() {
+        //Asia
+        Bounds bounds = countries[22].getCountryPath().getBoundsInLocal();
+        Asia.setY(bounds.getMinY() - 14);
+        Asia.setX(bounds.getCenterX() + 10);
+        Asia.setRotate(15);
+
+        //Europe
+        bounds = countries[12].getCountryPath().getBoundsInLocal();
+        Europe.setY(bounds.getMinY() - 15);
+        Europe.setX(bounds.getCenterX());
+
+        //North America
+        bounds = countries[8].getCountryPath().getBoundsInLocal();
+        NA.setY(bounds.getMinY() - 30);
+        NA.setX(bounds.getCenterX());
+        NA.setRotate(-15);
+
+        //South America
+        bounds = Argentina.getBoundsInLocal();
+        SA.setY(bounds.getCenterY() - 10);
+        SA.setX(bounds.getMinX() - 170);
+
+        //Africa
+        bounds = Madagascar.getBoundsInLocal();
+        Africa.setY(bounds.getMaxY() + 30);
+        Africa.setX(bounds.getCenterX() - 40);
+
+        //Australia
+        bounds = New_Guinea.getBoundsInLocal();
+        Australia.setY(bounds.getMaxY() + 30);
+        Australia.setX(bounds.getCenterX() - 25);
     }
 
     /**
@@ -241,12 +294,9 @@ public class GameScreenController {
     }
 
     /**
-     * Stops the name of the player being visible on the side of the input i.e ">ALEX how many troops would you like to place"
-     * becomes
-     * ">how many troops would you like to place"
+     * Called after a the mouse hos been removed out of a certain region
      *
      * @param event The particular event in code that triggers this function
-     *              Example: Pressing ENTER after dice roll etc
      */
     @FXML
     private void removeLabel(Event event) {

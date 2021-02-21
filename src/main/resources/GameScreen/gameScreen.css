@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
 #outputBox {
     -fx-background-color: black;
     -fx-text-fill: #0c0;
@@ -64,13 +65,6 @@
 
 .blue-country:hover {
     -fx-fill: #5c82ea;
-}
-
-.country-text {
-    -fx-border: solid black 3px;
-    -fx-width: 300px;
-    -fx-font-family: Pixel;
-    -fx-font-size: 50;
 }
 
 .orange-country {
