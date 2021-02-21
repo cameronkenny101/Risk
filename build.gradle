@@ -6,7 +6,10 @@ plugins {
 
 group 'alpharisk'
 version 'assignment-1'
-
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
 repositories {
     mavenCentral()
 }
@@ -23,5 +26,5 @@ jar {
     }
 }
 javafx {
-    modules = [ 'javafx.controls', 'javafx.fxml' ]
+    modules = ['javafx.controls', 'javafx.fxml']
 }
