@@ -20,6 +20,13 @@ public class Game {
     ArrayList<Integer> randomCountries = new ArrayList<>();
 
     /**
+     * Default Constructor that i created for use in testing -mark
+     */
+    public Game(){
+
+    }
+
+    /**
      * Used to start up the game and create player objects and a uiController
      * @param uiController this is used to control the gameplay on the screen
      * @param player1
