@@ -93,10 +93,11 @@ public class Game {
     private void initCountries(Constants.PLAYER_COLOUR color, int numCountries, ArrayList<Integer> ownedCountries) {
         int numOccupyCountries = numCountries + logic.getCountryIndex();
         for (; logic.getCountryIndex() < numOccupyCountries; logic.setCountryIndex(logic.getCountryIndex() + 1)) {
-            takeCountry(logic.getRandomCountries().get(logic.getCountryIndex()), color, 1);
+            int i = logic.getRandomCountries().get(logic.getCountryIndex());
+            takeCountry(i, color, 1);
             if(ownedCountries != null)
                 ownedCountries.add(logic.getRandomCountries().get(logic.getCountryIndex()));
-            uiController.output.appendText("> " + color + " selects " + Constants.COUNTRY_NAMES.get(logic.getCountryIndex()) + " card\n");
+            uiController.output.appendText("> " + color + " selects " + Constants.COUNTRY_NAMES.get(i) + " card\n");
         }
     }
 
