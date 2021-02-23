@@ -59,11 +59,11 @@ public class UserInput {
 
         if (troops < 0 || troops > player.getTroops())
             incorrectNumber();
-        else if (game.initPhase && troops > player.getInitTroops())
+        else if (game.logic.getInitPhase() && troops > player.getInitTroops())
             incorrectNumber();
         else {
             player.setTroops(player.getTroops() - troops);
-            if (game.initPhase)
+            if (game.logic.getInitPhase())
                 player.setInitTroops(player.getInitTroops() - troops);
             game.uiController.askQuestion("What country do you want to fortify");
         }
@@ -93,10 +93,10 @@ public class UserInput {
         game.uiController.output.appendText("> Neutral countries allocating troop\n");
         Random random = new Random();
         int countryId = random.nextInt(6);
-        game.setCountry(game.ownedGray.get(countryId), Constants.PLAYER_COLOUR.GREY, 1);
-        game.setCountry(game.ownedOrange.get(countryId), Constants.PLAYER_COLOUR.ORANGE, 1);
-        game.setCountry(game.ownedGreen.get(countryId), Constants.PLAYER_COLOUR.GREEN, 1);
-        game.setCountry(game.ownedPurple.get(countryId), Constants.PLAYER_COLOUR.PURPLE, 1);
+        game.setCountry(game.logic.getOwnedGray().get(countryId), Constants.PLAYER_COLOUR.GREY, 1);
+        game.setCountry(game.logic.getOwnedOrange().get(countryId), Constants.PLAYER_COLOUR.ORANGE, 1);
+        game.setCountry(game.logic.getOwnedGreen().get(countryId), Constants.PLAYER_COLOUR.GREEN, 1);
+        game.setCountry(game.logic.getOwnedPurple().get(countryId), Constants.PLAYER_COLOUR.PURPLE, 1);
         neutralTurnCountdown = Constants.NUM_PLAYERS;
 
         if(nextPlayer.getTroops() > 0)
@@ -143,7 +143,7 @@ public class UserInput {
 
     private void askForCountry(String country, Player player) {
         this.countryIndex = userInputLogic.shortCountryName(country);
-        if(game.country_owner[countryIndex] == player.getColour()) {
+        if(game.logic.getCountry_owner()[countryIndex] == player.getColour()) {
             game.uiController.output.appendText("> You selected the country " + Constants.COUNTRY_NAMES.get(countryIndex) + "\n");
             game.uiController.askQuestion("Are you sure you want to fortify this country? (yes/no)");
         } else {
@@ -151,43 +151,6 @@ public class UserInput {
             game.uiController.askQuestion("What country do you want to fortify");
         }
     }
-
-
-//    private int shortCountryName(String country) {
-//        int smallestNum = Integer.MAX_VALUE;
-//        int index = -1;
-//        int count = 0;
-//
-//        for(String countries : Constants.COUNTRY_NAMES) {
-//            int levenshtein = LevenshteinDistance(country, countries);
-//            if(smallestNum > levenshtein) {
-//                smallestNum = levenshtein;
-//                index = count;
-//            }
-//            count++;
-//        }
-//        return index;
-//    }
-
-//    private int LevenshteinDistance(String a, String b) {
-//        a = a.toLowerCase();
-//        b = b.toLowerCase();
-//
-//        int[] prev = new int[b.length() + 1];
-//        for(int i = 0; i < b.length() + 1; i++)
-//            prev[i] = i;
-//
-//        for(int i = 1; i <= a.length(); i++) {
-//            prev[0] = i;
-//            int nw = i - 1;
-//            for (int j = 1; j <= b.length(); j++) {
-//                int cj = Math.min(1 + Math.min(prev[j], prev[j - 1]), a.charAt(i - 1) == b.charAt(j - 1) ? nw : nw + 1);
-//                nw = prev[j];
-//                prev[j] = cj;
-//            }
-//        }
-//        return prev[b.length()];
-//    }
 }
 
 

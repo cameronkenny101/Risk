@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'alpharisk'
-version 'assignment-1'
+version 'assignment-2'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -24,6 +24,8 @@ dependencies {
 jar {
     manifest {
         attributes 'Main-Class': "$mainClassName"
+    } from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
 javafx {
