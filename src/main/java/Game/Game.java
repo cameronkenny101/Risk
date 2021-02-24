@@ -113,7 +113,7 @@ public class Game {
         if(troops > 0)
             uiController.output.appendText("> " + colour + " puts " + troops + " into " + Constants.COUNTRY_NAMES.get(countryId) + "\n");
         else
-            uiController.output.appendText("> " + colour + " removes " + troops + " out of " + Constants.COUNTRY_NAMES.get(countryId) + "\n");
+            uiController.output.appendText("> " + colour + " removes " + -troops + " out of " + Constants.COUNTRY_NAMES.get(countryId) + "\n");
     }
 
     /**
