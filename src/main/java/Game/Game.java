@@ -110,7 +110,10 @@ public class Game {
     public void takeCountry(int countryId, Constants.PLAYER_COLOUR colour, int troops) {
         logic.takeCountryLogic(countryId, colour, troops);
         uiController.setRegion(countryId, colour, logic.getTroop_count()[countryId]);
-        uiController.output.appendText("> " + colour + " puts " + troops + " into " + Constants.COUNTRY_NAMES.get(countryId) + "\n");
+        if(troops > 0)
+            uiController.output.appendText("> " + colour + " puts " + troops + " into " + Constants.COUNTRY_NAMES.get(countryId) + "\n");
+        else
+            uiController.output.appendText("> " + colour + " removes " + troops + " out of " + Constants.COUNTRY_NAMES.get(countryId) + "\n");
     }
 
     /**
@@ -121,9 +124,7 @@ public class Game {
      */
     public void setCountry(int countryId, Constants.PLAYER_COLOUR colour, int troops) {
         if(logic.getCountry_owner()[countryId] == colour) {
-            logic.takeCountryLogic(countryId, colour, troops);
-            uiController.setRegion(countryId, colour, logic.getTroop_count()[countryId]);
-            uiController.output.appendText("> " + colour + " puts " + troops + " into " + Constants.COUNTRY_NAMES.get(countryId) + "\n");
+            takeCountry(countryId, colour, troops);
         }
     }
 
@@ -149,7 +150,8 @@ public class Game {
             uiController.output.appendText("> " + player.getName() + ", you will now fortify your territories. You can place 3 troops at a time\n");
             uiController.askQuestion("How many troops do you want to place");
         } else {
-            uiController.output.appendText("FINISHED WEEK 2!");
+            uiController.output.appendText("> FINISHED WEEK 2! \n");
+            uiController.askQuestion("Do you want to fortify your territories");
         }
     }
 
