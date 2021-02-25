@@ -1,8 +1,7 @@
 package Game;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 
 
 public class UserInput {
@@ -54,6 +53,9 @@ public class UserInput {
                 break;
             case "What country do you want to fortify":
                 askToFortify(input, player);
+                break;
+            case "What country will fortify your country":
+                countryToGive(input, player);
                 break;
             case "How many troops do you want to move":
                 troopsToFortify(input, player);
@@ -192,7 +194,7 @@ public class UserInput {
                 game.uiController.output.appendText("> You can fortify " + Constants.COUNTRY_NAMES.get(countryIndex) + " with " + country + " with at most "
                         + (game.logic.getTroop_count()[Constants.ADJACENT[countryIndex][i]] - 1) + " troops \n");
                 count++;
-                adjacentIndex = i;
+               setAdjacentIndex(i);
             }
         }
         if(count == 0) {
@@ -216,8 +218,31 @@ public class UserInput {
         game.uiController.askQuestion("Do you want to fortify your territories");
     }
 
+    private void countryToGive(String country, Player player1) {
+        setAdjacentIndex(userInputLogic.shortCountryName(country));
+        boolean isThere = false;
+        for (int i = 0; i < Constants.ADJACENT[countryIndex].length; i++) {
+            if (Constants.ADJACENT[countryIndex][i] == adjacentIndex) {
+                isThere = true;
+                break;
+            }
+        }
+        if(isThere) {
+            game.takeCountry(countryIndex, player1.getColour(), troops);
+            game.takeCountry(adjacentIndex, player1.getColour(), -troops);
+        } else {
+            game.uiController.output.appendText("> You do not own \n" + Constants.COUNTRY_NAMES.get(adjacentIndex));
+            game.uiController.askQuestion("Do you want to fortify your territories");
+            game.uiController.askQuestion("What country will fortify your country");
+        }
+    }
+
     public void setCountryIndex(int countryIndex) {
         this.countryIndex = countryIndex;
+    }
+
+    public void setAdjacentIndex(int adjacentIndex) {
+        this.adjacentIndex = adjacentIndex;
     }
 }
 
