@@ -38,7 +38,7 @@ public class Game {
         uiController.askQuestion("Press enter to choose your 9 cards from the deck");
     }
 
-    /**
+    /**ne
      * starts the game
      */
     public void start() {
@@ -153,6 +153,23 @@ public class Game {
             uiController.output.appendText("> FINISHED WEEK 2! \n");
             uiController.askQuestion("Do you want to fortify your territories");
         }
+    }
+
+
+    /**
+     *
+     * @param p is either gonna be player 1 or 2
+     * @return a boolean value if the player has sucessfully taken over all the countries
+     */
+    public boolean isWinner(Player p){
+
+        for(int i = 0; i < logic.getCountry_owner().length;i++){
+            if(logic.getCountry_owner()[i] != p.getColour()){
+                return false;
+            }
+        }
+        System.out.println("THIS PLAYER ( "+p.getColour() +" ) HAS WON");
+        return true;
     }
 
 }

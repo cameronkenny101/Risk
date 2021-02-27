@@ -27,7 +27,7 @@ public class GameLogic {
 
     /**
      * Fills and allocates unselected countries by the players to neutrals
-     * @param 
+     * @param
      */
     public void setRandomCountries() {
         for(int i = 0; i < Constants.NUM_COUNTRIES; i++) {
@@ -36,20 +36,20 @@ public class GameLogic {
         Collections.shuffle(randomCountries);
     }
 
-    /**
-     *
-     * @param p is either gonna be player 1 or 2
-     * @return a boolean value if the player has sucessfully taken over all the countries
-     */
-    public boolean isWinner(Player p){
-
-        for(int i = 0; i < country_owner.length;i++){
-            if(country_owner[i] != p.getColour()){
-                return false;
-            }
-        }
-        return true;
-    }
+//    /**
+//     *
+//     * @param p is either gonna be player 1 or 2
+//     * @return a boolean value if the player has sucessfully taken over all the countries
+//     */
+//    public boolean isWinner(Player p){
+//
+//        for(int i = 0; i < country_owner.length;i++){
+//            if(country_owner[i] != p.getColour()){
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 
     public void endInitPhase() {
         initPhase = false;
