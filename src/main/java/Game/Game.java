@@ -27,6 +27,13 @@ public class Game {
     }
 
     /**
+     * default constructor for testing
+     */
+    public Game() {
+
+    }
+
+    /**
      * Used to display basic player info on game start up
      */
     private void printPlayerToConsole() {
@@ -163,7 +170,7 @@ public class Game {
      */
     public boolean isWinner(Player p){
 
-        for(int i = 0; i < logic.getCountry_owner().length;i++){
+        for(int i = 0; i < logic.country_owner.length;i++){
             if(logic.getCountry_owner()[i] != p.getColour()){
                 return false;
             }
