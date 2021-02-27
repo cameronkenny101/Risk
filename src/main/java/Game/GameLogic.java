@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class GameLogic {
 
-    private Constants.PLAYER_COLOUR[] country_owner = new Constants.PLAYER_COLOUR[Constants.NUM_COUNTRIES]; //Tells which players owns which country
+    protected Constants.PLAYER_COLOUR[] country_owner = new Constants.PLAYER_COLOUR[Constants.NUM_COUNTRIES]; //Tells which players owns which country
     private int[] troop_count = new int[Constants.NUM_COUNTRIES];//States the number of troops per country
     private ArrayList<Integer> ownedOrange = new ArrayList<>(); // Countries Orange neutral owns
     private ArrayList<Integer> ownedPurple = new ArrayList<>(); // Countries Purple neutral owns
@@ -27,7 +27,7 @@ public class GameLogic {
 
     /**
      * Fills and allocates unselected countries by the players to neutrals
-     * @param randomCountries
+     * @param
      */
     public void setRandomCountries() {
         for(int i = 0; i < Constants.NUM_COUNTRIES; i++) {
@@ -35,6 +35,22 @@ public class GameLogic {
         }
         Collections.shuffle(randomCountries);
     }
+
+    public int calculateReinforcements(Player player){
+        int countryControlled = 0;
+        for(int i = 0 ; i < country_owner.length; i ++){
+            if(country_owner[i] == player.getColour()){
+                countryControlled++;
+            }
+        }
+
+        if(countryControlled <= 8){
+            return 3;
+        }
+
+        return countryControlled/3; //As per the game rules in brightspace, under Phase 1 of the rules ( fraction is ignored)
+    }
+
 
     public void endInitPhase() {
         initPhase = false;
