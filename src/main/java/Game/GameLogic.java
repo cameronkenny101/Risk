@@ -58,7 +58,7 @@ public class GameLogic {
                           calculateContReinforcements(player,16,28,12,7) + //For Asia
                           calculateContReinforcements(player,28,32,4,2) + //For Oceania
                           calculateContReinforcements(player,32,36,4,2) + //For South America
-                          calculateContReinforcements(player,36,41,6,3); //For Africa
+                          calculateContReinforcements(player,36,42,6,3); //For Africa
 
         for(int i = 0 ; i < country_owner.length; i ++){
             if(country_owner[i] == player.getColour()){

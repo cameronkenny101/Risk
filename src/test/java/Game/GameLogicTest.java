@@ -58,12 +58,29 @@ public class GameLogicTest extends TestCase {
     public void testCalculateContReinforcements(){
         Player player = new Player("MARK", Constants.PLAYER_COLOUR.RED,1);
         GameScreenController gameScreenController = new GameScreenController();
-        logic.country_owner[0] = Constants.PLAYER_COLOUR.RED;
-        logic.country_owner[1] = Constants.PLAYER_COLOUR.RED;
-        logic.country_owner[2] = Constants.PLAYER_COLOUR.RED;
+        for(int i = 0; i < 42;i++){
+            logic.country_owner[i] = Constants.PLAYER_COLOUR.RED;
+        }
 
-       // logic.calculateContReinforcements(player,0,3,3,2);
-        assertEquals(2,logic.calculateContReinforcements(player,0,3,3,2));
+        //TESTS FOR NORMAL OPERATION
+        assertEquals(2,logic.calculateContReinforcements(player,0,9,9,2));
+        assertEquals(5,logic.calculateContReinforcements(player,9,16,7,5));
+        assertEquals(7,logic.calculateContReinforcements(player,16,28,12,7));
+        assertEquals(2,logic. calculateContReinforcements(player,28,32,4,2));
+        assertEquals(2,logic.calculateContReinforcements(player,32,36,4,2));
+        assertEquals(3,logic.calculateContReinforcements(player,36,42,6,3));
+
+        //TESTS FOR THE FUNCTION TO ID THAT SOME CONTS ARE CONTROLLED AND SOME ARENT
+        logic.country_owner[15] = Constants.PLAYER_COLOUR.BLUE;
+        logic.country_owner[40] = Constants.PLAYER_COLOUR.GREY;
+        assertEquals(2,logic.calculateContReinforcements(player,0,9,9,2));
+        assertEquals(0,logic.calculateContReinforcements(player,9,16,7,5));
+        assertEquals(7,logic.calculateContReinforcements(player,16,28,12,7));
+        assertEquals(2,logic. calculateContReinforcements(player,28,32,4,2));
+        assertEquals(2,logic.calculateContReinforcements(player,32,36,4,2));
+        assertEquals(0,logic.calculateContReinforcements(player,36,42,6,3));
+
+
     }
 
 
