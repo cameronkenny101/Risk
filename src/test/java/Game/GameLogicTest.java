@@ -55,9 +55,38 @@ public class GameLogicTest extends TestCase {
     }
 
     @Test
+    public void testCalculateReinforcements(){
+        Player testPlayer = new Player("Max", Constants.PLAYER_COLOUR.RED,1);
+        for(int i = 0 ; i < 7 ; i ++) {
+            logic.country_owner[i] = Constants.PLAYER_COLOUR.RED;
+        }
+        assertEquals(3,logic.calculateReinforcements(testPlayer));
+
+        for(int i = 0 ; i < 9 ; i ++) {
+            logic.country_owner[i] = Constants.PLAYER_COLOUR.RED;
+        }
+        assertEquals(8,logic.calculateReinforcements(testPlayer)); // 9 / 3 = 3 + 5 (from the control of America)
+
+        for(int i = 0 ; i < 16; i ++) {
+            logic.country_owner[i] = Constants.PLAYER_COLOUR.RED;
+        }
+        assertEquals(15,logic.calculateReinforcements(testPlayer)); // 16 / 3 = 5 + 5 + 5
+
+        for(int i = 0; i < 42; i++){
+            logic.country_owner[i] = Constants.PLAYER_COLOUR.RED;
+        }
+        //If the player hypothetically conquered all territory
+        assertEquals(38,logic.calculateReinforcements(testPlayer)); // 42 / 3 = 13 + 24 = 38
+        logic.country_owner[19] = Constants.PLAYER_COLOUR.GREY;
+        logic.country_owner[0] = Constants.PLAYER_COLOUR.GREY;
+        logic.country_owner[1] = Constants.PLAYER_COLOUR.GREY;
+        //After losing the extra troops by not fully conquering asia and North America
+        assertEquals(25,logic.calculateReinforcements(testPlayer)); // 42/3 = 14 + 2 + 2 + 5 +2
+    }
+
+    @Test
     public void testCalculateContReinforcements(){
         Player player = new Player("MARK", Constants.PLAYER_COLOUR.RED,1);
-        GameScreenController gameScreenController = new GameScreenController();
         for(int i = 0; i < 42;i++){
             logic.country_owner[i] = Constants.PLAYER_COLOUR.RED;
         }
