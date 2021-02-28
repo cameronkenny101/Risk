@@ -85,11 +85,13 @@ public class GameLogic {
      */
     protected int calculateContReinforcements(Player player,int startOfIndexOfCont,int endOfIndexOfCont,int amountOfCountries,int bonusTroops){
         int cont = 0;
-        for(;startOfIndexOfCont < endOfIndexOfCont;endOfIndexOfCont++){
-            if(country_owner[startOfIndexOfCont] == player.getColour()){
+        for(int i = startOfIndexOfCont;i < endOfIndexOfCont;i++){
+            if(country_owner[i] == player.getColour()){
                 cont++;
             }
         }
+
+        System.out.println("CONT " + cont + "\nAmount of Countries "+amountOfCountries);
         if(cont == amountOfCountries){
             return bonusTroops;
         }

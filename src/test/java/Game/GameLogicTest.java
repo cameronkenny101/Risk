@@ -54,14 +54,17 @@ public class GameLogicTest extends TestCase {
         assertTrue(list.get(2) >= 0 && list.get(2) <= 2);
     }
 
-//    @Test
-//    public void testCalculateContReinforcements(){
-//        Player player = new Player("MARK", Constants.PLAYER_COLOUR.RED,1);
-//        GameScreenController gameScreenController = new GameScreenController();
-//        gameScreenController.initialize();
-//        //logic.calculateContReinforcements(player,0,9,9,2);
-//
-//    }
+    @Test
+    public void testCalculateContReinforcements(){
+        Player player = new Player("MARK", Constants.PLAYER_COLOUR.RED,1);
+        GameScreenController gameScreenController = new GameScreenController();
+        logic.country_owner[0] = Constants.PLAYER_COLOUR.RED;
+        logic.country_owner[1] = Constants.PLAYER_COLOUR.RED;
+        logic.country_owner[2] = Constants.PLAYER_COLOUR.RED;
+
+       // logic.calculateContReinforcements(player,0,3,3,2);
+        assertEquals(2,logic.calculateContReinforcements(player,0,3,3,2));
+    }
 
 
 
