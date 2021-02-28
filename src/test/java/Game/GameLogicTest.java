@@ -1,5 +1,6 @@
 package Game;
 
+import GameScreen.GameScreenController;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -52,6 +53,15 @@ public class GameLogicTest extends TestCase {
         assertTrue(list.get(1) >= 0 && list.get(1) <= 2);
         assertTrue(list.get(2) >= 0 && list.get(2) <= 2);
     }
+
+//    @Test
+//    public void testCalculateContReinforcements(){
+//        Player player = new Player("MARK", Constants.PLAYER_COLOUR.RED,1);
+//        GameScreenController gameScreenController = new GameScreenController();
+//        gameScreenController.initialize();
+//        //logic.calculateContReinforcements(player,0,9,9,2);
+//
+//    }
 
 
 
