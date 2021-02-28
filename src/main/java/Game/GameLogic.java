@@ -53,12 +53,12 @@ public class GameLogic {
      */
     public int calculateReinforcements(Player player){
         int countryControlled = 0;
-        int bonusTroops = calculateContReinforcements(player,0,9,9,2) + //For North America
+        int bonusTroops = calculateContReinforcements(player,0,9,9,5) + //For North America
                           calculateContReinforcements(player,9,16,7,5) +//For Europe
                           calculateContReinforcements(player,16,28,12,7) + //For Asia
                           calculateContReinforcements(player,28,32,4,2) + //For Oceania
                           calculateContReinforcements(player,32,36,4,2) + //For South America
-                          calculateContReinforcements(player,36,41,6,3); //For Africa
+                          calculateContReinforcements(player,36,42,6,3); //For Africa
 
         for(int i = 0 ; i < country_owner.length; i ++){
             if(country_owner[i] == player.getColour()){
@@ -67,9 +67,10 @@ public class GameLogic {
         }
 
         if(countryControlled <= 8){
+           // System.out.println(countryControlled + " ----- " + bonusTroops);
             return 3 + bonusTroops;
         }
-
+       // System.out.println(countryControlled + " ----- " + bonusTroops + "----");
         return (countryControlled/3) + bonusTroops; //As per the game rules in brightspace, under Phase 1 of the rules ( fraction is ignored)
     }
 
@@ -85,8 +86,8 @@ public class GameLogic {
      */
     protected int calculateContReinforcements(Player player,int startOfIndexOfCont,int endOfIndexOfCont,int amountOfCountries,int bonusTroops){
         int cont = 0;
-        for(;startOfIndexOfCont < endOfIndexOfCont;endOfIndexOfCont++){
-            if(country_owner[startOfIndexOfCont] == player.getColour()){
+        for(int i = startOfIndexOfCont;i < endOfIndexOfCont;i++){
+            if(country_owner[i] == player.getColour()){
                 cont++;
             }
         }

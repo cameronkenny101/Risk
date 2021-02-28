@@ -140,7 +140,6 @@ public class GameScreenController {
     Game game;
     UserInput userInput;
     String question;
-
     CountryUI[] countries = new CountryUI[Constants.NUM_COUNTRIES];//Stores the relevant UI information for all 42 countries
 
     /**
