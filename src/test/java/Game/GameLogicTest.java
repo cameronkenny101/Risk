@@ -62,7 +62,7 @@ public class GameLogicTest extends TestCase {
             logic.country_owner[i] = Constants.PLAYER_COLOUR.RED;
         }
 
-        //TESTS FOR NORMAL OPERATION
+        //TESTS FOR NORMAL OPERATION  //NOTE THESE ARE THE SAME FUNCTION CALLS IN THE PROGRAM
         assertEquals(2,logic.calculateContReinforcements(player,0,9,9,2));
         assertEquals(5,logic.calculateContReinforcements(player,9,16,7,5));
         assertEquals(7,logic.calculateContReinforcements(player,16,28,12,7));
