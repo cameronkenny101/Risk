@@ -13,8 +13,8 @@ public class Game {
     /**
      * Used to start up the game and create player objects and a uiController
      * @param uiController this is used to control the gameplay on the screen
-     * @param player1
-     * @param player2
+     * @param player1 this is used to interact with the player1 instance of the player class
+     * @param player2 this is used to interact with the player2 instance of the player class
      */
     public Game(GameScreenController uiController, Player player1, Player player2) {
         this.uiController = uiController;
@@ -45,8 +45,8 @@ public class Game {
         uiController.askQuestion("Press enter to choose your 9 cards from the deck");
     }
 
-    /**ne
-     * starts the game
+    /**
+     * Starts the game, allowing players to choose there territory cards
      */
     public void start() {
         if(logic.getCountryIndex() == 0) {
@@ -68,7 +68,7 @@ public class Game {
     }
 
     /**
-     * this is the first operations of the game by getting the two players to roll a dice to see who places their armies first
+     * This is the first operation of the game by getting the two players to roll a dice to see who places their armies first
      */
     public void setFirstTurn() {
         if (player1.getDiceNum() == 0) {
@@ -124,9 +124,9 @@ public class Game {
     }
 
     /**
-     *
-     * @param countryId
-     * @param colour
+     * Sets the country on initialisation
+     * @param countryId a countries ID
+     * @param colour a players colour
      * @param troops troop number
      */
     public void setCountry(int countryId, Constants.PLAYER_COLOUR colour, int troops) {

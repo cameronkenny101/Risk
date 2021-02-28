@@ -2,7 +2,11 @@ package Game;
 
 public class UserInputLogic {
 
-
+    /**
+     * Sets the next turn
+     * @param player current player instance
+     * @param nextPlayer next player instance
+     */
     protected void nextTurn(Player player,Player nextPlayer){
         player.setTurn(false);
         player.setInitTroops(3);
@@ -10,6 +14,11 @@ public class UserInputLogic {
 
     }
 
+    /**
+     * Converts user input into a country based on levenshtein distance algorithm
+     * @param country user input
+     * @return index of the country
+     */
     protected int shortCountryName(String country){
         int smallestNum = Integer.MAX_VALUE;
         int index = -1;
@@ -26,6 +35,12 @@ public class UserInputLogic {
         return index;
     }
 
+    /**
+     * The levenshtein distance algorithm
+     * @param a User inputted string
+     * @param b Territory on the map
+     * @return The number of operations to make a and b the same string
+     */
     protected int LevenshteinDistance(String a, String b) {
         a = a.toLowerCase();
         b = b.toLowerCase();
