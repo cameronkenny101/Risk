@@ -46,8 +46,20 @@ public class GameLogic {
         Collections.shuffle(randomCountries);
     }
 
+    /**
+     * Used for caluclating the reinforcements dynmaically as the game progresses
+     * @param player the player
+     * @return returns the amount of reinforcements needed
+     */
     public int calculateReinforcements(Player player){
         int countryControlled = 0;
+        int bonusTroops = calculateContReinforcements(player,0,9,9,2) + //For North America
+                          calculateContReinforcements(player,9,16,7,5) +//For Europe
+                          calculateContReinforcements(player,16,28,12,7) + //For Asia
+                          calculateContReinforcements(player,28,32,4,2) + //For Oceania
+                          calculateContReinforcements(player,32,36,4,2) + //For South America
+                          calculateContReinforcements(player,36,41,6,3); //For Africa
+
         for(int i = 0 ; i < country_owner.length; i ++){
             if(country_owner[i] == player.getColour()){
                 countryControlled++;
@@ -55,12 +67,34 @@ public class GameLogic {
         }
 
         if(countryControlled <= 8){
-            return 3;
+            return 3 + bonusTroops;
         }
 
-        return countryControlled/3; //As per the game rules in brightspace, under Phase 1 of the rules ( fraction is ignored)
+        return (countryControlled/3) + bonusTroops; //As per the game rules in brightspace, under Phase 1 of the rules ( fraction is ignored)
     }
 
+    /**
+     * Used for inspecting what continents a player controls and allocates them more troops based on this
+     * @param player the player
+     * @param startOfIndexOfCont the given start position of the "countries[]" array, ie countries[0] == "Ontario"
+     * @param endOfIndexOfCont the last country in the continent + 1 i.e countries[9] == Britain , so the last country visited by the for loop
+     *                         is countries[8] == Alaska (the last country in the North American continent)
+     * @param amountOfCountries amount of countries needed to be able to control the continent
+     * @param bonusTroops amount of troops that will be rewarded if the player controls the amountOfCountries specified
+     * @return the bonus troops or 0
+     */
+    protected int calculateContReinforcements(Player player,int startOfIndexOfCont,int endOfIndexOfCont,int amountOfCountries,int bonusTroops){
+        int cont = 0;
+        for(;startOfIndexOfCont < endOfIndexOfCont;endOfIndexOfCont++){
+            if(country_owner[startOfIndexOfCont] == player.getColour()){
+                cont++;
+            }
+        }
+        if(cont == amountOfCountries){
+            return bonusTroops;
+        }
+        return 0;
+    }
 
     public void endInitPhase() {
         initPhase = false;
