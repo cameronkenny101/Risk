@@ -90,8 +90,6 @@ public class GameLogic {
                 cont++;
             }
         }
-
-        System.out.println("CONT " + cont + "\nAmount of Countries "+amountOfCountries);
         if(cont == amountOfCountries){
             return bonusTroops;
         }
