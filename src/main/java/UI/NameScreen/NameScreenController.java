@@ -1,16 +1,15 @@
-package NameScreen;
+package UI.NameScreen;
 
 import Game.Constants;
 import Game.Game;
 import Game.Player;
 import Game.UserInput;
-import GameScreen.GameScreenController;
+import UI.GameScreen.GameScreenController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -20,12 +19,10 @@ public class NameScreenController {
     private TextField username;
     String[] name = new String[Constants.NUM_PLAYERS];
     int playerNum = 0;
-    Game game;
     UserInput userInput;
 
     @FXML
     public void ButtonClicked(Event evt) throws Exception {
-        Button button = (Button) evt.getSource();
         TextField();
         username.clear();
     }
@@ -52,7 +49,7 @@ public class NameScreenController {
         GameScreenController gameScreenController = loader.getController();
         Scene scene = new Scene(root, 1320, 700);
         stage.setScene(scene);
-        game = new Game(gameScreenController, player1, player2);
+        Game game = new Game(gameScreenController, player1, player2);
         userInput = new UserInput(game, player1, player2);
         gameScreenController.receiveHandler(game, userInput);
     }

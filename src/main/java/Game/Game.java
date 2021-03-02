@@ -1,6 +1,6 @@
 package Game;
 
-import GameScreen.GameScreenController;
+import UI.GameScreen.GameScreenController;
 import java.util.ArrayList;
 
 public class Game {

@@ -1,4 +1,4 @@
-package MainMenu;
+package UI.MainMenu;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

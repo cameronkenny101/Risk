@@ -1,7 +1,7 @@
 /*@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');*/
 @font-face {
     font-family: VT323;
-    src: url('../Fonts/VT323.ttf');
+    src: url('../../Fonts/VT323.ttf');
 }
 .root {
     -fx-background-image: url("city.jpg");

@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.text.Text?>
 <Group id="map" fx:id="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
-       fx:controller="GameScreen.GameScreenController" stylesheets="GameScreen/gameScreen.css">
+       fx:controller="UI.GameScreen.GameScreenController" stylesheets="UI/GameScreen/gameScreen.css">
 
     <!-- Seas-->
     <!--<g id="Seas" fill="#FFFFFF">-->
@@ -200,9 +200,7 @@
 
 
     <VBox translateX="1020" prefWidth="300">
-
         <TextArea fx:id="output" id="outputBox" prefHeight="660" wrapText="true"/>
         <TextField fx:id="input" id="inputBox"/>
-
     </VBox>
 </Group>

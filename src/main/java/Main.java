@@ -20,7 +20,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Risk");
-        Parent root = FXMLLoader.load(getClass().getResource("MainMenu/mainMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("UI/MainMenu/mainMenu.fxml"));
         Scene scene = new Scene(root, 1000, 600);
 
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();

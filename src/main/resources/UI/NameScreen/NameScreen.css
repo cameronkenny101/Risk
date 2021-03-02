@@ -1,6 +1,6 @@
 @font-face {
     font-family: VT323;
-    src: url('../Fonts/VT323.ttf');
+    src: url('../../Fonts/VT323.ttf');
 }
 
 .root {
