@@ -1,4 +1,4 @@
-package PlayerChoosingScreen;
+package NameScreen;
 
 import Game.Constants;
 import Game.Game;
@@ -19,7 +19,6 @@ public class Controller {
     @FXML
     private TextField username;
     String[] name = new String[Constants.NUM_PLAYERS];
-    int[] commanderID = new int[Constants.NUM_PLAYERS];
     int playerNum = 0;
     Game game;
     UserInput userInput;
@@ -27,15 +26,13 @@ public class Controller {
     @FXML
     public void ButtonClicked(Event evt) throws Exception {
         Button button = (Button) evt.getSource();
-        commanderID[playerNum] = Integer.parseInt(button.getId());
         TextField();
         username.clear();
-        System.out.println(playerNum);
     }
 
     @FXML
     public void TextField() throws Exception {
-        if(username.getText().equals("")) {
+        if (username.getText().equals("")) {
             username.clear();
         } else {
             name[playerNum] = username.getText();
@@ -46,8 +43,8 @@ public class Controller {
     }
 
     private void writingDetailsForPlayers() throws Exception {
-        Player player1 = new Player(name[0], Constants.PLAYER_COLOUR.RED, commanderID[0]);
-        Player player2 = new Player(name[1], Constants.PLAYER_COLOUR.BLUE, commanderID[1]);
+        Player player1 = new Player(name[0], Constants.PLAYER_COLOUR.RED);
+        Player player2 = new Player(name[1], Constants.PLAYER_COLOUR.BLUE);
 
         Stage stage = (Stage) username.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GameScreen/gameScreen.fxml"));

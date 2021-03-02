@@ -161,7 +161,7 @@
 }
 
 .image {
-    -fx-background-image: url("../ChoosePlayerScreen/PlayerImages/Nap2-removebg-preview.png");
+    -fx-background-image: url("../NameScreen/PlayerImages/Nap2-removebg-preview.png");
     -fx-background-position: left top;
     -fx-background-size: 100 100;
     -fx-background-repeat: no-repeat;

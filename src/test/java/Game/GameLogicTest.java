@@ -3,7 +3,6 @@ package Game;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class GameLogicTest extends TestCase {
 
@@ -34,8 +33,8 @@ public class GameLogicTest extends TestCase {
 
     @Test
     public void testSetDiceToZero() {
-        Player player1 = new Player("Cam", Constants.PLAYER_COLOUR.GREY, 0);
-        Player player2 = new Player("Mike", Constants.PLAYER_COLOUR.BLUE, 1);
+        Player player1 = new Player("Cam", Constants.PLAYER_COLOUR.GREY);
+        Player player2 = new Player("Mike", Constants.PLAYER_COLOUR.BLUE);
         player1.setDiceNum(2);
         player2.setDiceNum(3);
         logic.setDiceToZero(player1, player2);
