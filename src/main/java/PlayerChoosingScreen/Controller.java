@@ -30,7 +30,6 @@ public class Controller {
         commanderID[playerNum] = Integer.parseInt(button.getId());
         TextField();
         username.clear();
-        System.out.println(playerNum);
     }
 
     @FXML

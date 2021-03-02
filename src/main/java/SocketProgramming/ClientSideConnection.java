@@ -19,7 +19,6 @@ public class ClientSideConnection {
             socket = new Socket("localhost", 3000);
             dataIn = new DataInputStream(socket.getInputStream());
             dataOut = new DataOutputStream(socket.getOutputStream());
-            playerID = dataIn.readInt();
             System.out.println("Connected in server as Player " + playerID);
         } catch (IOException ex) {
             System.out.println("Error in client side connection constructor");
