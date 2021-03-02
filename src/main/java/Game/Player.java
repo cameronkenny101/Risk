@@ -1,5 +1,7 @@
 package Game;
 
+import SocketProgramming.ClientSideConnection;
+
 /**
  * This class is used for storing critical game data
  */
@@ -11,6 +13,7 @@ public class Player {
     private int troops;
     private int initTroops;
     private boolean isTurn;
+    private ClientSideConnection csc;
 
     /**
      * Constructor for the player
@@ -24,6 +27,17 @@ public class Player {
         setCommanderID(commanderID);
         setTroops(3); // Player must place 1 troop of each country it initializes with
         setInitTroops(3);
+        connectToServer();
+        Thread t = new Thread(this::startGame);
+        t.start();
+    }
+
+    public void startGame() {
+        csc.receiveGameStatus();
+    }
+
+    public void connectToServer() {
+        csc = new ClientSideConnection();
     }
 
     /**

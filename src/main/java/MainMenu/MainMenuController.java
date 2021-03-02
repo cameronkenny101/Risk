@@ -33,5 +33,7 @@ public class MainMenuController implements Initializable {
         vbox.setTranslateX(325);
         vbox.setTranslateY(220);
         root.getChildren().addAll(vbox);
+
+
     }
 }
