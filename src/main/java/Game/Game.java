@@ -2,6 +2,7 @@ package Game;
 
 import GameScreen.GameScreenController;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Game {
 
@@ -34,7 +35,10 @@ public class Game {
             uiController.output.appendText("> Player 1 color: " + player1.getColour() + "\n");
             uiController.output.appendText("> Waiting for player 2");
         } else {
-
+            String[] playerInfo = player.getCsc().receivePlayerInfo();
+            this.player1 = new Player(playerInfo[0], playerInfo[1]);
+            this.player2 = player;
+            printPlayerToConsole();
         }
     }
 

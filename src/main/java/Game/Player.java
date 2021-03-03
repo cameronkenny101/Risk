@@ -29,12 +29,20 @@ public class Player {
         setTroops(3); // Player must place 1 troop of each country it initializes with
         setInitTroops(3);
         connectToServer();
-        Thread t = new Thread(this::startGame);
+        Thread t = new Thread(() -> startGame(name, colour));
         t.start();
     }
 
-    public void startGame() {
-        csc.receiveGameStatus();
+    public Player(String name, String color) {
+        setName(name);
+        setColour(Constants.PLAYER_COLOUR.BLUE);
+        setTroops(3);
+        setInitTroops(3);
+    }
+
+
+    public void startGame(String name, Constants.PLAYER_COLOUR colour) {
+        csc.receiveGameStatus(name, colour);
     }
 
     public void connectToServer() {

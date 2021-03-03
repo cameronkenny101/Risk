@@ -64,7 +64,6 @@ public class Controller {
             stage.setScene(scene);
             game = new Game(gameScreenController, player);
             userInput = new UserInput(game, player);
-            gameScreenController.receiveHandler(game, userInput);
         } else {
             Player player1 = new Player(name[0], Constants.PLAYER_COLOUR.RED, commanderID[0]);
             Player player2 = new Player(name[1], Constants.PLAYER_COLOUR.BLUE, commanderID[1]);
@@ -72,8 +71,8 @@ public class Controller {
             stage.setScene(scene);
             game = new Game(gameScreenController, player1, player2);
             userInput = new UserInput(game, player1, player2);
-            gameScreenController.receiveHandler(game, userInput);
         }
+        gameScreenController.receiveHandler(game, userInput);
     }
 
 

@@ -23,7 +23,6 @@ public class Server {
     }
 
     public void acceptConnections() {
-
         try {
             System.out.println("Waiting for connections");
             while(numPlayers < 2) {
@@ -31,22 +30,33 @@ public class Server {
                 numPlayers++;
                 System.out.println("Player has joined");
                 ServerSideConnection ssc = new ServerSideConnection(s, numPlayers);
-                if(numPlayers == 1)
+                if(numPlayers == 1) {
                     player1 = ssc;
-                else {
+                } else {
                     player2 = ssc;
                 }
                 Thread t = new Thread(ssc);
                 t.start();
             }
+            player1.getPlayer();
+            player2.sendPlayerInfo(player1.getPlayerName(), player1.getPlayerColor());
+            System.out.println("Game lobby full. There are two players in game");
+
+            while (true) {
+
+            }
+
         } catch (IOException e) {
             System.out.println("Error in acceptConnections method");
             e.printStackTrace();
         }
+        // successfully
     }
 
     public static void main(String[] args) {
         Server server = new Server();
         server.acceptConnections();
     }
+
+
 }

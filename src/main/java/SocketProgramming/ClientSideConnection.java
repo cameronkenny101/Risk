@@ -1,5 +1,7 @@
 package SocketProgramming;
 
+import Game.Constants;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -26,8 +28,26 @@ public class ClientSideConnection {
         }
     }
 
-    public void receiveGameStatus() {
+    public void receiveGameStatus(String name, Constants.PLAYER_COLOUR colour) {
         System.out.println("Receiving game");
+        try {
+            dataOut.writeUTF(name);
+            dataOut.writeUTF(colour.toString());
+            dataOut.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String[] receivePlayerInfo() {
+        String[] playerInfo = new String[2];
+        try {
+            playerInfo[0] = dataIn.readUTF();
+            playerInfo[1] = dataIn.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return playerInfo;
     }
 
     public int getPlayerID() {
