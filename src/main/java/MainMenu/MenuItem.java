@@ -1,5 +1,6 @@
 package MainMenu;
 
+import PlayerChoosingScreen.Controller;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,10 +31,21 @@ public class MenuItem extends StackPane {
             rectangle.setFill(Color.BLACK);
         });
 
+        // Offline game
         if (value == 0) {
             setOnMouseClicked(event -> {
                 try {
-                    switchScene();
+                    switchScene(false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+        // Online game
+        if(value == 1) {
+            setOnMouseClicked(event -> {
+                try {
+                    switchScene(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -57,10 +69,15 @@ public class MenuItem extends StackPane {
         }
     }
 
-    private void switchScene() throws Exception {
+    private void switchScene(boolean online) throws Exception {
         Stage stage = (Stage) getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("../ChoosePlayerScreen/playerScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../ChoosePlayerScreen/playerScreen.fxml"));
+        Parent root = loader.load();
+        Controller playerScreenController = loader.getController();
         Scene scene = new Scene(root, 1023, 437);
         stage.setScene(scene);
+
+        if(online)
+            playerScreenController.setOnline();
     }
 }

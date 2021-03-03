@@ -13,6 +13,7 @@ public class Player {
     private int troops;
     private int initTroops;
     private boolean isTurn;
+
     private ClientSideConnection csc;
 
     /**
@@ -38,6 +39,10 @@ public class Player {
 
     public void connectToServer() {
         csc = new ClientSideConnection();
+    }
+
+    public ClientSideConnection getCsc() {
+        return csc;
     }
 
     /**

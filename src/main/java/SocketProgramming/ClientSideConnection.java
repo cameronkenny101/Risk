@@ -29,4 +29,8 @@ public class ClientSideConnection {
     public void receiveGameStatus() {
         System.out.println("Receiving game");
     }
+
+    public int getPlayerID() {
+        return playerID;
+    }
 }

@@ -26,11 +26,16 @@ public class Game {
         printPlayerToConsole();
     }
 
-    /**
-     * default constructor for testing
-     */
-    public Game() {
+    public Game(GameScreenController uiController, Player player) {
+        this.uiController = uiController;
+        if(player.getCsc().getPlayerID() == 1) {
+            this.player1 = player;
+            uiController.output.appendText("> Player 1 name: " + player1.getName() + "\n");
+            uiController.output.appendText("> Player 1 color: " + player1.getColour() + "\n");
+            uiController.output.appendText("> Waiting for player 2");
+        } else {
 
+        }
     }
 
     /**

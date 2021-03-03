@@ -1,6 +1,5 @@
 package Game;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -26,6 +25,10 @@ public class UserInput {
         this.player1 = player1;
         this.player2 = player2;
         this.dice = new Dice();
+    }
+
+    public UserInput(Game game, Player player) {
+
     }
 
     /**
