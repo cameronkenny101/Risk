@@ -29,15 +29,19 @@ public class Game {
 
     public Game(GameScreenController uiController, Player player) {
         this.uiController = uiController;
+        dice = new Dice();
+        logic = new GameLogic();
+        logic.setRandomCountries();
         if(player.getCsc().getPlayerID() == 1) {
             this.player1 = player;
-            uiController.output.appendText("> Player 1 name: " + player1.getName() + "\n");
-            uiController.output.appendText("> Player 1 color: " + player1.getColour() + "\n");
-            uiController.output.appendText("> Waiting for player 2");
+            uiController.output.appendText("> Waiting for player 2 \n");
+            Thread t = new Thread(this::startGame);
+            t.start();
         } else {
             String[] playerInfo = player.getCsc().receivePlayerInfo();
             this.player1 = new Player(playerInfo[0], playerInfo[1]);
             this.player2 = player;
+            player2.setColour(Constants.PLAYER_COLOUR.BLUE);
             printPlayerToConsole();
         }
     }
@@ -186,6 +190,16 @@ public class Game {
         }
         System.out.println("THIS PLAYER ( "+p.getColour() +" ) HAS WON");
         return true;
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
+
+    public void startGame() {
+        String[] playerInfo = player1.getCsc().receivePlayerInfo();
+        this.player2 = new Player(playerInfo[0], Constants.PLAYER_COLOUR.BLUE, 0);
+        printPlayerToConsole();
     }
 
 }

@@ -38,19 +38,16 @@ public class Server {
                 Thread t = new Thread(ssc);
                 t.start();
             }
-            player1.getPlayer();
-            player2.sendPlayerInfo(player1.getPlayerName(), player1.getPlayerColor());
             System.out.println("Game lobby full. There are two players in game");
-
-            while (true) {
-
-            }
+            player1.getPlayer();
+            player2.getPlayer();
+            player2.sendPlayerInfo(player1.getPlayerName(), player1.getPlayerColor());
+            player1.sendPlayerInfo(player2.getPlayerName(), player2.getPlayerColor());
 
         } catch (IOException e) {
             System.out.println("Error in acceptConnections method");
             e.printStackTrace();
         }
-        // successfully
     }
 
     public static void main(String[] args) {

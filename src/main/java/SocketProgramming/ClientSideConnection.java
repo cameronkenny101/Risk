@@ -28,7 +28,7 @@ public class ClientSideConnection {
         }
     }
 
-    public void receiveGameStatus(String name, Constants.PLAYER_COLOUR colour) {
+    public void writePlayerInfo(String name, Constants.PLAYER_COLOUR colour) {
         System.out.println("Receiving game");
         try {
             dataOut.writeUTF(name);

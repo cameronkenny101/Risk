@@ -2,7 +2,6 @@ package Game;
 
 import java.util.*;
 
-
 public class UserInput {
 
     Game game;
@@ -28,7 +27,8 @@ public class UserInput {
     }
 
     public UserInput(Game game, Player player) {
-
+        this.game = game;
+        this.player1 = player;
     }
 
     /**
@@ -37,6 +37,7 @@ public class UserInput {
      * @param input the input of the user ie in response to how many troops question "3" troops
      */
     public void receiveInput(String question, String input) {
+        setPlayer2();
         Player player = player1.isTurn() ? player1 : player2;
         Player nextPlayer = player1.isTurn() ? player2 : player1;
 
@@ -284,6 +285,10 @@ public class UserInput {
 
     public void setAdjacentIndex(int adjacentIndex) {
         this.adjacentIndex = adjacentIndex;
+    }
+
+    private void setPlayer2() {
+        this.player2 = game.getPlayer2();
     }
 }
 

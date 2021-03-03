@@ -35,14 +35,14 @@ public class Player {
 
     public Player(String name, String color) {
         setName(name);
-        setColour(Constants.PLAYER_COLOUR.BLUE);
+        setColour(Constants.PLAYER_COLOUR.RED);
         setTroops(3);
         setInitTroops(3);
     }
 
 
     public void startGame(String name, Constants.PLAYER_COLOUR colour) {
-        csc.receiveGameStatus(name, colour);
+        csc.writePlayerInfo(name, colour);
     }
 
     public void connectToServer() {
