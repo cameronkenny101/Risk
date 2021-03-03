@@ -2,7 +2,6 @@ package Game;
 
 import GameScreen.GameScreenController;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Game {
 
@@ -21,17 +20,14 @@ public class Game {
         this.uiController = uiController;
         this.player1 = player1;
         this.player2 = player2;
-        dice = new Dice();
-        logic = new GameLogic();
-        logic.setRandomCountries();
+        initClasses();
         printPlayerToConsole();
     }
 
+    // Online Constructor
     public Game(GameScreenController uiController, Player player) {
         this.uiController = uiController;
-        dice = new Dice();
-        logic = new GameLogic();
-        logic.setRandomCountries();
+        initClasses();
         if(player.getCsc().getPlayerID() == 1) {
             this.player1 = player;
             uiController.output.appendText("> Waiting for player 2 \n");
@@ -44,6 +40,12 @@ public class Game {
             player2.setColour(Constants.PLAYER_COLOUR.BLUE);
             printPlayerToConsole();
         }
+    }
+
+    private void initClasses() {
+        dice = new Dice();
+        logic = new GameLogic();
+        logic.setRandomCountries();
     }
 
     /**
