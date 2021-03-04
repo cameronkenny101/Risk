@@ -49,7 +49,7 @@ public class GameLogic {
     }
 
     /**
-     * Used for caluclating the reinforcements dynmaically as the game progresses
+     * Used for calculating the reinforcements dynamically as the game progresses
      *
      * @param player the player
      * @return returns the amount of reinforcements needed
@@ -70,10 +70,8 @@ public class GameLogic {
         }
 
         if (countryControlled <= 8) {
-            // System.out.println(countryControlled + " ----- " + bonusTroops);
             return 3 + bonusTroops;
         }
-        // System.out.println(countryControlled + " ----- " + bonusTroops + "----");
         return (countryControlled / 3) + bonusTroops; //As per the game rules in brightspace, under Phase 1 of the rules ( fraction is ignored)
     }
 
@@ -99,6 +97,12 @@ public class GameLogic {
             return bonusTroops;
         }
         return 0;
+    }
+
+    public int calculateBattle(int attackCountryId, int defenceCountryId, int attackNumUnits, int defenceNumUnits)
+    {
+
+        return -1;
     }
 
     public void endInitPhase() {
