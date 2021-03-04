@@ -181,7 +181,7 @@ public class UserInput {
             game.uiController.output.appendText("> You selected the country " + Constants.COUNTRY_NAMES.get(countryIndex) + "\n");
             game.uiController.askQuestion("Are you sure you want to reinforce this country? (yes/no)");
         } else {
-            game.uiController.output.appendText(Constants.COUNTRY_NAMES.get(countryIndex) + " You choose a country you do not own. \n");
+            game.uiController.output.appendText(Constants.COUNTRY_NAMES.get(countryIndex) + " You chose a country you do not own. \n");
             game.uiController.askQuestion("What country do you want to reinforce");
         }
     }

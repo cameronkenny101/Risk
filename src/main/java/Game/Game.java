@@ -8,7 +8,6 @@ public class Game {
 
     GameScreenController uiController;
     Player player1, player2;
-    Dice dice;
     GameLogic logic;
 
     /**
@@ -22,7 +21,6 @@ public class Game {
         this.uiController = uiController;
         this.player1 = player1;
         this.player2 = player2;
-        dice = new Dice();
         logic = new GameLogic();
         logic.setRandomCountries();
         printPlayerToConsole();
@@ -73,16 +71,16 @@ public class Game {
      */
     public void setFirstTurn() {
         if (player1.getDiceNum() == 0) {
-            player1.setDiceNum(dice.rollDice());
+            player1.setDiceNum(Dice.rollDice());
             uiController.output.appendText("> " + player1.getName() + " rolled a " + player1.getDiceNum() + "\n");
             uiController.output.appendText("> " + player2.getName() + " must now roll the dice \n");
             uiController.askQuestion("Press enter to roll the dice");
         } else {
-            player2.setDiceNum(dice.rollDice());
+            player2.setDiceNum(Dice.rollDice());
             uiController.output.appendText("> " + player2.getName() + " rolled a " + player2.getDiceNum() + "\n");
-            if (dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) > 0) {
+            if (Dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) > 0) {
                 setTurn(player1);
-            } else if (dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) < 0) {
+            } else if (Dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) < 0) {
                 setTurn(player2);
             } else {
                 uiController.output.appendText("> The dice roll was a draw. Try again \n");

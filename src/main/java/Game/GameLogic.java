@@ -99,10 +99,47 @@ public class GameLogic {
         return 0;
     }
 
-    public int calculateBattle(int attackCountryId, int defenceCountryId, int attackNumUnits, int defenceNumUnits)
-    {
+    public int calculateBattle(int attackCountryId, int defenceCountryId, int numAttackUnits, int numDefenceUnits) {
+        //Assert that the it borders the country
+        if (!assertBorders(attackCountryId, defenceCountryId))
+            throw new IllegalArgumentException("Attacking country is not adjacent to defence country");
 
+        //Assert that the number of troops used to attack is valid
+        if (numAttackUnits < 2 || troop_count[attackCountryId] - 1 > numAttackUnits || numAttackUnits > 3)
+            throw new IllegalArgumentException("Invalid number of troops to attack");
+
+        //Assert number of defence units is valid
+        if (numDefenceUnits > 2 || numDefenceUnits > troop_count[defenceCountryId])
+            throw new IllegalArgumentException("Invalid number of troops to defend");
+
+
+        //Battle Sequence
+        while (numDefenceUnits > 0 && numAttackUnits > 0) {
+            int attackerDice = Dice.highRoll(numAttackUnits);
+            int defenderDice = Dice.highRoll(numDefenceUnits);
+
+            if (attackerDice > defenderDice) {
+                numDefenceUnits--;
+            } else {
+                numAttackUnits--;
+            }
+        }
         return -1;
+    }
+
+    /**
+     * Asserts that country 1 is adjacent to country 2
+     *
+     * @param country1 id of country 1
+     * @param country2 id of country 2
+     * @return true if adjacent, false otherwise
+     */
+    private boolean assertBorders(int country1, int country2) {
+        for (int adjCountry : Constants.ADJACENT[country1]) {
+            if (country2 == adjCountry)
+                return true;
+        }
+        return false;
     }
 
     public void endInitPhase() {
