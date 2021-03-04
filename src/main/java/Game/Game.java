@@ -1,6 +1,7 @@
 package Game;
 
 import UI.GameScreen.GameScreenController;
+
 import java.util.ArrayList;
 
 public class Game {
@@ -12,9 +13,10 @@ public class Game {
 
     /**
      * Used to start up the game and create player objects and a uiController
+     *
      * @param uiController this is used to control the gameplay on the screen
-     * @param player1 this is used to interact with the player1 instance of the player class
-     * @param player2 this is used to interact with the player2 instance of the player class
+     * @param player1      this is used to interact with the player1 instance of the player class
+     * @param player2      this is used to interact with the player2 instance of the player class
      */
     public Game(GameScreenController uiController, Player player1, Player player2) {
         this.uiController = uiController;
@@ -49,12 +51,11 @@ public class Game {
      * Starts the game, allowing players to choose there territory cards
      */
     public void start() {
-        if(logic.getCountryIndex() == 0) {
+        if (logic.getCountryIndex() == 0) {
             initCountries(Constants.PLAYER_COLOUR.RED, Constants.INIT_COUNTRIES_PLAYER, null);
             uiController.output.appendText("> It is " + player2.getColour() + " turn to choose there cards! \n");
             uiController.askQuestion("Press enter to choose your 9 cards from the deck");
-        }
-        else if(logic.getCountryIndex() == 9) {
+        } else if (logic.getCountryIndex() == 9) {
             initCountries(Constants.PLAYER_COLOUR.BLUE, Constants.INIT_COUNTRIES_PLAYER, null);
             uiController.askQuestion("Press enter to let neutrals choose there cards");
         } else {
@@ -93,8 +94,9 @@ public class Game {
 
     /**
      * Randomly allocates the countries as if the players drew cards from a deck
-     * @param color the colour of the player/neutral
-     * @param numCountries number of countries
+     *
+     * @param color          the colour of the player/neutral
+     * @param numCountries   number of countries
      * @param ownedCountries this is a list of all countries that are already assigned to a player
      */
     private void initCountries(Constants.PLAYER_COLOUR color, int numCountries, ArrayList<Integer> ownedCountries) {
@@ -102,7 +104,7 @@ public class Game {
         for (; logic.getCountryIndex() < numOccupyCountries; logic.setCountryIndex(logic.getCountryIndex() + 1)) {
             int i = logic.getRandomCountries().get(logic.getCountryIndex());
             takeCountry(i, color, 1);
-            if(ownedCountries != null)
+            if (ownedCountries != null)
                 ownedCountries.add(logic.getRandomCountries().get(logic.getCountryIndex()));
             uiController.output.appendText("> " + color + " selects " + Constants.COUNTRY_NAMES.get(i) + " card\n");
         }
@@ -110,14 +112,15 @@ public class Game {
 
     /**
      * function used to make a country fall under the ownership of another player
+     *
      * @param countryId a countries ID
-     * @param colour a players colour
-     * @param troops amount of troops to be stationed
+     * @param colour    a players colour
+     * @param troops    amount of troops to be stationed
      */
     public void takeCountry(int countryId, Constants.PLAYER_COLOUR colour, int troops) {
         logic.takeCountryLogic(countryId, colour, troops);
         uiController.setRegion(countryId, colour, logic.getTroop_count()[countryId]);
-        if(troops > 0)
+        if (troops > 0)
             uiController.output.appendText("> " + colour + " puts " + troops + " into " + Constants.COUNTRY_NAMES.get(countryId) + "\n");
         else
             uiController.output.appendText("> " + colour + " removes " + -troops + " out of " + Constants.COUNTRY_NAMES.get(countryId) + "\n");
@@ -125,12 +128,13 @@ public class Game {
 
     /**
      * Sets the country on initialisation
+     *
      * @param countryId a countries ID
-     * @param colour a players colour
-     * @param troops troop number
+     * @param colour    a players colour
+     * @param troops    troop number
      */
     public void setCountry(int countryId, Constants.PLAYER_COLOUR colour, int troops) {
-        if(logic.getCountry_owner()[countryId] == colour) {
+        if (logic.getCountry_owner()[countryId] == colour) {
             takeCountry(countryId, colour, troops);
         }
     }
@@ -147,13 +151,14 @@ public class Game {
 
     /**
      * used to give permission to a player to fortify his territories
+     *
      * @param player player that won the roll
      */
     private void setTurn(Player player) {
         player.setTurn(true);
         logic.setDiceToZero(player1, player2);
         uiController.output.appendText("> " + player.getName() + " won the roll. " + player.getName() + " will go first \n");
-        if(logic.getInitPhase()) {
+        if (logic.getInitPhase()) {
             uiController.output.appendText("> " + player.getName() + ", you will now fortify your territories. You can place 3 troops at a time\n");
             uiController.askQuestion("How many troops do you want to place");
         } else {
@@ -164,18 +169,17 @@ public class Game {
 
 
     /**
-     *
      * @param p is either gonna be player 1 or 2
      * @return a boolean value if the player has sucessfully taken over all the countries
      */
-    public boolean isWinner(Player p){
+    public boolean isWinner(Player p) {
 
-        for(int i = 0; i < logic.country_owner.length;i++){
-            if(logic.getCountry_owner()[i] != p.getColour()){
+        for (int i = 0; i < logic.country_owner.length; i++) {
+            if (logic.getCountry_owner()[i] != p.getColour()) {
                 return false;
             }
         }
-        System.out.println("THIS PLAYER ( "+p.getColour() +" ) HAS WON");
+        System.out.println("THIS PLAYER ( " + p.getColour() + " ) HAS WON");
         return true;
     }
 

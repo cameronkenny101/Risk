@@ -13,7 +13,8 @@ public class Player {
 
     /**
      * Constructor for the player
-     * @param name Name provided in the login screen
+     *
+     * @param name   Name provided in the login screen
      * @param colour Colour allocated
      */
     public Player(String name, Constants.PLAYER_COLOUR colour) {
