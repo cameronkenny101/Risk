@@ -9,6 +9,7 @@ public class Game {
     Player player1, player2;
     Dice dice;
     GameLogic logic;
+    boolean isOnline = false;
 
     /**
      * Used to start up the game and create player objects and a uiController
@@ -21,12 +22,14 @@ public class Game {
         this.player1 = player1;
         this.player2 = player2;
         initClasses();
-        printPlayerToConsole();
+        boolean isOnline = false;
+        printPlayerToConsole(true);
     }
 
     // Online Constructor
     public Game(GameScreenController uiController, Player player) {
         this.uiController = uiController;
+        this.isOnline = true;
         initClasses();
         if(player.getCsc().getPlayerID() == 1) {
             this.player1 = player;
@@ -38,7 +41,7 @@ public class Game {
             this.player1 = new Player(playerInfo[0], playerInfo[1]);
             this.player2 = player;
             player2.setColour(Constants.PLAYER_COLOUR.BLUE);
-            printPlayerToConsole();
+            printPlayerToConsole(false);
         }
     }
 
@@ -51,13 +54,16 @@ public class Game {
     /**
      * Used to display basic player info on game start up
      */
-    private void printPlayerToConsole() {
+    private void printPlayerToConsole(boolean isPlayer1) {
         uiController.output.appendText("> Player 1 name: " + player1.getName() + "\n");
         uiController.output.appendText("> Player 1 color: " + player1.getColour() + "\n");
         uiController.output.appendText("> Player 2 name: " + player2.getName() + "\n");
         uiController.output.appendText("> Player 2 color: " + player2.getColour() + "\n");
         uiController.output.appendText("> It is " + player1.getColour() + " turn to choose there cards! \n");
-        uiController.askQuestion("Press enter to choose your 9 cards from the deck");
+        if(isOnline && !isPlayer1)
+            uiController.output.appendText("> Wait for player 1 to choose there cards");
+        else
+            uiController.askQuestion("Press enter to choose your 9 cards from the deck");
     }
 
     /**
@@ -201,7 +207,7 @@ public class Game {
     public void startGame() {
         String[] playerInfo = player1.getCsc().receivePlayerInfo();
         this.player2 = new Player(playerInfo[0], Constants.PLAYER_COLOUR.BLUE, 0);
-        printPlayerToConsole();
+        printPlayerToConsole(true);
     }
 
 }
