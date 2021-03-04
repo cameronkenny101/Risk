@@ -1,41 +1,35 @@
-package PlayerChoosingScreen;
+package UI.NameScreen;
 
 import Game.Constants;
 import Game.Game;
 import Game.Player;
 import Game.UserInput;
-import GameScreen.GameScreenController;
+import UI.GameScreen.GameScreenController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class Controller {
+public class NameScreenController {
 
     @FXML
     private TextField username;
     String[] name = new String[Constants.NUM_PLAYERS];
-    int[] commanderID = new int[Constants.NUM_PLAYERS];
     int playerNum = 0;
-    Game game;
     UserInput userInput;
 
     @FXML
     public void ButtonClicked(Event evt) throws Exception {
-        Button button = (Button) evt.getSource();
-        commanderID[playerNum] = Integer.parseInt(button.getId());
         TextField();
         username.clear();
-        System.out.println(playerNum);
     }
 
     @FXML
     public void TextField() throws Exception {
-        if(username.getText().equals("")) {
+        if (username.getText().equals("")) {
             username.clear();
         } else {
             name[playerNum] = username.getText();
@@ -46,8 +40,8 @@ public class Controller {
     }
 
     private void writingDetailsForPlayers() throws Exception {
-        Player player1 = new Player(name[0], Constants.PLAYER_COLOUR.RED, commanderID[0]);
-        Player player2 = new Player(name[1], Constants.PLAYER_COLOUR.BLUE, commanderID[1]);
+        Player player1 = new Player(name[0], Constants.PLAYER_COLOUR.RED);
+        Player player2 = new Player(name[1], Constants.PLAYER_COLOUR.BLUE);
 
         Stage stage = (Stage) username.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GameScreen/gameScreen.fxml"));
@@ -55,7 +49,7 @@ public class Controller {
         GameScreenController gameScreenController = loader.getController();
         Scene scene = new Scene(root, 1320, 700);
         stage.setScene(scene);
-        game = new Game(gameScreenController, player1, player2);
+        Game game = new Game(gameScreenController, player1, player2);
         userInput = new UserInput(game, player1, player2);
         gameScreenController.receiveHandler(game, userInput);
     }

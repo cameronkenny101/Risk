@@ -1,0 +1,33 @@
+@font-face {
+    font-family: VT323;
+    src: url('../../Fonts/VT323.ttf');
+}
+
+.root {
+    -fx-background-image: url("background.png");
+    -fx-background-size: 1025;
+}
+
+.title {
+    -fx-fill: #DDDDDD;
+    -fx-alignment: center;
+    -fx-font-family: 'VT323', monospace;
+    -fx-font-size: 50;
+    -fx-font-weight: bold;
+}
+
+.text-field {
+    -fx-fill: #DDDDDD;
+    -fx-alignment: center;
+    -fx-font-family: 'VT323', monospace;
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+
+    -fx-background-color: #290829;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #FFFFFF;
+}
+
+.label {
+    -fx-text-fill: #cb2727;
+}

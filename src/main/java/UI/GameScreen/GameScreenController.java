@@ -1,4 +1,4 @@
-package GameScreen;
+package UI.GameScreen;
 
 import Game.Constants;
 import Game.Game;
@@ -7,7 +7,6 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;

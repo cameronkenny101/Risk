@@ -6,7 +6,6 @@ package Game;
 public class Player {
     private String name;
     private Constants.PLAYER_COLOUR colour;
-    private int commanderID;
     private int diceNum;
     private int troops;
     private int initTroops;
@@ -14,14 +13,14 @@ public class Player {
 
     /**
      * Constructor for the player
-     * @param name Name provided in the login screen
+     *
+     * @param name   Name provided in the login screen
      * @param colour Colour allocated
-     * @param commanderID their allocated ID
      */
-    public Player(String name, Constants.PLAYER_COLOUR colour, int commanderID) {
+    public Player(String name, Constants.PLAYER_COLOUR colour) {
         setName(name);
         setColour(colour);
-        setCommanderID(commanderID);
+        setTroops(Constants.INIT_UNITS_PLAYER - Constants.INIT_COUNTRIES_PLAYER); // Player must place 1 troop of each country it initializes with
         setTroops(3); // Player must place 1 troop of each country it initializes with
         setInitTroops(3);
     }
@@ -49,13 +48,6 @@ public class Player {
         this.colour = colour;
     }
 
-    public int getCommanderID() {
-        return commanderID;
-    }
-
-    public void setCommanderID(int commanderID) {
-        this.commanderID = commanderID;
-    }
 
     public int getTroops() {
         return troops;

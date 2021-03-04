@@ -1,4 +1,4 @@
-package MainMenu;
+package UI.MainMenu;
 
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
