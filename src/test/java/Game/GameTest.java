@@ -9,7 +9,7 @@ public class GameTest extends TestCase {
     @Test
     public void testisWinner() {
         Game game = new Game();
-        Player player = new Player("Mark", Constants.PLAYER_COLOUR.RED, 1);
+        Player player = new Player("Mark", Constants.PLAYER_COLOUR.RED);
         GameLogic gameLogic = new GameLogic();
 
         for (int i = 0; i < gameLogic.country_owner.length; i++) {
