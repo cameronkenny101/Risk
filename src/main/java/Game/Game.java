@@ -177,7 +177,8 @@ public class Game {
                 return false;
             }
         }
-        System.out.println("THIS PLAYER ( " + p.getColour() + " ) HAS WON");
+
+        uiController.output.appendText(p.getName() + " has won!");
         return true;
     }
 
