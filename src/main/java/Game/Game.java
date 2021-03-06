@@ -168,15 +168,17 @@ public class Game {
 
     /**
      * @param p is either gonna be player 1 or 2
+     * @param arrayOfCountries this is the country_owner array from GameLogic, i had to pass it in
+     *                         manually because the testisWinner would give me a null pointer if i didnt pass it in
      * @return a boolean value if the player has successfully taken over all the countries
      */
-    public boolean isWinner(Player p) {
-        for (int i = 0; i < logic.country_owner.length; i++) {
-            if (logic.country_owner[i] != p.getColour()) {
+    public boolean isWinner(Player p,Constants.PLAYER_COLOUR[] arrayOfCountries) {
+        for (int i = 0; i < arrayOfCountries.length; i++) {
+            if (arrayOfCountries[i] != p.getColour()) {
                 return false;
             }
         }
-        uiController.output.appendText(p.getName() + " has won!");
+//        uiController.output.appendText(p.getName() + " has won!");
         return true;
     }
 
