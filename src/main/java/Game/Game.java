@@ -176,7 +176,6 @@ public class Game {
                 return false;
             }
         }
-
         uiController.output.appendText(p.getName() + " has won!");
         return true;
     }
