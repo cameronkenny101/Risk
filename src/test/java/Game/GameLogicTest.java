@@ -1,6 +1,6 @@
 package Game;
 
-import GameScreen.GameScreenController;
+//import GameScreen.GameScreenController;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ public class GameLogicTest extends TestCase {
 
     @Test
     public void testCalculateReinforcements(){
-        Player testPlayer = new Player("Max", Constants.PLAYER_COLOUR.RED,1);
+        Player testPlayer = new Player("Max", Constants.PLAYER_COLOUR.RED);
         for(int i = 0 ; i < 7 ; i ++) {
             logic.country_owner[i] = Constants.PLAYER_COLOUR.RED;
         }
@@ -85,7 +85,7 @@ public class GameLogicTest extends TestCase {
 
     @Test
     public void testCalculateContReinforcements(){
-        Player player = new Player("MARK", Constants.PLAYER_COLOUR.RED,1);
+        Player player = new Player("MARK", Constants.PLAYER_COLOUR.RED);
         for(int i = 0; i < 42;i++){
             logic.country_owner[i] = Constants.PLAYER_COLOUR.RED;
         }

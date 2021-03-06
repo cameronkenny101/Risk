@@ -168,16 +168,14 @@ public class Game {
 
     /**
      * @param p is either gonna be player 1 or 2
-     * @return a boolean value if the player has sucessfully taken over all the countries
+     * @return a boolean value if the player has successfully taken over all the countries
      */
     public boolean isWinner(Player p) {
-
         for (int i = 0; i < logic.country_owner.length; i++) {
-            if (logic.getCountry_owner()[i] != p.getColour()) {
+            if (logic.country_owner[i] != p.getColour()) {
                 return false;
             }
         }
-
         uiController.output.appendText(p.getName() + " has won!");
         return true;
     }
