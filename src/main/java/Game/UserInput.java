@@ -41,7 +41,7 @@ public class UserInput {
 
         switch (question) {
             case "Press enter to choose your 9 cards from the deck":
-            case "Press enter to let neutrals choose there cards":
+            case "Press enter to let neutrals choose their cards":
                 game.start();
                 break;
             case "Press enter to roll the dice":
@@ -248,7 +248,7 @@ public class UserInput {
     }
 
     /**
-     * Takes user input for amount of troops the player wants to fortify there territory with
+     * Takes user input for amount of troops the player wants to fortify their territory with
      *
      * @param input  user input for number of troops to fortify
      * @param player player instance

@@ -41,21 +41,21 @@ public class Game {
         uiController.output.appendText("> Player 1 color: " + player1.getColour() + "\n");
         uiController.output.appendText("> Player 2 name: " + player2.getName() + "\n");
         uiController.output.appendText("> Player 2 color: " + player2.getColour() + "\n");
-        uiController.output.appendText("> It is " + player1.getColour() + " turn to choose there cards! \n");
+        uiController.output.appendText("> It is " + player1.getColour() + " turn to choose their cards! \n");
         uiController.askQuestion("Press enter to choose your 9 cards from the deck");
     }
 
     /**
-     * Starts the game, allowing players to choose there territory cards
+     * Starts the game, allowing players to choose their territory cards
      */
     public void start() {
         if (logic.getCountryIndex() == 0) {
             initCountries(Constants.PLAYER_COLOUR.RED, Constants.INIT_COUNTRIES_PLAYER, null);
-            uiController.output.appendText("> It is " + player2.getColour() + " turn to choose there cards! \n");
+            uiController.output.appendText("> It is " + player2.getColour() + " turn to choose their cards! \n");
             uiController.askQuestion("Press enter to choose your 9 cards from the deck");
         } else if (logic.getCountryIndex() == 9) {
             initCountries(Constants.PLAYER_COLOUR.BLUE, Constants.INIT_COUNTRIES_PLAYER, null);
-            uiController.askQuestion("Press enter to let neutrals choose there cards");
+            uiController.askQuestion("Press enter to let neutrals choose their cards");
         } else {
             initCountries(Constants.PLAYER_COLOUR.ORANGE, Constants.INIT_COUNTRIES_NEUTRAL, logic.getOwnedOrange());
             initCountries(Constants.PLAYER_COLOUR.PURPLE, Constants.INIT_COUNTRIES_NEUTRAL, logic.getOwnedPurple());
@@ -142,7 +142,7 @@ public class Game {
      */
     public void endInitPhase() {
         logic.endInitPhase();
-        uiController.output.appendText("> Everyone has allocated there troops! \n");
+        uiController.output.appendText("> Everyone has allocated their troops! \n");
         uiController.output.appendText("> We must decide who goes first! \n");
         uiController.askQuestion("Press enter to roll the dice");
     }
@@ -168,7 +168,7 @@ public class Game {
 
     /**
      * @param p is either gonna be player 1 or 2
-     * @return a boolean value if the player has sucessfully taken over all the countries
+     * @return a boolean value if the player has successfully taken over all the countries
      */
     public boolean isWinner(Player p) {
 
