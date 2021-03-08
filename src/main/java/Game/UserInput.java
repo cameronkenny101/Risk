@@ -13,6 +13,7 @@ public class UserInput {
     int adjacentIndex;
     int neutralTurnCountdown = Constants.NUM_PLAYERS;
     UserInputLogic userInputLogic = new UserInputLogic();
+    Battle battle;
 
     /**
      * Constructor for UserInput class
@@ -63,9 +64,152 @@ public class UserInput {
             case "What country will fortify your country":
                 countryToGive(input, player);
                 break;
+            case "Would you like to invade another country? (yes/no)":
+                askToBattle(input);
+            case "What country do you wish to attack from?":
+                battleFrom(input, player);
+            case "What country do you wish to attack?":
+                attackCountry(input, player);
+            case "How many units do you wish to attack for you?":
+                setAttackUnits(input, nextPlayer);
+            case "How many units do you wish to defend for you?":
+                setDefenceUnits(input, player, nextPlayer);
+            case "Do you want to move any additional troops to your new territory?":
+                askToMoveAdditionalTroops(input, player, nextPlayer);
+            case "How many troops do you want to add? (There must still be 1 troop left in your original territory)":
+                moveTroops(input, player, nextPlayer);
             case "How many troops do you want to move":
                 troopsToFortify(input, player);
                 break;
+        }
+    }
+
+    public void moveTroops(String troops, Player attacker, Player defender) {
+        int num = Integer.parseInt(troops);
+        if (game.logic.getTroop_count()[battle.attackCountryId] - num >= 1) {
+            game.logic.getTroop_count()[battle.attackCountryId] -= num;
+            game.logic.getTroop_count()[battle.defenceCountryId] += num;
+
+            game.uiController.setRegion(battle.defenceCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.defenceCountryId]);
+            game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId]);
+        } else {
+            game.uiController.output.appendText("Invalid number of troops\n");
+            game.uiController.askQuestion("Do you want to move any additional troops to your new territory?");
+        }
+    }
+
+    /**
+     * Asks to move additional troops after a victory
+     *
+     * @param input
+     * @param attacker
+     * @param defender
+     */
+    public void askToMoveAdditionalTroops(String input, Player attacker, Player defender) {
+        if (input.equals("yes")) {
+            game.uiController.askQuestion("How many troops do you want to add? (There must still be 1 troop left in your original territory)");
+        } else {
+            battle("no", attacker, defender);
+        }
+    }
+
+    public void battle(String input, Player attacker, Player defender) {
+        if (input.equals("yes")) {
+            // Roll dice
+            ArrayList<Integer> attackerDice = Dice.rollSetOfDice(battle.numAttackUnits);
+            ArrayList<Integer> defenderDice = Dice.rollSetOfDice(battle.numDefenceUnits);
+            game.uiController.output.appendText("Attacker has rolled the following dice: " + attackerDice + "\n");
+            game.uiController.output.appendText("Defender has rolled the following dice: " + defenderDice + "\n");
+
+            //Execute battle sequence
+            battle.calculateBattleSequence(attackerDice, defenderDice);
+
+            //if we win the battle
+            if (battle.invasionVictory) {
+                game.uiController.output.appendText("You have won the battled and claimed a new territory\n");
+                //set the regions in the UI
+                game.uiController.setRegion(battle.defenceCountryId, attacker.getColour(), battle.numAttackUnits);
+                game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId] - battle.numAttackUnits);
+
+                //Set Troop Counts:
+                game.logic.getTroop_count()[battle.defenceCountryId] = battle.numAttackUnits;
+                game.logic.getTroop_count()[battle.attackCountryId] -= battle.numAttackUnits;
+
+                game.uiController.askQuestion("Do you want to move any additional troops to your new territory?");
+            }
+        }
+    }
+
+    public void setDefenceUnits(String troops, Player attacker, Player defender) {
+        battle.numDefenceUnits = Integer.parseInt(troops);
+        boolean valid = battle.assertValidDefenders();
+        if (!valid) {
+            game.uiController.output.appendText("You chose an invalid number of troops. You have " + game.logic.getTroop_count()[battle.numDefenceUnits] + " troops available and you may only choose between 1 and 3. \n");
+            game.uiController.askQuestion("How many units do you wish to defend for you?");
+        } else {
+            battle("yes", attacker, defender);
+        }
+    }
+
+    public void setAttackUnits(String troops, Player player) {
+        battle.numAttackUnits = Integer.parseInt(troops);
+        boolean valid = battle.assertValidAttackers();
+        if (!valid) {
+            game.uiController.output.appendText("You chose an invalid number of troops. You have " + game.logic.getTroop_count()[battle.attackCountryId] + " troops available and you may only choose between 1 and 3. \n");
+            game.uiController.askQuestion("How many units do you wish to attack for you?");
+        } else {
+            game.uiController.output.appendText("The defending player, " + player.getName() + ", must now choose how many units to defend with.\n ");
+            game.uiController.askQuestion("How many units do you wish to defend for you?");
+        }
+    }
+
+    public void attackCountry(String country, Player player) {
+        battle.defenceCountryId = userInputLogic.shortCountryName(country);
+        boolean adj = battle.assertAdjacent();
+        if (!adj) {
+            game.uiController.output.appendText(Constants.COUNTRY_NAMES.get(countryIndex) + " You choose a country that is not adjacent.\n");
+            game.uiController.askQuestion("What country do you wish to attack?");
+        } else if (game.logic.getCountry_owner()[countryIndex] != player.getColour()) {
+            game.uiController.output.appendText("> You selected the country " + Constants.COUNTRY_NAMES.get(countryIndex) + " to attack.\n");
+            game.uiController.askQuestion("How many units do you wish to attack for you?");
+        } else {
+            game.uiController.output.appendText(Constants.COUNTRY_NAMES.get(countryIndex) + " You choose a country that you own. \n");
+            game.uiController.askQuestion("What country do you wish to attack?");
+        }
+    }
+
+    /**
+     * Ask do you want battle a country?
+     *
+     * @param input yes or no string to start battle
+     */
+    private void askToBattle(String input) {
+        if (input.equals("yes")) {
+            game.uiController.askQuestion("What country do you wish to attack from?");
+        } else {
+            game.uiController.output.appendText("> You chose not to battle.\n");
+            game.uiController.askQuestion("Do you want to fortify your territories");
+        }
+    }
+
+    /**
+     * Asks a user for a country to battle from
+     *
+     * @param country the input of the country
+     * @param player  the current players instance
+     */
+    private void battleFrom(String country, Player player) {
+        battle.attackCountryId = userInputLogic.shortCountryName(country);
+
+        if (game.logic.getTroop_count()[battle.attackCountryId] <= 1) {
+            game.uiController.output.appendText(Constants.COUNTRY_NAMES.get(countryIndex) + " You chose a country that has less than two troops. \n");
+            game.uiController.askQuestion("What country do you wish to attack from?");
+        } else if (game.logic.getCountry_owner()[countryIndex] == player.getColour()) {
+            game.uiController.output.appendText("> You selected the country " + Constants.COUNTRY_NAMES.get(countryIndex) + " to attack from.\n");
+            game.uiController.askQuestion("What country do you wish to attack?");
+        } else {
+            game.uiController.output.appendText(Constants.COUNTRY_NAMES.get(countryIndex) + " You chose a country you do not own. \n");
+            game.uiController.askQuestion("What country do you wish to attack from?");
         }
     }
 
@@ -139,8 +283,8 @@ public class UserInput {
             game.uiController.output.appendText("> You have " + player.getInitTroops() + " troops left to move \n");
             game.uiController.askQuestion("How many troops do you want to place");
         } else {
-            if(game.isWinner(player,game.logic.country_owner) == true){
-                game.isWinner(player,game.logic.country_owner);
+            if (game.isWinner(player, game.logic.country_owner)) {
+                game.isWinner(player, game.logic.country_owner);
             }
             userInputLogic.nextTurn(player, nextPlayer);
             neutralTurnCountdown--;
@@ -294,6 +438,59 @@ public class UserInput {
 
     public void setAdjacentIndex(int adjacentIndex) {
         this.adjacentIndex = adjacentIndex;
+    }
+
+    /*Stores variables for attacking*/
+    public class Battle {
+        int attackCountryId;
+        int defenceCountryId;
+        int numAttackUnits;
+        int numDefenceUnits;
+        boolean invasionVictory;
+
+        /**
+         * Asserts that the two countries are adjacent
+         *
+         * @return true if the countries are adjacent
+         */
+        public boolean assertAdjacent() {
+            //Assert that the country is adjacent
+            for (int adjCountry : Constants.ADJACENT[attackCountryId]) {
+                if (defenceCountryId == adjCountry) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public boolean assertValidAttackers() {
+            //Assert that the number of troops used to attack is valid
+            return numAttackUnits >= 2 && game.logic.troop_count[attackCountryId] - 1 <= numAttackUnits && numAttackUnits <= 3;
+        }
+
+        public boolean assertValidDefenders() {
+            //Assert number of defence units is valid
+            return numDefenceUnits <= 2 && numDefenceUnits <= game.logic.troop_count[defenceCountryId];
+        }
+
+        public void calculateBattleSequence(ArrayList<Integer> attackerDice, ArrayList<Integer> defenderDice) {
+            for (int i = 0; i < Math.min(numAttackUnits, numDefenceUnits); i++) {
+                if (attackerDice.get(i) > defenderDice.get(i)) {
+                    game.logic.getTroop_count()[defenceCountryId]--;
+                    numDefenceUnits--;
+                } else {
+                    game.logic.getTroop_count()[attackCountryId]--;
+                    numAttackUnits--;
+                }
+                if (numDefenceUnits == 0) {
+                    invasionVictory = true;
+                    break;
+                }
+                if (numAttackUnits == 0) {
+                    break;
+                }
+            }
+        }
     }
 }
 

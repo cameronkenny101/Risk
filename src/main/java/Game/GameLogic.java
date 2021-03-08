@@ -6,7 +6,7 @@ import java.util.Collections;
 public class GameLogic {
 
     protected Constants.PLAYER_COLOUR[] country_owner = new Constants.PLAYER_COLOUR[Constants.NUM_COUNTRIES]; // Tells which players owns which country
-    private final int[] troop_count = new int[Constants.NUM_COUNTRIES]; // States the number of troops per country
+    public final int[] troop_count = new int[Constants.NUM_COUNTRIES]; // States the number of troops per country
     private final ArrayList<Integer> ownedOrange = new ArrayList<>(); // Countries Orange neutral owns
     private final ArrayList<Integer> ownedPurple = new ArrayList<>(); // Countries Purple neutral owns
     private final ArrayList<Integer> ownedGreen = new ArrayList<>(); // Countries Green neutral owns
@@ -100,49 +100,7 @@ public class GameLogic {
     }
 
 
-    public void calculateBattleSequence(int attackCountryId, int defenceCountryId, int numAttackUnits, int numDefenceUnits) {
-        ArrayList<Integer> attackerDice = Dice.rollSetOfDice(numAttackUnits);
-        ArrayList<Integer> defenderDice = Dice.rollSetOfDice(numDefenceUnits);
 
-        for (int i = 0; i < Math.min(numAttackUnits, numDefenceUnits); i++) {
-            if (attackerDice.get(i) > defenderDice.get(i)) {
-                troop_count[defenceCountryId]--;
-            } else {
-                troop_count[attackCountryId]--;
-            }
-            if (troop_count[defenceCountryId] == 0 || troop_count[attackCountryId] == 0)
-                break;
-        }
-    }
-
-    /**
-     * Asserts that the battle being done is valid
-     *
-     * @param attackCountryId  id of the country attacking
-     * @param defenceCountryId id of the country defending
-     * @param numAttackUnits   number of units attacking
-     * @param numDefenceUnits  number of units defending
-     */
-    private void assertValidBattle(int attackCountryId, int defenceCountryId, int numAttackUnits, int numDefenceUnits) {
-        //Assert that the number of troops used to attack is valid
-        if (numAttackUnits < 2 || troop_count[attackCountryId] - 1 > numAttackUnits || numAttackUnits > 3)
-            throw new IllegalArgumentException("Invalid number of troops to attack");
-
-        //Assert number of defence units is valid
-        if (numDefenceUnits > 2 || numDefenceUnits > troop_count[defenceCountryId])
-            throw new IllegalArgumentException("Invalid number of troops to defend");
-
-        //Assert that the country is adjacent
-        boolean isAdj = false;
-        for (int adjCountry : Constants.ADJACENT[attackCountryId]) {
-            if (defenceCountryId == adjCountry) {
-                isAdj = true;
-                break;
-            }
-        }
-        if (!isAdj)
-            throw new IllegalArgumentException("Attack Country is not adjacent");
-    }
 
     public void endInitPhase() {
         initPhase = false;
