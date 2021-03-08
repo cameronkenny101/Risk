@@ -137,6 +137,8 @@ public class UserInput {
 
                 game.uiController.askQuestion("Do you want to move any additional troops to your new territory?");
             }
+        } else {
+            //TODO: ask if they want to call off invasion, invade a new territory, or end combat
         }
     }
 
