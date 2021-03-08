@@ -51,7 +51,7 @@ public class Game {
     public void start() {
         if (logic.getCountryIndex() == 0) {
             initCountries(Constants.PLAYER_COLOUR.RED, Constants.INIT_COUNTRIES_PLAYER, null);
-            uiController.output.appendText("> It is " + player2.getColour() + " turn to choose their cards! \n");
+            uiController.output.appendText("> It is " + player2.getColour() + "'s turn to choose their cards! \n");
             uiController.askQuestion("Press enter to choose your 9 cards from the deck");
         } else if (logic.getCountryIndex() == 9) {
             initCountries(Constants.PLAYER_COLOUR.BLUE, Constants.INIT_COUNTRIES_PLAYER, null);
@@ -181,4 +181,7 @@ public class Game {
         return true;
     }
 
+    public void combatMode() {
+
+    }
 }

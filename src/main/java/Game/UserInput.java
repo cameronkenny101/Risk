@@ -8,7 +8,6 @@ public class UserInput {
 
     Game game;
     Player player1, player2;
-    Dice dice;
     int troops;
     int countryIndex;
     int adjacentIndex;
@@ -26,7 +25,6 @@ public class UserInput {
         this.game = game;
         this.player1 = player1;
         this.player2 = player2;
-        this.dice = new Dice();
     }
 
     /**

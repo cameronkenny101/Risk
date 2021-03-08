@@ -1,5 +1,7 @@
 package Game;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Random;
 
 public class Dice {
@@ -23,17 +25,18 @@ public class Dice {
     }
 
     /**
-     * Rolls a dice numOfdice times and returns the highest dice rolled
+     * Rolls a set of dice in descending order
      *
      * @param numOfDice number of dice to roll
-     * @return highest roll of teh dice
+     * @return a set of dice in descending order
      */
-    public static int highRoll(int numOfDice) {
-        int maxDice = rollOneDice();
-        for (int i = 0; i < numOfDice - 1; i++) {
-            maxDice = Math.max(maxDice, rollOneDice());
+    public static ArrayList<Integer> rollSetOfDice(int numOfDice) {
+        ArrayList<Integer> setOfDice = new ArrayList<>();
+        for (int i = 0; i < numOfDice; i++) {
+            setOfDice.add(rollOneDice());
         }
-        return maxDice;
+        setOfDice.sort(Comparator.reverseOrder());
+        return setOfDice;
     }
 
     /**
