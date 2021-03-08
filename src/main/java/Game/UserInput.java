@@ -139,7 +139,9 @@ public class UserInput {
             game.uiController.output.appendText("> You have " + player.getInitTroops() + " troops left to move \n");
             game.uiController.askQuestion("How many troops do you want to place");
         } else {
-            game.isWinner(player);
+            if(game.isWinner(player,game.logic.country_owner) == true){
+                game.isWinner(player,game.logic.country_owner);
+            }
             userInputLogic.nextTurn(player, nextPlayer);
             neutralTurnCountdown--;
             if (neutralTurnCountdown == 0)

@@ -1,6 +1,10 @@
 package Game;
 
+<<<<<<< HEAD
 import UI.GameScreen.GameScreenController;
+=======
+//import GameScreen.GameScreenController;
+>>>>>>> 5d5c8d16c507176450ed6ce3db28e12fae6a008d
 import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
 
@@ -55,9 +59,15 @@ public class GameLogicTest extends TestCase {
     }
 
     @Test
+<<<<<<< HEAD
     public void testCalculateReinforcements() {
         Player testPlayer = new Player("Max", Constants.PLAYER_COLOUR.RED);
         for (int i = 0; i < 7; i++) {
+=======
+    public void testCalculateReinforcements(){
+        Player testPlayer = new Player("Max", Constants.PLAYER_COLOUR.RED);
+        for(int i = 0 ; i < 7 ; i ++) {
+>>>>>>> 5d5c8d16c507176450ed6ce3db28e12fae6a008d
             logic.country_owner[i] = Constants.PLAYER_COLOUR.RED;
         }
         assertEquals(3, logic.calculateReinforcements(testPlayer));
@@ -85,9 +95,15 @@ public class GameLogicTest extends TestCase {
     }
 
     @Test
+<<<<<<< HEAD
     public void testCalculateContReinforcements() {
         Player player = new Player("MARK", Constants.PLAYER_COLOUR.RED);
         for (int i = 0; i < 42; i++) {
+=======
+    public void testCalculateContReinforcements(){
+        Player player = new Player("MARK", Constants.PLAYER_COLOUR.RED);
+        for(int i = 0; i < 42;i++){
+>>>>>>> 5d5c8d16c507176450ed6ce3db28e12fae6a008d
             logic.country_owner[i] = Constants.PLAYER_COLOUR.RED;
         }
 
