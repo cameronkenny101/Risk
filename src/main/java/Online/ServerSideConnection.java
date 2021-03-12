@@ -1,9 +1,8 @@
 package Online;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ServerSideConnection implements Runnable {
 
@@ -13,6 +12,7 @@ public class ServerSideConnection implements Runnable {
     private int playerID;
     private String playerName;
     private String playerColor;
+    private ArrayList<Integer> countries;
 
     public ServerSideConnection(Socket s, int id) {
         socket = s;
@@ -52,11 +52,30 @@ public class ServerSideConnection implements Runnable {
         dataOut.flush();
     }
 
+    public void getArray() throws IOException, ClassNotFoundException {
+        countries = new ArrayList<>();
+        int size = dataIn.readInt();
+        for(int i = 0; i < size; i++)
+            countries.add(dataIn.readInt());
+    }
+
+    public void sendArray(ArrayList<Integer> countries) throws IOException {
+        dataOut.writeInt(countries.size());
+        for (Integer country : countries) {
+            dataOut.writeInt(country);
+        }
+        dataOut.flush();
+    }
+
     public String getPlayerColor() {
         return playerColor;
     }
 
     public String getPlayerName() {
         return playerName;
+    }
+
+    public ArrayList<Integer> getCountries() {
+        return countries;
     }
 }

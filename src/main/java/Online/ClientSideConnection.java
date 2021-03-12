@@ -2,10 +2,9 @@ package Online;
 
 import Game.Constants;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ClientSideConnection {
 
@@ -39,6 +38,19 @@ public class ClientSideConnection {
         }
     }
 
+    public void writeArrayInfo(ArrayList<Integer> countryArray) {
+        System.out.println("Sending array");
+        try {
+            dataOut.writeInt(countryArray.size());
+            for (Integer integer : countryArray) {
+                dataOut.writeInt(integer);
+            }
+            dataOut.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String[] receivePlayerInfo() {
         String[] playerInfo = new String[2];
         try {
@@ -48,6 +60,18 @@ public class ClientSideConnection {
             e.printStackTrace();
         }
         return playerInfo;
+    }
+
+    public ArrayList<Integer> receiveArrayInfo() {
+        ArrayList<Integer> countries = new ArrayList<>();
+        try {
+            int size = dataIn.readInt();
+            for(int i = 0; i < size; i++)
+                countries.add(dataIn.readInt());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return countries;
     }
 
     public int getPlayerID() {

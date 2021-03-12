@@ -43,8 +43,10 @@ public class Server {
             player2.getPlayer();
             player2.sendPlayerInfo(player1.getPlayerName(), player1.getPlayerColor());
             player1.sendPlayerInfo(player2.getPlayerName(), player2.getPlayerColor());
+            player1.getArray();
+            player2.sendArray(player1.getCountries());
 
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error in acceptConnections method");
             e.printStackTrace();
         }

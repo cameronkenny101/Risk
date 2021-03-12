@@ -2,6 +2,8 @@ package Online;
 
 import Game.Constants;
 
+import java.util.ArrayList;
+
 public class OnlineGameHandler {
 
     private static OnlineGameHandler instance = new OnlineGameHandler();
@@ -19,6 +21,10 @@ public class OnlineGameHandler {
 
     public void startGame(String name, Constants.PLAYER_COLOUR colour, ClientSideConnection csc) {
         csc.writePlayerInfo(name, colour);
+    }
+
+    public void sendRandomCountries(ArrayList<Integer> randomCountries, ClientSideConnection csc) {
+        csc.writeArrayInfo(randomCountries);
     }
 
 }

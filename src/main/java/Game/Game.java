@@ -1,7 +1,9 @@
 package Game;
 
+import Online.OnlineGameHandler;
 import UI.GameScreen.GameScreenController;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Game {
@@ -9,6 +11,7 @@ public class Game {
     GameScreenController uiController;
     Player player1, player2;
     GameLogic logic;
+    OnlineGameHandler onlineGameHandler;
     boolean isOnline = false;
 
     /**
@@ -27,17 +30,20 @@ public class Game {
     }
 
     // Online Constructor
-    public Game(GameScreenController uiController, Player player) {
+    public Game(GameScreenController uiController, Player player) throws IOException {
         this.uiController = uiController;
         this.isOnline = true;
+        this.onlineGameHandler = OnlineGameHandler.getInstance();
         initClasses();
         if(player.getCsc().getPlayerID() == 1) {
             this.player1 = player;
             uiController.output.appendText("> Waiting for player 2 \n");
             Thread t = new Thread(this::startGame);
             t.start();
+            onlineGameHandler.sendRandomCountries(logic.getRandomCountries(), player1.getCsc());
         } else {
             String[] playerInfo = player.getCsc().receivePlayerInfo();
+            logic.setRandomCountriesOnline(player.getCsc().receiveArrayInfo());
             this.player1 = new Player(playerInfo[0], playerInfo[1]);
             this.player2 = player;
             player2.setColour(Constants.PLAYER_COLOUR.BLUE);
@@ -69,14 +75,8 @@ public class Game {
         uiController.askQuestion("Press enter to choose your 9 cards from the deck");
         if(isOnline && !isPlayer1)
             uiController.output.appendText("> Wait for player 1 to choose there cards");
-        else if(isOnline)
-            sendRandomCountries();
         else
             uiController.askQuestion("Press enter to choose your 9 cards from the deck");
-    }
-
-    public void sendRandomCountries() {
-
     }
 
     public void startGame() {
@@ -213,8 +213,8 @@ public class Game {
      * @return a boolean value if the player has successfully taken over all the countries
      */
     public boolean isWinner(Player p,Constants.PLAYER_COLOUR[] arrayOfCountries) {
-        for (int i = 0; i < arrayOfCountries.length; i++) {
-            if (arrayOfCountries[i] != p.getColour()) {
+        for (Constants.PLAYER_COLOUR arrayOfCountry : arrayOfCountries) {
+            if (arrayOfCountry != p.getColour()) {
                 return false;
             }
         }

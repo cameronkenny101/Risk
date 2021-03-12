@@ -13,7 +13,7 @@ public class GameLogic {
     private final ArrayList<Integer> ownedGray = new ArrayList<>(); // Countries Gray neutral owns
     private int countryIndex = 0;
     private boolean initPhase = true;
-    private final ArrayList<Integer> randomCountries = new ArrayList<>();
+    private ArrayList<Integer> randomCountries = new ArrayList<>();
 
     /**
      * Logic for taking a territory
@@ -63,8 +63,8 @@ public class GameLogic {
                 calculateContReinforcements(player, 32, 36, 4, 2) + //For South America
                 calculateContReinforcements(player, 36, 42, 6, 3); //For Africa
 
-        for (int i = 0; i < country_owner.length; i++) {
-            if (country_owner[i] == player.getColour()) {
+        for (Constants.PLAYER_COLOUR colour : country_owner) {
+            if (colour == player.getColour()) {
                 countryControlled++;
             }
         }
@@ -120,6 +120,10 @@ public class GameLogic {
 
     public ArrayList<Integer> getRandomCountries() {
         return randomCountries;
+    }
+
+    public void setRandomCountriesOnline(ArrayList<Integer> randomCountries) {
+        this.randomCountries = randomCountries;
     }
 
     public ArrayList<Integer> getOwnedGray() {
