@@ -1,5 +1,6 @@
 package UI.MainMenu;
 
+import UI.NameScreen.NameScreenController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -33,7 +34,17 @@ public class MenuItem extends StackPane {
         if (value == 0) {
             setOnMouseClicked(event -> {
                 try {
-                    switchScene();
+                    switchScene(false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+
+        if(value == 1) {
+            setOnMouseClicked(event -> {
+                try {
+                    switchScene(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -57,10 +68,15 @@ public class MenuItem extends StackPane {
         }
     }
 
-    private void switchScene() throws Exception {
+    private void switchScene(boolean online) throws Exception {
         Stage stage = (Stage) getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("../NameScreen/NameScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../NameScreen/NameScreen.fxml"));
+        Parent root = loader.load();
+        NameScreenController playerScreenController = loader.getController();
         Scene scene = new Scene(root, 1023, 437);
         stage.setScene(scene);
+
+        if(online)
+            playerScreenController.setOnline();
     }
 }

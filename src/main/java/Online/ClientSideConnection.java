@@ -1,4 +1,4 @@
-package SocketProgramming;
+package Online;
 
 import Game.Constants;
 

@@ -1,6 +1,6 @@
 package Game;
 
-import SocketProgramming.ClientSideConnection;
+import Online.ClientSideConnection;
 
 /**
  * This class is used for storing critical game data
@@ -30,15 +30,15 @@ public class Player {
     }
 
     // Constructors for online game
-    public Player(String name, Constants.PLAYER_COLOUR colour, int commanderID, boolean isOnline) {
-        this(name, colour, commanderID);
+    public Player(String name, Constants.PLAYER_COLOUR colour, boolean isOnline) {
+        this(name, colour);
         connectToServer();
         Thread t = new Thread(() -> startGame(name, colour));
         t.start();
     }
 
     public Player(String name, String color) {
-        this(name, Constants.PLAYER_COLOUR.RED, 1);
+        this(name, Constants.PLAYER_COLOUR.RED);
     }
 
     public void startGame(String name, Constants.PLAYER_COLOUR colour) {

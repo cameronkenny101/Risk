@@ -28,6 +28,11 @@ public class UserInput {
         this.player2 = player2;
     }
 
+    public UserInput(Game game, Player player) {
+        this.game = game;
+        this.player1 = player;
+    }
+
     /**
      * This is used to align a question with a given answer
      *

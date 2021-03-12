@@ -19,7 +19,13 @@ public class NameScreenController {
     private TextField username;
     String[] name = new String[Constants.NUM_PLAYERS];
     int playerNum = 0;
-    UserInput userInput;
+    UserInput input;
+    Game game;
+    boolean isOnline = false;
+
+    public void setOnline() {
+        isOnline = true;
+    }
 
     @FXML
     public void ButtonClicked(Event evt) throws Exception {
@@ -31,6 +37,9 @@ public class NameScreenController {
     public void TextField() throws Exception {
         if (username.getText().equals("")) {
             username.clear();
+        } else if(isOnline) {
+            name[playerNum] = username.getText();
+            writingDetailsForPlayers();
         } else {
             name[playerNum] = username.getText();
             if (playerNum == Constants.NUM_PLAYERS - 1)
@@ -40,18 +49,26 @@ public class NameScreenController {
     }
 
     private void writingDetailsForPlayers() throws Exception {
-        Player player1 = new Player(name[0], Constants.PLAYER_COLOUR.RED);
-        Player player2 = new Player(name[1], Constants.PLAYER_COLOUR.BLUE);
-
         Stage stage = (Stage) username.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../GameScreen/gameScreen.fxml"));
         Parent root = (Parent) loader.load();
         GameScreenController gameScreenController = loader.getController();
-        Scene scene = new Scene(root, 1320, 700);
-        stage.setScene(scene);
-        Game game = new Game(gameScreenController, player1, player2);
-        userInput = new UserInput(game, player1, player2);
-        gameScreenController.receiveHandler(game, userInput);
+
+        if(isOnline) {
+            Player player = new Player(name[0], Constants.PLAYER_COLOUR.RED, isOnline);
+            Scene scene = new Scene(root, 1320, 700);
+            stage.setScene(scene);
+            game = new Game(gameScreenController, player);
+            input = new UserInput(game, player);
+        } else {
+            Player player1 = new Player(name[0], Constants.PLAYER_COLOUR.RED);
+            Player player2 = new Player(name[1], Constants.PLAYER_COLOUR.BLUE);
+            Scene scene = new Scene(root, 1320, 700);
+            stage.setScene(scene);
+            game = new Game(gameScreenController, player1, player2);
+            input = new UserInput(game, player1, player2);
+        }
+        gameScreenController.receiveHandler(game, input);
     }
 
 }

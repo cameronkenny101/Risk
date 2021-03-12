@@ -1,4 +1,4 @@
-package SocketProgramming;
+package Online;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

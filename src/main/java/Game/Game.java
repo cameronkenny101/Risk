@@ -9,6 +9,7 @@ public class Game {
     GameScreenController uiController;
     Player player1, player2;
     GameLogic logic;
+    boolean isOnline = false;
 
     /**
      * Used to start up the game and create player objects and a uiController
@@ -21,9 +22,32 @@ public class Game {
         this.uiController = uiController;
         this.player1 = player1;
         this.player2 = player2;
+        initClasses();
+        printPlayerToConsole(true);
+    }
+
+    // Online Constructor
+    public Game(GameScreenController uiController, Player player) {
+        this.uiController = uiController;
+        this.isOnline = true;
+        initClasses();
+        if(player.getCsc().getPlayerID() == 1) {
+            this.player1 = player;
+            uiController.output.appendText("> Waiting for player 2 \n");
+            Thread t = new Thread(this::startGame);
+            t.start();
+        } else {
+            String[] playerInfo = player.getCsc().receivePlayerInfo();
+            this.player1 = new Player(playerInfo[0], playerInfo[1]);
+            this.player2 = player;
+            player2.setColour(Constants.PLAYER_COLOUR.BLUE);
+            printPlayerToConsole(false);
+        }
+    }
+
+    private void initClasses() {
         logic = new GameLogic();
         logic.setRandomCountries();
-        printPlayerToConsole();
     }
 
     /**
@@ -36,13 +60,23 @@ public class Game {
     /**
      * Used to display basic player info on game start up
      */
-    private void printPlayerToConsole() {
+    private void printPlayerToConsole(boolean isPlayer1) {
         uiController.output.appendText("> Player 1 name: " + player1.getName() + "\n");
         uiController.output.appendText("> Player 1 color: " + player1.getColour() + "\n");
         uiController.output.appendText("> Player 2 name: " + player2.getName() + "\n");
         uiController.output.appendText("> Player 2 color: " + player2.getColour() + "\n");
         uiController.output.appendText("> It is " + player1.getColour() + " turn to choose their cards! \n");
         uiController.askQuestion("Press enter to choose your 9 cards from the deck");
+        if(isOnline && !isPlayer1)
+            uiController.output.appendText("> Wait for player 1 to choose there cards");
+        else
+            uiController.askQuestion("Press enter to choose your 9 cards from the deck");
+    }
+
+    public void startGame() {
+        String[] playerInfo = player1.getCsc().receivePlayerInfo();
+        this.player2 = new Player(playerInfo[0], Constants.PLAYER_COLOUR.BLUE);
+        printPlayerToConsole(true);
     }
 
     /**
