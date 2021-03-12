@@ -55,7 +55,7 @@ public class NameScreenController {
         GameScreenController gameScreenController = loader.getController();
 
         if(isOnline) {
-            Player player = new Player(name[0], Constants.PLAYER_COLOUR.RED, isOnline);
+            Player player = new Player(name[0], Constants.PLAYER_COLOUR.RED, true);
             Scene scene = new Scene(root, 1320, 700);
             stage.setScene(scene);
             game = new Game(gameScreenController, player);

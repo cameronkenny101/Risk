@@ -1,6 +1,7 @@
 package Game;
 
 import Online.ClientSideConnection;
+import Online.OnlineGameHandler;
 
 /**
  * This class is used for storing critical game data
@@ -13,6 +14,7 @@ public class Player {
     private int troops;
     private int initTroops;
     private boolean isTurn;
+    OnlineGameHandler onlineGameHandler;
     private ClientSideConnection csc;
 
     /**
@@ -32,25 +34,21 @@ public class Player {
     // Constructors for online game
     public Player(String name, Constants.PLAYER_COLOUR colour, boolean isOnline) {
         this(name, colour);
-        connectToServer();
-        Thread t = new Thread(() -> startGame(name, colour));
-        t.start();
-    }
-
-    public Player(String name, String color) {
-        this(name, Constants.PLAYER_COLOUR.RED);
-    }
-
-    public void startGame(String name, Constants.PLAYER_COLOUR colour) {
-        csc.writePlayerInfo(name, colour);
-    }
-
-    public void connectToServer() {
+        setOnlineGameHandler();
         csc = new ClientSideConnection();
+        onlineGameHandler.connectPlayerToServer(name, colour, csc);
+    }
+
+    private void setOnlineGameHandler() {
+        this.onlineGameHandler = OnlineGameHandler.getInstance();
     }
 
     public ClientSideConnection getCsc() {
         return csc;
+    }
+
+    public Player(String name, String color) {
+        this(name, Constants.PLAYER_COLOUR.RED);
     }
 
     /**

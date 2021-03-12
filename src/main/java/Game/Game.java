@@ -69,8 +69,14 @@ public class Game {
         uiController.askQuestion("Press enter to choose your 9 cards from the deck");
         if(isOnline && !isPlayer1)
             uiController.output.appendText("> Wait for player 1 to choose there cards");
+        else if(isOnline)
+            sendRandomCountries();
         else
             uiController.askQuestion("Press enter to choose your 9 cards from the deck");
+    }
+
+    public void sendRandomCountries() {
+
     }
 
     public void startGame() {
