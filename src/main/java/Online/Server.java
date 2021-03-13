@@ -1,5 +1,7 @@
 package Online;
 
+import Game.Player;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -42,7 +44,8 @@ public class Server {
             getPlayers();
             sendPlayerInfo();
             getAndSendMap();
-            waitForMove();
+            waitForMove(player1, player2);
+            waitForMove(player2, player1);
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error in acceptConnections method");
             e.printStackTrace();
@@ -64,12 +67,12 @@ public class Server {
         player2.sendArray(player1.getCountries());
     }
 
-    public void waitForMove() throws IOException {
+    public void waitForMove(ServerSideConnection player, ServerSideConnection nextPlayer) throws IOException {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    player2.sendBoolean(player1.getBoolean());
+                    nextPlayer.sendBoolean(player.getBoolean());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

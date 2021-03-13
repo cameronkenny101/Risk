@@ -77,7 +77,7 @@ public class Game {
         uiController.output.appendText("> It is " + player1.getColour() + " turn to choose their cards! \n");
         if(isOnline && !isPlayer1) {
             uiController.output.appendText("> Wait for player 1 to choose there cards\n");
-            Thread t = new Thread(this::nextMove);
+            Thread t = new Thread(() -> nextMove(player1, player2));
             t.start();
         }
         else
@@ -92,12 +92,17 @@ public class Game {
         player2.setTurn(false);
     }
 
-    public void nextMove() {
-        player2.getCsc().receiveBoolean();
+    public void nextMove(Player player, Player nextPlayer) {
+        nextPlayer.getCsc().receiveBoolean();
         Platform.runLater(() -> {
-            initCountries(player1.getColour(), Constants.INIT_COUNTRIES_PLAYER, null);
-            uiController.output.appendText("> It is " + player2.getColour() + "'s turn to choose their cards! \n");
-            uiController.askQuestion("Press enter to choose your 9 cards from the deck");
+            initCountries(player.getColour(), Constants.INIT_COUNTRIES_PLAYER, null);
+            if(player.getColour() == Constants.PLAYER_COLOUR.RED) {
+                uiController.output.appendText("> It is " + nextPlayer.getColour() + "'s turn to choose their cards! \n");
+                uiController.askQuestion("Press enter to choose your 9 cards from the deck");
+            } else {
+                uiController.output.appendText("> Players have chosen all there cards\n");
+                uiController.askQuestion("Press enter to let neutrals choose their cards");
+            }
         });
     }
 
@@ -107,8 +112,15 @@ public class Game {
     public void start() {
         if (logic.getCountryIndex() == 0) {
             initCountries(player1.getColour(), Constants.INIT_COUNTRIES_PLAYER, null);
-            uiController.output.appendText("> It is " + player2.getColour() + "'s turn to choose their cards! \n");
-            uiController.askQuestion("Press enter to choose your 9 cards from the deck");
+            if(isOnline) {
+                uiController.output.appendText("> It is " + player2.getColour() + "'s turn to choose their cards! \n");
+                uiController.output.appendText("> Wait for player 2 to choose there cards\n");
+                Thread t = new Thread(() -> nextMove(player2, player1));
+                t.start();
+            } else {
+                uiController.output.appendText("> It is " + player2.getColour() + "'s turn to choose their cards! \n");
+                uiController.askQuestion("Press enter to choose your 9 cards from the deck");
+            }
         } else if (logic.getCountryIndex() == 9) {
             initCountries(player2.getColour(), Constants.INIT_COUNTRIES_PLAYER, null);
             uiController.askQuestion("Press enter to let neutrals choose their cards");
@@ -162,6 +174,8 @@ public class Game {
                 ownedCountries.add(logic.getRandomCountries().get(logic.getCountryIndex()));
             uiController.output.appendText("> " + color + " selects " + Constants.COUNTRY_NAMES.get(i) + " card\n");
         }
+        player1.setTurn(!player1.isTurn());
+        player2.setTurn(!player2.isTurn());
     }
 
     /**
