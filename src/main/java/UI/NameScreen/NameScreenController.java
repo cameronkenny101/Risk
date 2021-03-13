@@ -59,7 +59,7 @@ public class NameScreenController {
             Scene scene = new Scene(root, 1320, 700);
             stage.setScene(scene);
             game = new Game(gameScreenController, player);
-            input = new UserInput(game, player);
+            input = new UserInput(game);
         } else {
             Player player1 = new Player(name[0], Constants.PLAYER_COLOUR.RED);
             Player player2 = new Player(name[1], Constants.PLAYER_COLOUR.BLUE);

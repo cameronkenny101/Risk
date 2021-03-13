@@ -51,6 +51,16 @@ public class ClientSideConnection {
         }
     }
 
+    public void writeBoolean(boolean nextMove) {
+        System.out.println("Sending bool for next move");
+        try {
+            dataOut.writeBoolean(nextMove);
+            dataOut.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String[] receivePlayerInfo() {
         String[] playerInfo = new String[2];
         try {
@@ -72,6 +82,16 @@ public class ClientSideConnection {
             e.printStackTrace();
         }
         return countries;
+    }
+
+    public boolean receiveBoolean() {
+        boolean nextMove = false;
+        try {
+            nextMove = dataIn.readBoolean();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return nextMove;
     }
 
     public int getPlayerID() {

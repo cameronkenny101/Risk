@@ -27,4 +27,8 @@ public class OnlineGameHandler {
         csc.writeArrayInfo(randomCountries);
     }
 
+    public void sendNextMove(ClientSideConnection csc) {
+        csc.writeBoolean(true);
+    }
+
 }

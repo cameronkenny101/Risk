@@ -28,9 +28,8 @@ public class UserInput {
         this.player2 = player2;
     }
 
-    public UserInput(Game game, Player player) {
+    public UserInput(Game game) {
         this.game = game;
-        this.player1 = player;
     }
 
     /**
@@ -40,12 +39,15 @@ public class UserInput {
      * @param input    the input of the user ie in response to how many troops question "3" troops
      */
     public void receiveInput(String question, String input) {
-        Player player = player1.isTurn() ? player1 : player2;
-        Player nextPlayer = player1.isTurn() ? player2 : player1;
+        Player player = game.player1.isTurn() ? game.player1 : game.player2;
+        Player nextPlayer = game.player1.isTurn() ? game.player2 : game.player1;
 
         switch (question) {
             case "Press enter to choose your 9 cards from the deck":
             case "Press enter to let neutrals choose their cards":
+                if(game.isOnline) {
+                    player.onlineGameHandler.sendNextMove(player.getCsc());
+                }
                 game.start();
                 break;
             case "Press enter to roll the dice":

@@ -3,6 +3,7 @@ package UI.GameScreen;
 import Game.Constants;
 import Game.Game;
 import Game.UserInput;
+import Game.Player;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;

@@ -67,6 +67,15 @@ public class ServerSideConnection implements Runnable {
         dataOut.flush();
     }
 
+    public boolean getBoolean() throws IOException {
+        return dataIn.readBoolean();
+    }
+
+    public void sendBoolean(boolean nextMove) throws IOException {
+        dataOut.writeBoolean(nextMove);
+        dataOut.flush();
+    }
+
     public String getPlayerColor() {
         return playerColor;
     }

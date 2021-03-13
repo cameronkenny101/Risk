@@ -2,6 +2,7 @@ package Game;
 
 import Online.OnlineGameHandler;
 import UI.GameScreen.GameScreenController;
+import javafx.application.Platform;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class Game {
     }
 
     // Online Constructor
-    public Game(GameScreenController uiController, Player player) throws IOException {
+    public Game(GameScreenController uiController, Player player) {
         this.uiController = uiController;
         this.isOnline = true;
         this.onlineGameHandler = OnlineGameHandler.getInstance();
@@ -48,6 +49,8 @@ public class Game {
             this.player2 = player;
             player2.setColour(Constants.PLAYER_COLOUR.BLUE);
             printPlayerToConsole(false);
+            player1.setTurn(true);
+            player2.setTurn(false);
         }
     }
 
@@ -72,9 +75,11 @@ public class Game {
         uiController.output.appendText("> Player 2 name: " + player2.getName() + "\n");
         uiController.output.appendText("> Player 2 color: " + player2.getColour() + "\n");
         uiController.output.appendText("> It is " + player1.getColour() + " turn to choose their cards! \n");
-        uiController.askQuestion("Press enter to choose your 9 cards from the deck");
-        if(isOnline && !isPlayer1)
-            uiController.output.appendText("> Wait for player 1 to choose there cards");
+        if(isOnline && !isPlayer1) {
+            uiController.output.appendText("> Wait for player 1 to choose there cards\n");
+            Thread t = new Thread(this::nextMove);
+            t.start();
+        }
         else
             uiController.askQuestion("Press enter to choose your 9 cards from the deck");
     }
@@ -83,6 +88,17 @@ public class Game {
         String[] playerInfo = player1.getCsc().receivePlayerInfo();
         this.player2 = new Player(playerInfo[0], Constants.PLAYER_COLOUR.BLUE);
         printPlayerToConsole(true);
+        player1.setTurn(true);
+        player2.setTurn(false);
+    }
+
+    public void nextMove() {
+        player2.getCsc().receiveBoolean();
+        Platform.runLater(() -> {
+            initCountries(player1.getColour(), Constants.INIT_COUNTRIES_PLAYER, null);
+            uiController.output.appendText("> It is " + player2.getColour() + "'s turn to choose their cards! \n");
+            uiController.askQuestion("Press enter to choose your 9 cards from the deck");
+        });
     }
 
     /**
@@ -90,11 +106,11 @@ public class Game {
      */
     public void start() {
         if (logic.getCountryIndex() == 0) {
-            initCountries(Constants.PLAYER_COLOUR.RED, Constants.INIT_COUNTRIES_PLAYER, null);
+            initCountries(player1.getColour(), Constants.INIT_COUNTRIES_PLAYER, null);
             uiController.output.appendText("> It is " + player2.getColour() + "'s turn to choose their cards! \n");
             uiController.askQuestion("Press enter to choose your 9 cards from the deck");
         } else if (logic.getCountryIndex() == 9) {
-            initCountries(Constants.PLAYER_COLOUR.BLUE, Constants.INIT_COUNTRIES_PLAYER, null);
+            initCountries(player2.getColour(), Constants.INIT_COUNTRIES_PLAYER, null);
             uiController.askQuestion("Press enter to let neutrals choose their cards");
         } else {
             initCountries(Constants.PLAYER_COLOUR.ORANGE, Constants.INIT_COUNTRIES_NEUTRAL, logic.getOwnedOrange());

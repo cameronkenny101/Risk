@@ -39,17 +39,43 @@ public class Server {
                 t.start();
             }
             System.out.println("Game lobby full. There are two players in game");
-            player1.getPlayer();
-            player2.getPlayer();
-            player2.sendPlayerInfo(player1.getPlayerName(), player1.getPlayerColor());
-            player1.sendPlayerInfo(player2.getPlayerName(), player2.getPlayerColor());
-            player1.getArray();
-            player2.sendArray(player1.getCountries());
-
+            getPlayers();
+            sendPlayerInfo();
+            getAndSendMap();
+            waitForMove();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error in acceptConnections method");
             e.printStackTrace();
         }
+    }
+
+    public void getPlayers() throws IOException {
+        player1.getPlayer();
+        player2.getPlayer();
+    }
+
+    public void sendPlayerInfo() throws IOException {
+        player2.sendPlayerInfo(player1.getPlayerName(), player1.getPlayerColor());
+        player1.sendPlayerInfo(player2.getPlayerName(), player2.getPlayerColor());
+    }
+
+    public void getAndSendMap() throws IOException, ClassNotFoundException {
+        player1.getArray();
+        player2.sendArray(player1.getCountries());
+    }
+
+    public void waitForMove() throws IOException {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    player2.sendBoolean(player1.getBoolean());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
     }
 
     public static void main(String[] args) {
