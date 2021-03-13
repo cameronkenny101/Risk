@@ -54,8 +54,14 @@ public class Server {
             waitForMove(player1, player2);
             waitForMove(player2, player1);
             waitForMove(player1, player2);
+            System.out.println("Waiting for dice winner");
             waitForDiceWinner();
             setPlayerTurn();
+            if(player1Turn) {
+                player2.sendIntArray(player1.getIntArray());
+            } else {
+                player1.sendIntArray(player2.getIntArray());
+            }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -89,8 +95,9 @@ public class Server {
         while(noWinner) {
             receiveDiceRoll(player1, player2);
             receiveDiceRoll(player2, player1);
-            noWinner = player2.getBoolean();
+            noWinner = player1.getBoolean();
         }
+        System.out.println("Dice wait is over");
     }
 
     public void setPlayerTurn() throws IOException {

@@ -299,7 +299,7 @@ public class UserInput {
             if (neutralTurnCountdown == 0)
                 chooseNeutralTerritory(nextPlayer);
             else {
-                player.onlineGameHandler.sendIntArray(game.logic.getTroop_count(), player.getColour() == player1.getColour(), player.getCsc());
+                player.onlineGameHandler.sendIntArray(game.logic.troop_count, player.getCsc());
                 askForTroops(nextPlayer);
             }
         }

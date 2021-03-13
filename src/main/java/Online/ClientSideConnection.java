@@ -51,10 +51,9 @@ public class ClientSideConnection {
         }
     }
 
-    public void writeIntArrayInfo(int[] array, boolean isPlayer1) {
+    public void writeIntArrayInfo(int[] array) {
         System.out.println("Sending array");
         try {
-            dataOut.writeBoolean(isPlayer1);
             dataOut.writeInt(array.length);
             for (int i : array) {
                 dataOut.writeInt(i);
@@ -106,6 +105,16 @@ public class ClientSideConnection {
             e.printStackTrace();
         }
         return countries;
+    }
+
+    public int[] receiveIntArrayInfo() throws IOException {
+        int size = dataIn.readInt();
+        int[] array = new int[size];
+        for(int i = 0; i < size; i++) {
+            array[i] = dataIn.readInt();
+            System.out.println(array[i]);
+        }
+        return array;
     }
 
     public boolean receiveBoolean() {

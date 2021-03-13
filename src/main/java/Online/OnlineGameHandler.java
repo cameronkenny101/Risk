@@ -29,8 +29,8 @@ public class OnlineGameHandler {
         csc.writeArrayInfo(randomCountries);
     }
 
-    public void sendIntArray(int[] array, boolean isPlayer1, ClientSideConnection csc) {
-        csc.writeIntArrayInfo(array, isPlayer1);
+    public void sendIntArray(int[] array, ClientSideConnection csc) {
+        csc.writeIntArrayInfo(array);
     }
 
     public void sendNextMove(ClientSideConnection csc) {

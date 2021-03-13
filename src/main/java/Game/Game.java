@@ -203,15 +203,14 @@ public class Game {
     public void diceRollWinner() {
         if (Dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) > 0) {
             setTurn(player1, player2);
-            player2.getCsc().writeBoolean(false);
         } else if (Dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) < 0) {
             setTurn(player2, player1);
         } else {
             uiController.output.appendText("> The dice roll was a draw. Try again \n");
             logic.setDiceToZero(player1, player2);
-            if(isOnline && !isPlayer1) {
+            if(isOnline && isPlayer1) {
                 initOnlineDiceRoll(player2, player1);
-                player2.getCsc().writeBoolean(true);
+                player1.getCsc().writeBoolean(true);
             } else {
                 uiController.askQuestion("Press enter to roll the dice");
             }
@@ -284,10 +283,8 @@ public class Game {
      */
     private void setTurn(Player player, Player nextPlayer) {
         if(isOnline && isPlayer1) {
-            if(player.getColour() == player1.getColour())
-                player1.getCsc().writeBoolean(true);
-            else
-                player1.getCsc().writeBoolean(false);
+            player1.getCsc().writeBoolean(false);
+            player1.getCsc().writeBoolean(player.getColour() == player1.getColour());
         }
         player.setTurn(true);
         nextPlayer.setTurn(false);
@@ -295,7 +292,7 @@ public class Game {
         uiController.output.appendText("> " + player.getName() + " won the roll. " + player.getName() + " will go first \n");
         if (logic.getInitPhase()) {
             if(isOnline)
-                setOnlineTurn(player);
+                setOnlineTurn(player, nextPlayer);
             else {
                 uiController.output.appendText("> " + player.getName() + ", you will now fortify your territories. You can place 3 troops at a time\n");
                 uiController.askQuestion("How many troops do you want to place");
@@ -306,12 +303,25 @@ public class Game {
         }
     }
 
-    private void setOnlineTurn(Player player) {
+    private void setOnlineTurn(Player player, Player nextPlayer) {
         if(isPlayer1 && (player.getColour() == player1.getColour()) || !isPlayer1 && (player.getColour() == player2.getColour())) {
             uiController.output.appendText("> " + player.getName() + ", you will now fortify your territories. You can place 3 troops at a time\n");
             uiController.askQuestion("How many troops do you want to place");
-        } else
-            uiController.output.appendText("> Wait for " + player2.getName() + " to fortify there territories");
+        } else {
+            uiController.output.appendText("> Wait for " + player.getName() + " to fortify there territories\n");
+            Thread t = new Thread(() -> {
+                try {
+                    reinforcementTurn(nextPlayer);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            t.start();
+        }
+    }
+
+    private void reinforcementTurn(Player player) throws IOException {
+        int[] array = player.getCsc().receiveIntArrayInfo();
     }
 
 
