@@ -10,6 +10,7 @@ public class Server {
     private int numPlayers;
     private ServerSideConnection player1;
     private ServerSideConnection player2;
+    boolean player1Turn;
 
     public Server() {
         System.out.println("*******  G A M E  S E R V E R  *******");
@@ -54,6 +55,7 @@ public class Server {
             waitForMove(player2, player1);
             waitForMove(player1, player2);
             waitForDiceWinner();
+            setPlayerTurn();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -88,6 +90,16 @@ public class Server {
             receiveDiceRoll(player1, player2);
             receiveDiceRoll(player2, player1);
             noWinner = player2.getBoolean();
+        }
+    }
+
+    public void setPlayerTurn() throws IOException {
+        if(player1.getBoolean()) {
+            player1Turn = true;
+            System.out.println("Player 1 won the dice roll");
+        } else {
+            player1Turn = false;
+            System.out.println("Player 2 has won the dice roll");
         }
     }
 

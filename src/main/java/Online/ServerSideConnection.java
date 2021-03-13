@@ -13,6 +13,7 @@ public class ServerSideConnection implements Runnable {
     private String playerName;
     private String playerColor;
     private ArrayList<Integer> countries;
+    private boolean isPlayer1;
 
     public ServerSideConnection(Socket s, int id) {
         socket = s;
@@ -65,6 +66,15 @@ public class ServerSideConnection implements Runnable {
             dataOut.writeInt(country);
         }
         dataOut.flush();
+    }
+
+    public int[] getIntArray() throws IOException {
+        isPlayer1 = dataIn.readBoolean();
+        int size = dataIn.readInt();
+        int[] array = new int[size];
+        for(int i = 0; i < size; i++)
+            array[i] = dataIn.readInt();
+        return array;
     }
 
     public boolean getBoolean() throws IOException {

@@ -283,6 +283,12 @@ public class Game {
      * @param player player that won the roll
      */
     private void setTurn(Player player, Player nextPlayer) {
+        if(isOnline && isPlayer1) {
+            if(player.getColour() == player1.getColour())
+                player1.getCsc().writeBoolean(true);
+            else
+                player1.getCsc().writeBoolean(false);
+        }
         player.setTurn(true);
         nextPlayer.setTurn(false);
         logic.setDiceToZero(player1, player2);

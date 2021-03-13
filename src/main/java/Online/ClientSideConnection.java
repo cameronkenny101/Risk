@@ -51,6 +51,20 @@ public class ClientSideConnection {
         }
     }
 
+    public void writeIntArrayInfo(int[] array, boolean isPlayer1) {
+        System.out.println("Sending array");
+        try {
+            dataOut.writeBoolean(isPlayer1);
+            dataOut.writeInt(array.length);
+            for (int i : array) {
+                dataOut.writeInt(i);
+            }
+            dataOut.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void writeBoolean(boolean nextMove) {
         System.out.println("Sending bool for next move");
         try {

@@ -1,6 +1,5 @@
 package Game;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -299,8 +298,10 @@ public class UserInput {
             neutralTurnCountdown--;
             if (neutralTurnCountdown == 0)
                 chooseNeutralTerritory(nextPlayer);
-            else
+            else {
+                player.onlineGameHandler.sendIntArray(game.logic.getTroop_count(), player.getColour() == player1.getColour(), player.getCsc());
                 askForTroops(nextPlayer);
+            }
         }
     }
 
