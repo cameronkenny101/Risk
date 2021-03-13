@@ -198,10 +198,9 @@ public class Game {
     }
 
     public void diceRollWinner(boolean isPlayer1) {
-        player1.setDiceNum(2);
-        player2.setDiceNum(2);
         if (Dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) > 0) {
             setTurn(player1, player2);
+            player2.getCsc().writeBoolean(false);
         } else if (Dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) < 0) {
             setTurn(player2, player1);
         } else {
@@ -209,8 +208,10 @@ public class Game {
             logic.setDiceToZero(player1, player2);
             if(isOnline && !isPlayer1) {
                 initOnlineDiceRoll(player2, player1);
+                player2.getCsc().writeBoolean(true);
+            } else {
+                uiController.askQuestion("Press enter to roll the dice");
             }
-            uiController.askQuestion("Press enter to roll the dice");
         }
     }
 
