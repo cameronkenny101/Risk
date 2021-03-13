@@ -1,7 +1,5 @@
 package Online;
 
-import Game.Player;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -46,6 +44,7 @@ public class Server {
             getAndSendMap();
             waitForMove(player1, player2);
             waitForMove(player2, player1);
+            waitForMove(player1, player2);
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error in acceptConnections method");
             e.printStackTrace();

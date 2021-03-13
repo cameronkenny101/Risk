@@ -4,7 +4,6 @@ import Online.OnlineGameHandler;
 import UI.GameScreen.GameScreenController;
 import javafx.application.Platform;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Game {
@@ -77,7 +76,7 @@ public class Game {
         uiController.output.appendText("> It is " + player1.getColour() + " turn to choose their cards! \n");
         if(isOnline && !isPlayer1) {
             uiController.output.appendText("> Wait for player 1 to choose there cards\n");
-            Thread t = new Thread(() -> nextMove(player1, player2));
+            Thread t = new Thread(() -> pickUserTerritories(player1, player2));
             t.start();
         }
         else
@@ -92,8 +91,8 @@ public class Game {
         player2.setTurn(false);
     }
 
-    public void nextMove(Player player, Player nextPlayer) {
-        nextPlayer.getCsc().receiveBoolean();
+    public void pickUserTerritories(Player player, Player nextPlayer) {
+        System.out.println(nextPlayer.getCsc().receiveBoolean());
         Platform.runLater(() -> {
             initCountries(player.getColour(), Constants.INIT_COUNTRIES_PLAYER, null);
             if(player.getColour() == Constants.PLAYER_COLOUR.RED) {
@@ -106,6 +105,17 @@ public class Game {
         });
     }
 
+    public void pickNeutralTerritories(Player nextPlayer) {
+        System.out.println(nextPlayer.getCsc().receiveBoolean());
+        Platform.runLater(() -> {
+            initCountries(Constants.PLAYER_COLOUR.ORANGE, Constants.INIT_COUNTRIES_NEUTRAL, logic.getOwnedOrange());
+            initCountries(Constants.PLAYER_COLOUR.PURPLE, Constants.INIT_COUNTRIES_NEUTRAL, logic.getOwnedPurple());
+            initCountries(Constants.PLAYER_COLOUR.GREEN, Constants.INIT_COUNTRIES_NEUTRAL, logic.getOwnedGreen());
+            initCountries(Constants.PLAYER_COLOUR.GREY, Constants.INIT_COUNTRIES_NEUTRAL, logic.getOwnedGray());
+            uiController.output.appendText("I AM PLAYER2?");
+        });
+    }
+
     /**
      * Starts the game, allowing players to choose their territory cards
      */
@@ -115,7 +125,7 @@ public class Game {
             if(isOnline) {
                 uiController.output.appendText("> It is " + player2.getColour() + "'s turn to choose their cards! \n");
                 uiController.output.appendText("> Wait for player 2 to choose there cards\n");
-                Thread t = new Thread(() -> nextMove(player2, player1));
+                Thread t = new Thread(() -> pickUserTerritories(player2, player1));
                 t.start();
             } else {
                 uiController.output.appendText("> It is " + player2.getColour() + "'s turn to choose their cards! \n");
@@ -123,7 +133,13 @@ public class Game {
             }
         } else if (logic.getCountryIndex() == 9) {
             initCountries(player2.getColour(), Constants.INIT_COUNTRIES_PLAYER, null);
-            uiController.askQuestion("Press enter to let neutrals choose their cards");
+            if(isOnline) {
+                uiController.output.appendText("> Wait for player 1 to choose random cards for the neutral territories\n");
+                Thread t = new Thread(() -> pickNeutralTerritories(player2));
+                t.start();
+            } else {
+                uiController.askQuestion("Press enter to let neutrals choose their cards");
+            }
         } else {
             initCountries(Constants.PLAYER_COLOUR.ORANGE, Constants.INIT_COUNTRIES_NEUTRAL, logic.getOwnedOrange());
             initCountries(Constants.PLAYER_COLOUR.PURPLE, Constants.INIT_COUNTRIES_NEUTRAL, logic.getOwnedPurple());
