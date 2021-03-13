@@ -61,6 +61,16 @@ public class ClientSideConnection {
         }
     }
 
+    public void writeInt(int number) {
+        System.out.println("Sending number for next move");
+        try {
+            dataOut.writeInt(number);
+            dataOut.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String[] receivePlayerInfo() {
         String[] playerInfo = new String[2];
         try {
@@ -92,6 +102,10 @@ public class ClientSideConnection {
             e.printStackTrace();
         }
         return nextMove;
+    }
+
+    public int receiveInt() throws IOException {
+        return dataIn.readInt();
     }
 
     public int getPlayerID() {

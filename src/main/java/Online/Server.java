@@ -45,6 +45,7 @@ public class Server {
             waitForMove(player1, player2);
             waitForMove(player2, player1);
             waitForMove(player1, player2);
+            receiveDiceRoll(player1, player2);
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error in acceptConnections method");
             e.printStackTrace();
@@ -67,17 +68,11 @@ public class Server {
     }
 
     public void waitForMove(ServerSideConnection player, ServerSideConnection nextPlayer) throws IOException {
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    nextPlayer.sendBoolean(player.getBoolean());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        t.start();
+        nextPlayer.sendBoolean(player.getBoolean());
+    }
+
+    public void receiveDiceRoll(ServerSideConnection player, ServerSideConnection nextPlayer) throws IOException {
+        nextPlayer.sendInt(player.getInt());
     }
 
     public static void main(String[] args) {

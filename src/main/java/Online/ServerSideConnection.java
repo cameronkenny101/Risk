@@ -52,7 +52,7 @@ public class ServerSideConnection implements Runnable {
         dataOut.flush();
     }
 
-    public void getArray() throws IOException, ClassNotFoundException {
+    public void getArray() throws IOException {
         countries = new ArrayList<>();
         int size = dataIn.readInt();
         for(int i = 0; i < size; i++)
@@ -73,6 +73,15 @@ public class ServerSideConnection implements Runnable {
 
     public void sendBoolean(boolean nextMove) throws IOException {
         dataOut.writeBoolean(nextMove);
+        dataOut.flush();
+    }
+
+    public int getInt() throws IOException {
+        return dataIn.readInt();
+    }
+
+    public void sendInt(int number) throws IOException {
+        dataOut.writeInt(number);
         dataOut.flush();
     }
 

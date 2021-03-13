@@ -1,7 +1,9 @@
 package Online;
 
 import Game.Constants;
+import Game.Player;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class OnlineGameHandler {
@@ -29,6 +31,10 @@ public class OnlineGameHandler {
 
     public void sendNextMove(ClientSideConnection csc) {
         csc.writeBoolean(true);
+    }
+
+    public void sendDiceRoll(ClientSideConnection csc, int diceNum) {
+        csc.writeInt(diceNum);
     }
 
 }

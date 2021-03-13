@@ -4,6 +4,7 @@ import Online.OnlineGameHandler;
 import UI.GameScreen.GameScreenController;
 import javafx.application.Platform;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Game {
@@ -105,6 +106,14 @@ public class Game {
         });
     }
 
+    public void receiveDiceRoll(Player player, Player nextPlayer) throws IOException {
+        int diceNum = player.getCsc().receiveInt();
+        System.out.println("Receiving dice roll " + diceNum);
+        nextPlayer.setDiceNum(diceNum);
+        uiController.output.appendText("> " + player1.getName() + " rolled a " + nextPlayer.getDiceNum() + "\n");
+        uiController.askQuestion("Press enter to roll the dice");
+    }
+
     public void pickNeutralTerritories(Player nextPlayer) {
         System.out.println(nextPlayer.getCsc().receiveBoolean());
         Platform.runLater(() -> {
@@ -112,7 +121,15 @@ public class Game {
             initCountries(Constants.PLAYER_COLOUR.PURPLE, Constants.INIT_COUNTRIES_NEUTRAL, logic.getOwnedPurple());
             initCountries(Constants.PLAYER_COLOUR.GREEN, Constants.INIT_COUNTRIES_NEUTRAL, logic.getOwnedGreen());
             initCountries(Constants.PLAYER_COLOUR.GREY, Constants.INIT_COUNTRIES_NEUTRAL, logic.getOwnedGray());
-            uiController.output.appendText("I AM PLAYER2?");
+            uiController.output.appendText("> Wait for " + player1.getName() + " to roll the dice\n");
+            Thread thread = new Thread(() -> {
+                try {
+                    receiveDiceRoll(player2, player1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            thread.start();
         });
     }
 
@@ -158,7 +175,11 @@ public class Game {
             player1.setDiceNum(Dice.rollDice());
             uiController.output.appendText("> " + player1.getName() + " rolled a " + player1.getDiceNum() + "\n");
             uiController.output.appendText("> " + player2.getName() + " must now roll the dice \n");
-            uiController.askQuestion("Press enter to roll the dice");
+            if(isOnline) {
+                player1.onlineGameHandler.sendDiceRoll(player1.getCsc(), player1.getDiceNum());
+            } else {
+                uiController.askQuestion("Press enter to roll the dice");
+            }
         } else {
             player2.setDiceNum(Dice.rollDice());
             uiController.output.appendText("> " + player2.getName() + " rolled a " + player2.getDiceNum() + "\n");
