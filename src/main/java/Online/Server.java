@@ -46,6 +46,7 @@ public class Server {
             waitForMove(player2, player1);
             waitForMove(player1, player2);
             receiveDiceRoll(player1, player2);
+            receiveDiceRoll(player2, player1);
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error in acceptConnections method");
             e.printStackTrace();

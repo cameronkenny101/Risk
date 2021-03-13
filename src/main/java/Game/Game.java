@@ -110,8 +110,11 @@ public class Game {
         int diceNum = player.getCsc().receiveInt();
         System.out.println("Receiving dice roll " + diceNum);
         nextPlayer.setDiceNum(diceNum);
-        uiController.output.appendText("> " + player1.getName() + " rolled a " + nextPlayer.getDiceNum() + "\n");
-        uiController.askQuestion("Press enter to roll the dice");
+        uiController.output.appendText("> " + nextPlayer.getName() + " rolled a " + nextPlayer.getDiceNum() + "\n");
+        if(player.getColour() == Constants.PLAYER_COLOUR.RED)
+            diceRollWinner(true);
+        else
+            uiController.askQuestion("Press enter to roll the dice");
     }
 
     public void pickNeutralTerritories(Player nextPlayer) {
@@ -121,16 +124,20 @@ public class Game {
             initCountries(Constants.PLAYER_COLOUR.PURPLE, Constants.INIT_COUNTRIES_NEUTRAL, logic.getOwnedPurple());
             initCountries(Constants.PLAYER_COLOUR.GREEN, Constants.INIT_COUNTRIES_NEUTRAL, logic.getOwnedGreen());
             initCountries(Constants.PLAYER_COLOUR.GREY, Constants.INIT_COUNTRIES_NEUTRAL, logic.getOwnedGray());
-            uiController.output.appendText("> Wait for " + player1.getName() + " to roll the dice\n");
-            Thread thread = new Thread(() -> {
-                try {
-                    receiveDiceRoll(player2, player1);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-            thread.start();
+            initOnlineDiceRoll(player2, player1);
         });
+    }
+
+    public void initOnlineDiceRoll(Player player, Player nextPlayer) {
+        uiController.output.appendText("> Wait for " + nextPlayer.getName() + " to roll the dice\n");
+        Thread thread = new Thread(() -> {
+            try {
+                receiveDiceRoll(player, nextPlayer);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
     }
 
     /**
@@ -177,21 +184,33 @@ public class Game {
             uiController.output.appendText("> " + player2.getName() + " must now roll the dice \n");
             if(isOnline) {
                 player1.onlineGameHandler.sendDiceRoll(player1.getCsc(), player1.getDiceNum());
+                initOnlineDiceRoll(player1, player2);
             } else {
                 uiController.askQuestion("Press enter to roll the dice");
             }
         } else {
             player2.setDiceNum(Dice.rollDice());
             uiController.output.appendText("> " + player2.getName() + " rolled a " + player2.getDiceNum() + "\n");
-            if (Dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) > 0) {
-                setTurn(player1);
-            } else if (Dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) < 0) {
-                setTurn(player2);
-            } else {
-                uiController.output.appendText("> The dice roll was a draw. Try again \n");
-                logic.setDiceToZero(player1, player2);
-                uiController.askQuestion("Press enter to roll the dice");
+            if(isOnline)
+                player2.onlineGameHandler.sendDiceRoll(player2.getCsc(), player2.getDiceNum());
+            diceRollWinner(false);
+        }
+    }
+
+    public void diceRollWinner(boolean isPlayer1) {
+        player1.setDiceNum(2);
+        player2.setDiceNum(2);
+        if (Dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) > 0) {
+            setTurn(player1, player2);
+        } else if (Dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) < 0) {
+            setTurn(player2, player1);
+        } else {
+            uiController.output.appendText("> The dice roll was a draw. Try again \n");
+            logic.setDiceToZero(player1, player2);
+            if(isOnline && !isPlayer1) {
+                initOnlineDiceRoll(player2, player1);
             }
+            uiController.askQuestion("Press enter to roll the dice");
         }
     }
 
@@ -259,8 +278,9 @@ public class Game {
      *
      * @param player player that won the roll
      */
-    private void setTurn(Player player) {
+    private void setTurn(Player player, Player nextPlayer) {
         player.setTurn(true);
+        nextPlayer.setTurn(false);
         logic.setDiceToZero(player1, player2);
         uiController.output.appendText("> " + player.getName() + " won the roll. " + player.getName() + " will go first \n");
         if (logic.getInitPhase()) {
