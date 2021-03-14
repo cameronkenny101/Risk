@@ -45,7 +45,7 @@ public class UserInput {
         switch (question) {
             case "Press enter to choose your 9 cards from the deck":
             case "Press enter to let neutrals choose their cards":
-                if(game.isOnline) {
+                if (game.isOnline) {
                     player.onlineGameHandler.sendNextMove(player.getCsc());
                 }
                 game.start();
@@ -85,9 +85,22 @@ public class UserInput {
                 askToMoveAdditionalTroops(input, player, nextPlayer);
             case "How many troops do you want to add? (There must still be 1 troop left in your original territory)":
                 moveTroops(input, player, nextPlayer);
+            case "Would you like to:\n 1, continue the invasion.\n2, invade a new territory.\n 3, end combat.":
+                attackerChoice(input, player, nextPlayer);
             case "How many troops do you want to move":
                 troopsToFortify(input, player);
                 break;
+        }
+    }
+
+    public void attackerChoice(String input, Player player, Player nextPlayer) {
+        switch (input) {
+            case "1":
+                battle("yes", player, nextPlayer);
+            case "2":
+                askToBattle("yes");
+            case "3":
+                askToBattle("no");
         }
     }
 
@@ -121,7 +134,7 @@ public class UserInput {
     }
 
     public void battle(String input, Player attacker, Player defender) {
-        if (input.equals("yes")) {
+        if (input.equals("yes") && !battle.invasionVictory) {
             // Roll dice
             ArrayList<Integer> attackerDice = Dice.rollSetOfDice(battle.numAttackUnits);
             ArrayList<Integer> defenderDice = Dice.rollSetOfDice(battle.numDefenceUnits);
@@ -145,7 +158,7 @@ public class UserInput {
                 game.uiController.askQuestion("Do you want to move any additional troops to your new territory?");
             }
         } else {
-            //TODO: ask if they want to call off invasion, invade a new territory, or end combat
+            game.uiController.askQuestion("Would you like to:\n 1, continue the invasion.\n2, invade a new territory.\n 3, end combat.");
         }
     }
 
@@ -194,11 +207,24 @@ public class UserInput {
      */
     private void askToBattle(String input) {
         if (input.equals("yes")) {
+            resetBattle();
             game.uiController.askQuestion("What country do you wish to attack from?");
         } else {
+            //END OF BATTLE
             game.uiController.output.appendText("> You chose not to battle.\n");
             game.uiController.askQuestion("Do you want to fortify your territories");
         }
+    }
+
+    /**
+     * Resets all the variables in battle
+     */
+    private void resetBattle() {
+        battle.invasionVictory = false;
+        battle.attackCountryId = -1;
+        battle.defenceCountryId = -1;
+        battle.numAttackUnits = -1;
+        battle.numDefenceUnits = -1;
     }
 
     /**
@@ -295,12 +321,15 @@ public class UserInput {
             if (game.isWinner(player, game.logic.country_owner)) {
                 game.isWinner(player, game.logic.country_owner);
             }
+            //Todo: check logic of next player
             userInputLogic.nextTurn(player, nextPlayer);
             neutralTurnCountdown--;
             if (neutralTurnCountdown == 0)
                 chooseNeutralTerritory(nextPlayer);
-            else
-                askForTroops(nextPlayer);
+            else {
+                //Asks Battle Question START OF BATTLE
+                game.uiController.output.appendText("Would you like to invade another country? (yes/no)");
+            }
         }
     }
 
