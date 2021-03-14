@@ -310,7 +310,7 @@ public class Game {
 
     private void setOnlineTurn(Player player, Player nextPlayer) {
         if(isPlayer1 && (player.getColour() == player1.getColour()) || !isPlayer1 && (player.getColour() == player2.getColour())) {
-            uiController.output.appendText("> " + player.getName() + ", you will now fortify your territories. You can place 3 troops at a time\n");
+            uiController.output.appendText("> " + player.getName() + ", you will now fortify your territories. You can place 3 troops at a time. You have " + player.getTroops() + " troops left to place.\n");
             uiController.askQuestion("How many troops do you want to place");
         } else {
             uiController.output.appendText("> Wait for " + player.getName() + " to fortify there territories\n");
@@ -331,12 +331,13 @@ public class Game {
         int[] countryArray = nextPlayer.getCsc().receiveIntArrayInfo();
         setCountry(countryIndex, player.getColour(), troops - logic.troop_count[countryIndex]);
         userInput.neutralTurnCountdown--;
+        player.setTroops(player.getTroops() - 3);
         if(!Arrays.equals(countryArray, logic.getTroop_count())) {
             uiController.setMap(countryArray, logic.getCountry_owner());
-            uiController.output.appendText("> Neutrals have reinforced there territories");
+            uiController.output.appendText("> Neutrals have reinforced there territories\n");
         }
         userInput.userInputLogic.nextTurn(player, nextPlayer);
-        uiController.output.appendText("> " + nextPlayer.getName() + ", you will now fortify your territories. You can place 3 troops at a time\n");
+        uiController.output.appendText("> " + nextPlayer.getName() + ", you will now fortify your territories. You can place 3 troops at a time. You have " + nextPlayer.getTroops() + " troops left to place.\n");
         uiController.askQuestion("How many troops do you want to place");
     }
 
