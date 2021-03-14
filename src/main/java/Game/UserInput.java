@@ -93,7 +93,7 @@ public class UserInput {
             case "How many troops do you want to add? (There must still be 1 troop left in your original territory)":
                 moveTroops(input, player, nextPlayer);
                 break;
-            case "Would you like to:\n 1, continue the invasion.\n2, invade a new territory.\n 3, end combat.":
+            case "Would you like to:\n1, continue the invasion.\n2, invade a new territory.\n3, end combat.":
                 attackerChoice(input, player, nextPlayer);
                 break;
             case "How many troops do you want to move":
@@ -181,6 +181,7 @@ public class UserInput {
                 game.uiController.askQuestion("Would you like to:\n1, continue the invasion.\n2, invade a new territory.\n3, end combat.");
             }
         } else {
+
             game.uiController.askQuestion("Would you like to:\n1, continue the invasion.\n2, invade a new territory.\n3, end combat.");
         }
     }
