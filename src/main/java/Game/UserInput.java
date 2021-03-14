@@ -12,7 +12,7 @@ public class UserInput {
     int adjacentIndex;
     int neutralTurnCountdown = Constants.NUM_PLAYERS;
     UserInputLogic userInputLogic = new UserInputLogic();
-    Battle battle;
+    Battle battle = new Battle();
 
     /**
      * Constructor for UserInput class
