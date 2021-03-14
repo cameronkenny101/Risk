@@ -1,6 +1,5 @@
 package Game;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -329,6 +328,8 @@ public class UserInput {
             else {
                 //Asks Battle Question START OF BATTLE
                 game.uiController.output.appendText("Would you like to invade another country? (yes/no)");
+                player.onlineGameHandler.sendIntArray(game.logic.troop_count, player.getCsc());
+                askForTroops(nextPlayer);
             }
         }
     }

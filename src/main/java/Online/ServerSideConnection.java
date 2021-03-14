@@ -67,6 +67,23 @@ public class ServerSideConnection implements Runnable {
         dataOut.flush();
     }
 
+    public int[] getIntArray() throws IOException {
+        int size = dataIn.readInt();
+        int[] array = new int[size];
+        for(int i = 0; i < size; i++)
+            array[i] = dataIn.readInt();
+        return array;
+    }
+
+    public void sendIntArray(int[] array) throws IOException {
+        dataOut.writeInt(array.length);
+        for (int i : array) {
+            dataOut.writeInt(i);
+            System.out.println(i);
+        }
+        dataOut.flush();
+    }
+
     public boolean getBoolean() throws IOException {
         return dataIn.readBoolean();
     }

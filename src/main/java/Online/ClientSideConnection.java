@@ -51,6 +51,19 @@ public class ClientSideConnection {
         }
     }
 
+    public void writeIntArrayInfo(int[] array) {
+        System.out.println("Sending array");
+        try {
+            dataOut.writeInt(array.length);
+            for (int i : array) {
+                dataOut.writeInt(i);
+            }
+            dataOut.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void writeBoolean(boolean nextMove) {
         System.out.println("Sending bool for next move");
         try {
@@ -92,6 +105,16 @@ public class ClientSideConnection {
             e.printStackTrace();
         }
         return countries;
+    }
+
+    public int[] receiveIntArrayInfo() throws IOException {
+        int size = dataIn.readInt();
+        int[] array = new int[size];
+        for(int i = 0; i < size; i++) {
+            array[i] = dataIn.readInt();
+            System.out.println(array[i]);
+        }
+        return array;
     }
 
     public boolean receiveBoolean() {

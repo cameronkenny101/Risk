@@ -10,6 +10,7 @@ public class Server {
     private int numPlayers;
     private ServerSideConnection player1;
     private ServerSideConnection player2;
+    boolean player1Turn;
 
     public Server() {
         System.out.println("*******  G A M E  S E R V E R  *******");
@@ -39,15 +40,29 @@ public class Server {
                 t.start();
             }
             System.out.println("Game lobby full. There are two players in game");
+        } catch (IOException e) {
+            System.out.println("Error in acceptConnections method");
+            e.printStackTrace();
+        }
+    }
+
+    public void playGame() {
+        try {
             getPlayers();
             sendPlayerInfo();
             getAndSendMap();
             waitForMove(player1, player2);
             waitForMove(player2, player1);
             waitForMove(player1, player2);
-            receiveDiceRoll(player1, player2);
+            System.out.println("Waiting for dice winner");
+            waitForDiceWinner();
+            setPlayerTurn();
+            if(player1Turn) {
+                player2.sendIntArray(player1.getIntArray());
+            } else {
+                player1.sendIntArray(player2.getIntArray());
+            }
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error in acceptConnections method");
             e.printStackTrace();
         }
     }
@@ -75,9 +90,30 @@ public class Server {
         nextPlayer.sendInt(player.getInt());
     }
 
+    public void waitForDiceWinner() throws IOException {
+        boolean noWinner = true;
+        while(noWinner) {
+            receiveDiceRoll(player1, player2);
+            receiveDiceRoll(player2, player1);
+            noWinner = player1.getBoolean();
+        }
+        System.out.println("Dice wait is over");
+    }
+
+    public void setPlayerTurn() throws IOException {
+        if(player1.getBoolean()) {
+            player1Turn = true;
+            System.out.println("Player 1 won the dice roll");
+        } else {
+            player1Turn = false;
+            System.out.println("Player 2 has won the dice roll");
+        }
+    }
+
     public static void main(String[] args) {
         Server server = new Server();
         server.acceptConnections();
+        server.playGame();
     }
 
 

@@ -14,6 +14,7 @@ public class Game {
     GameLogic logic;
     OnlineGameHandler onlineGameHandler;
     boolean isOnline = false;
+    boolean isPlayer1;
 
     /**
      * Used to start up the game and create player objects and a uiController
@@ -27,7 +28,7 @@ public class Game {
         this.player1 = player1;
         this.player2 = player2;
         initClasses();
-        printPlayerToConsole(true);
+        printPlayerToConsole();
     }
 
     // Online Constructor
@@ -38,17 +39,19 @@ public class Game {
         initClasses();
         if(player.getCsc().getPlayerID() == 1) {
             this.player1 = player;
+            isPlayer1 = true;
             uiController.output.appendText("> Waiting for player 2 \n");
             Thread t = new Thread(this::startGame);
             t.start();
             onlineGameHandler.sendRandomCountries(logic.getRandomCountries(), player1.getCsc());
         } else {
             String[] playerInfo = player.getCsc().receivePlayerInfo();
+            isPlayer1 = false;
             logic.setRandomCountriesOnline(player.getCsc().receiveArrayInfo());
             this.player1 = new Player(playerInfo[0], playerInfo[1]);
             this.player2 = player;
             player2.setColour(Constants.PLAYER_COLOUR.BLUE);
-            printPlayerToConsole(false);
+            printPlayerToConsole();
             player1.setTurn(true);
             player2.setTurn(false);
         }
@@ -69,7 +72,7 @@ public class Game {
     /**
      * Used to display basic player info on game start up
      */
-    private void printPlayerToConsole(boolean isPlayer1) {
+    private void printPlayerToConsole() {
         uiController.output.appendText("> Player 1 name: " + player1.getName() + "\n");
         uiController.output.appendText("> Player 1 color: " + player1.getColour() + "\n");
         uiController.output.appendText("> Player 2 name: " + player2.getName() + "\n");
@@ -87,7 +90,7 @@ public class Game {
     public void startGame() {
         String[] playerInfo = player1.getCsc().receivePlayerInfo();
         this.player2 = new Player(playerInfo[0], Constants.PLAYER_COLOUR.BLUE);
-        printPlayerToConsole(true);
+        printPlayerToConsole();
         player1.setTurn(true);
         player2.setTurn(false);
     }
@@ -110,8 +113,11 @@ public class Game {
         int diceNum = player.getCsc().receiveInt();
         System.out.println("Receiving dice roll " + diceNum);
         nextPlayer.setDiceNum(diceNum);
-        uiController.output.appendText("> " + player1.getName() + " rolled a " + nextPlayer.getDiceNum() + "\n");
-        uiController.askQuestion("Press enter to roll the dice");
+        uiController.output.appendText("> " + nextPlayer.getName() + " rolled a " + nextPlayer.getDiceNum() + "\n");
+        if(player.getColour() == Constants.PLAYER_COLOUR.RED)
+            diceRollWinner();
+        else
+            uiController.askQuestion("Press enter to roll the dice");
     }
 
     public void pickNeutralTerritories(Player nextPlayer) {
@@ -121,16 +127,20 @@ public class Game {
             initCountries(Constants.PLAYER_COLOUR.PURPLE, Constants.INIT_COUNTRIES_NEUTRAL, logic.getOwnedPurple());
             initCountries(Constants.PLAYER_COLOUR.GREEN, Constants.INIT_COUNTRIES_NEUTRAL, logic.getOwnedGreen());
             initCountries(Constants.PLAYER_COLOUR.GREY, Constants.INIT_COUNTRIES_NEUTRAL, logic.getOwnedGray());
-            uiController.output.appendText("> Wait for " + player1.getName() + " to roll the dice\n");
-            Thread thread = new Thread(() -> {
-                try {
-                    receiveDiceRoll(player2, player1);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-            thread.start();
+            initOnlineDiceRoll(player2, player1);
         });
+    }
+
+    public void initOnlineDiceRoll(Player player, Player nextPlayer) {
+        uiController.output.appendText("> Wait for " + nextPlayer.getName() + " to roll the dice\n");
+        Thread thread = new Thread(() -> {
+            try {
+                receiveDiceRoll(player, nextPlayer);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
     }
 
     /**
@@ -177,19 +187,31 @@ public class Game {
             uiController.output.appendText("> " + player2.getName() + " must now roll the dice \n");
             if(isOnline) {
                 player1.onlineGameHandler.sendDiceRoll(player1.getCsc(), player1.getDiceNum());
+                initOnlineDiceRoll(player1, player2);
             } else {
                 uiController.askQuestion("Press enter to roll the dice");
             }
         } else {
             player2.setDiceNum(Dice.rollDice());
             uiController.output.appendText("> " + player2.getName() + " rolled a " + player2.getDiceNum() + "\n");
-            if (Dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) > 0) {
-                setTurn(player1);
-            } else if (Dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) < 0) {
-                setTurn(player2);
+            if(isOnline)
+                player2.onlineGameHandler.sendDiceRoll(player2.getCsc(), player2.getDiceNum());
+            diceRollWinner();
+        }
+    }
+
+    public void diceRollWinner() {
+        if (Dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) > 0) {
+            setTurn(player1, player2);
+        } else if (Dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) < 0) {
+            setTurn(player2, player1);
+        } else {
+            uiController.output.appendText("> The dice roll was a draw. Try again \n");
+            logic.setDiceToZero(player1, player2);
+            if(isOnline && isPlayer1) {
+                initOnlineDiceRoll(player2, player1);
+                player1.getCsc().writeBoolean(true);
             } else {
-                uiController.output.appendText("> The dice roll was a draw. Try again \n");
-                logic.setDiceToZero(player1, player2);
                 uiController.askQuestion("Press enter to roll the dice");
             }
         }
@@ -259,17 +281,47 @@ public class Game {
      *
      * @param player player that won the roll
      */
-    private void setTurn(Player player) {
+    private void setTurn(Player player, Player nextPlayer) {
+        if(isOnline && isPlayer1) {
+            player1.getCsc().writeBoolean(false);
+            player1.getCsc().writeBoolean(player.getColour() == player1.getColour());
+        }
         player.setTurn(true);
+        nextPlayer.setTurn(false);
         logic.setDiceToZero(player1, player2);
         uiController.output.appendText("> " + player.getName() + " won the roll. " + player.getName() + " will go first \n");
         if (logic.getInitPhase()) {
-            uiController.output.appendText("> " + player.getName() + ", you will now fortify your territories. You can place 3 troops at a time\n");
-            uiController.askQuestion("How many troops do you want to place");
+            if(isOnline)
+                setOnlineTurn(player, nextPlayer);
+            else {
+                uiController.output.appendText("> " + player.getName() + ", you will now fortify your territories. You can place 3 troops at a time\n");
+                uiController.askQuestion("How many troops do you want to place");
+            }
         } else {
             uiController.output.appendText("> FINISHED WEEK 2! \n");
             uiController.askQuestion("Do you want to fortify your territories");
         }
+    }
+
+    private void setOnlineTurn(Player player, Player nextPlayer) {
+        if(isPlayer1 && (player.getColour() == player1.getColour()) || !isPlayer1 && (player.getColour() == player2.getColour())) {
+            uiController.output.appendText("> " + player.getName() + ", you will now fortify your territories. You can place 3 troops at a time\n");
+            uiController.askQuestion("How many troops do you want to place");
+        } else {
+            uiController.output.appendText("> Wait for " + player.getName() + " to fortify there territories\n");
+            Thread t = new Thread(() -> {
+                try {
+                    reinforcementTurn(nextPlayer);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            t.start();
+        }
+    }
+
+    private void reinforcementTurn(Player player) throws IOException {
+        int[] array = player.getCsc().receiveIntArrayInfo();
     }
 
 
