@@ -310,7 +310,6 @@ public class Game {
                 uiController.askQuestion("How many troops do you want to place");
             }
         } else {
-            uiController.output.appendText("> FINISHED WEEK 2! \n");
             //Asks Battle Question START OF BATTLE
             uiController.askQuestion("Would you like to invade a country? (yes/no)");
             //uiController.askQuestion("Do you want to fortify your territories");

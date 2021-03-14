@@ -103,13 +103,17 @@ public class UserInput {
     }
 
     public void attackerChoice(String input, Player player, Player nextPlayer) {
-        switch (input) {
-            case "1":
+        int num = Integer.parseInt(input);
+        switch (num) {
+            case 1:
                 battle("yes", player, nextPlayer);
-            case "2":
+                break;
+            case 2:
                 askToBattle("yes");
-            case "3":
-                askToBattle("no");
+                break;
+            default:
+                game.uiController.askQuestion("Do you want to fortify your territories");
+                break;
         }
     }
 
@@ -152,10 +156,18 @@ public class UserInput {
 
             //Execute battle sequence
             battle.calculateBattleSequence(attackerDice, defenderDice);
+            //set the regions in the UI
+            game.uiController.setRegion(battle.defenceCountryId, defender.getColour(), battle.numAttackUnits);
+            game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId] - battle.numAttackUnits);
+
+            //Set Troop Counts:
+            game.logic.getTroop_count()[battle.defenceCountryId] = battle.numAttackUnits;
+            game.logic.getTroop_count()[battle.attackCountryId] -= battle.numAttackUnits;
 
             //if we win the battle
             if (battle.invasionVictory) {
                 game.uiController.output.appendText("You have won the battled and claimed a new territory\n");
+
                 //set the regions in the UI
                 game.uiController.setRegion(battle.defenceCountryId, attacker.getColour(), battle.numAttackUnits);
                 game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId] - battle.numAttackUnits);
@@ -165,6 +177,8 @@ public class UserInput {
                 game.logic.getTroop_count()[battle.attackCountryId] -= battle.numAttackUnits;
 
                 game.uiController.askQuestion("Do you want to move any additional troops to your new territory?");
+            } else {
+                game.uiController.askQuestion("Would you like to:\n1, continue the invasion.\n2, invade a new territory.\n3, end combat.");
             }
         } else {
             game.uiController.askQuestion("Would you like to:\n1, continue the invasion.\n2, invade a new territory.\n3, end combat.");
@@ -310,9 +324,8 @@ public class UserInput {
         game.setCountry(game.logic.getOwnedPurple().get(countryId), Constants.PLAYER_COLOUR.PURPLE, 1);
         neutralTurnCountdown = Constants.NUM_PLAYERS;
 
-        if (game.isOnline && nextPlayer.getTroops() > 0)
-            return;
-        else if (nextPlayer.getTroops() > 0)
+        if (game.isOnline && nextPlayer.getTroops() > 0) {
+        } else if (nextPlayer.getTroops() > 0)
             askForTroops(nextPlayer);
         else
             game.endInitPhase();
@@ -339,13 +352,13 @@ public class UserInput {
                 chooseNeutralTerritory(nextPlayer);
             else
                 askForTroops(nextPlayer);
-            if(game.isOnline)
+            if (game.isOnline)
                 handleOnlineReinforcement(player, nextPlayer);
         }
     }
 
     private void handleOnlineReinforcement(Player player, Player nextPlayer) {
-        if(game.isOnline && game.logic.getInitPhase()) {
+        if (game.isOnline && game.logic.getInitPhase()) {
             player.getCsc().writeBoolean(true);
             player.onlineGameHandler.sendInt(game.logic.getTroop_count()[countryIndex], player.getCsc());
             player.onlineGameHandler.sendInt(countryIndex, player.getCsc());
@@ -538,7 +551,7 @@ public class UserInput {
 
         public boolean assertValidAttackers() {
             //Assert that the number of troops used to attack is valid
-            return numAttackUnits >= 2 && game.logic.troop_count[attackCountryId] - 1 <= numAttackUnits && numAttackUnits <= 3;
+            return numAttackUnits >= 2 && game.logic.troop_count[attackCountryId] - 1 >= numAttackUnits && numAttackUnits <= 3;
         }
 
         public boolean assertValidDefenders() {
