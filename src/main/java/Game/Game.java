@@ -323,7 +323,7 @@ public class Game {
     }
 
     private void reinforcementTurn(Player player) throws IOException {
-        int[] array = player.getCsc().receiveIntArrayInfo();
+        logic.setTroop_count(player.getCsc().receiveIntArrayInfo());
     }
 
 

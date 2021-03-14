@@ -6,7 +6,7 @@ import java.util.Collections;
 public class GameLogic {
 
     protected Constants.PLAYER_COLOUR[] country_owner = new Constants.PLAYER_COLOUR[Constants.NUM_COUNTRIES]; // Tells which players owns which country
-    public final int[] troop_count = new int[Constants.NUM_COUNTRIES]; // States the number of troops per country
+    public int[] troop_count = new int[Constants.NUM_COUNTRIES]; // States the number of troops per country
     private final ArrayList<Integer> ownedOrange = new ArrayList<>(); // Countries Orange neutral owns
     private final ArrayList<Integer> ownedPurple = new ArrayList<>(); // Countries Purple neutral owns
     private final ArrayList<Integer> ownedGreen = new ArrayList<>(); // Countries Green neutral owns
@@ -140,6 +140,10 @@ public class GameLogic {
 
     public int[] getTroop_count() {
         return troop_count;
+    }
+
+    public void setTroop_count(int[] troop_count) {
+        this.troop_count = troop_count;
     }
 
     public Constants.PLAYER_COLOUR[] getCountry_owner() {

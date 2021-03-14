@@ -165,7 +165,7 @@ public class UserInput {
                 game.uiController.askQuestion("Do you want to move any additional troops to your new territory?");
             }
         } else {
-            game.uiController.askQuestion("Would you like to:\n 1, continue the invasion.\n2, invade a new territory.\n 3, end combat.");
+            game.uiController.askQuestion("Would you like to:\n1, continue the invasion.\n2, invade a new territory.\n3, end combat.");
         }
     }
 
@@ -187,7 +187,7 @@ public class UserInput {
             game.uiController.output.appendText("You chose an invalid number of troops. You have " + game.logic.getTroop_count()[battle.attackCountryId] + " troops available and you may only choose between 1 and 3. \n");
             game.uiController.askQuestion("How many units do you wish to attack for you?");
         } else {
-            game.uiController.output.appendText("The defending player, " + player.getName() + ", must now choose how many units to defend with.\n ");
+            game.uiController.output.appendText("The defending player, " + player.getName() + ", must now choose how many units to defend with.\n");
             game.uiController.askQuestion("How many units do you wish to defend for you?");
         }
     }
