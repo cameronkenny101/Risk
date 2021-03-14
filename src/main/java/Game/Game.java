@@ -3,9 +3,11 @@ package Game;
 import Online.OnlineGameHandler;
 import UI.GameScreen.GameScreenController;
 import javafx.application.Platform;
+import org.graalvm.compiler.lir.LIRInstruction;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Game {
 
@@ -13,6 +15,7 @@ public class Game {
     Player player1, player2;
     GameLogic logic;
     OnlineGameHandler onlineGameHandler;
+    UserInput userInput;
     boolean isOnline = false;
     boolean isPlayer1;
 
@@ -322,13 +325,23 @@ public class Game {
         }
     }
 
-    private void reinforcementTurn(Player player, Player nextPlayer) throws IOException {
-        System.out.println("here boi");
+    public void reinforcementTurn(Player player, Player nextPlayer) throws IOException {
         int troops = nextPlayer.getCsc().receiveInt();
-        System.out.println("IM HERE WITH " + troops);
         int countryIndex = nextPlayer.getCsc().receiveInt();
-        System.out.println("IM HERE WITH " + countryIndex);
+        int[] countryArray = nextPlayer.getCsc().receiveIntArrayInfo();
         setCountry(countryIndex, player.getColour(), troops - logic.troop_count[countryIndex]);
+        userInput.neutralTurnCountdown--;
+        if(!Arrays.equals(countryArray, logic.getTroop_count())) {
+            uiController.setMap(countryArray, logic.getCountry_owner());
+            uiController.output.appendText("> Neutrals have reinforced there territories");
+        }
+        userInput.userInputLogic.nextTurn(player, nextPlayer);
+        uiController.output.appendText("> " + nextPlayer.getName() + ", you will now fortify your territories. You can place 3 troops at a time\n");
+        uiController.askQuestion("How many troops do you want to place");
+    }
+
+    public void receiveUserInput(UserInput userInput) {
+        this.userInput = userInput;
     }
 
 

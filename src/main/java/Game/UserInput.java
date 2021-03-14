@@ -1,5 +1,6 @@
 package Game;
 
+import java.io.IOException;
 import java.util.*;
 
 
@@ -29,6 +30,7 @@ public class UserInput {
 
     public UserInput(Game game) {
         this.game = game;
+        game.receiveUserInput(this);
     }
 
     /**
@@ -308,7 +310,9 @@ public class UserInput {
         game.setCountry(game.logic.getOwnedPurple().get(countryId), Constants.PLAYER_COLOUR.PURPLE, 1);
         neutralTurnCountdown = Constants.NUM_PLAYERS;
 
-        if (nextPlayer.getTroops() > 0)
+        if (game.isOnline && nextPlayer.getTroops() > 0)
+            return;
+        else if (nextPlayer.getTroops() > 0)
             askForTroops(nextPlayer);
         else
             game.endInitPhase();
@@ -331,15 +335,30 @@ public class UserInput {
             //Todo: check logic of next player
             userInputLogic.nextTurn(player, nextPlayer);
             neutralTurnCountdown--;
-            if (neutralTurnCountdown == 0)
+            if (neutralTurnCountdown == 0) {
                 chooseNeutralTerritory(nextPlayer);
-            else {
-                if(game.isOnline) {
-                    player.onlineGameHandler.sendInt(game.logic.getTroop_count()[countryIndex], player.getCsc());
-                    player.onlineGameHandler.sendInt(countryIndex, player.getCsc());
-                }
+                handleOnlineReinforcement(player, nextPlayer);
+            } else if (game.isOnline)
+                handleOnlineReinforcement(player, nextPlayer);
+            else
                 askForTroops(nextPlayer);
-            }
+        }
+    }
+
+    private void handleOnlineReinforcement(Player player, Player nextPlayer) {
+        if(game.isOnline) {
+            player.onlineGameHandler.sendInt(game.logic.getTroop_count()[countryIndex], player.getCsc());
+            player.onlineGameHandler.sendInt(countryIndex, player.getCsc());
+            player.onlineGameHandler.sendIntArray(game.logic.getTroop_count(), player.getCsc());
+            game.uiController.output.appendText("> You must now wait for " + nextPlayer.getName() + " to reinforce there territories\n");
+            Thread t = new Thread(() -> {
+                try {
+                    game.reinforcementTurn(nextPlayer, player);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            t.start();
         }
     }
 

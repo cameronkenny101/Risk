@@ -12,7 +12,6 @@ public class UserInputLogic {
         player.setTurn(false);
         player.setInitTroops(3);
         nextPlayer.setTurn(true);
-
     }
 
     /**

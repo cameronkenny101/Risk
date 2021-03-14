@@ -57,13 +57,7 @@ public class Server {
             System.out.println("Waiting for dice winner");
             waitForDiceWinner();
             setPlayerTurn();
-            if(player1Turn) {
-                player2.sendInt(player1.getInt());
-                player2.sendInt(player1.getInt());
-            } else {
-                player1.sendInt(player2.getInt());
-                player1.sendInt(player2.getInt());
-            }
+            initPhase();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -109,6 +103,21 @@ public class Server {
         } else {
             player1Turn = false;
             System.out.println("Player 2 has won the dice roll");
+        }
+    }
+
+    public void initPhase() throws IOException {
+        while (true) {
+            if (player1Turn) {
+                player2.sendInt(player1.getInt());
+                player2.sendInt(player1.getInt());
+                player2.sendIntArray(player1.getIntArray());
+            } else {
+                player1.sendInt(player2.getInt());
+                player1.sendInt(player2.getInt());
+                player1.sendIntArray(player2.getIntArray());
+            }
+            player1Turn = !player1Turn;
         }
     }
 

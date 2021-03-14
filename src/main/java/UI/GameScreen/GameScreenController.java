@@ -335,6 +335,12 @@ public class GameScreenController {
         displayTroops(country_id, troop_count, Colour);
     }
 
+    public void setMap(int[] troopCount, Constants.PLAYER_COLOUR[] owner) {
+        for(int i = 0; i < Constants.NUM_COUNTRIES; i++) {
+            setRegion(i, owner[i], troopCount[i]);
+        }
+    }
+
     /**
      * Function for displaying the troop count of a given country in a white bubble in it's centre
      *
