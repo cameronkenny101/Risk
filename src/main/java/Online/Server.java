@@ -59,6 +59,8 @@ public class Server {
             setPlayerTurn();
             initPhase();
             System.out.println("Init phase finished");
+            waitForDiceWinner();
+            setPlayerTurn();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

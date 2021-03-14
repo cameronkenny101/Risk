@@ -335,13 +335,12 @@ public class UserInput {
             //Todo: check logic of next player
             userInputLogic.nextTurn(player, nextPlayer);
             neutralTurnCountdown--;
-            if (neutralTurnCountdown == 0) {
+            if (neutralTurnCountdown == 0)
                 chooseNeutralTerritory(nextPlayer);
-                handleOnlineReinforcement(player, nextPlayer);
-            } else if (game.isOnline)
-                handleOnlineReinforcement(player, nextPlayer);
             else
                 askForTroops(nextPlayer);
+            if(game.isOnline)
+                handleOnlineReinforcement(player, nextPlayer);
         }
     }
 

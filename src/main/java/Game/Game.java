@@ -276,7 +276,16 @@ public class Game {
         logic.endInitPhase();
         uiController.output.appendText("> Everyone has allocated their troops! \n");
         uiController.output.appendText("> We must decide who goes first! \n");
-        uiController.askQuestion("Press enter to roll the dice");
+        if(isOnline) {
+            if (isPlayer1)
+                uiController.askQuestion("Press enter to roll the dice");
+            else {
+                // uiController.output.appendText("> Wait for " + player1.getName() + " to roll there dice");
+                initOnlineDiceRoll(player2, player1);
+            }
+        } else
+            uiController.askQuestion("Press enter to roll the dice");
+
     }
 
     /**
@@ -343,7 +352,7 @@ public class Game {
             uiController.output.appendText("> " + nextPlayer.getName() + ", you will now fortify your territories. You can place 3 troops at a time. You have " + nextPlayer.getTroops() + " troops left to place.\n");
             uiController.askQuestion("How many troops do you want to place");
         } else
-            uiController.output.appendText("FINISHED SPRINT 2!");
+            endInitPhase();
     }
 
     public void receiveUserInput(UserInput userInput) {
