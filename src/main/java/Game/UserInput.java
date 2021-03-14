@@ -70,22 +70,30 @@ public class UserInput {
             case "What country will fortify your country":
                 countryToGive(input, player);
                 break;
-            case "Would you like to invade another country? (yes/no)":
+            case "Would you like to invade a country? (yes/no)":
                 askToBattle(input);
+                break;
             case "What country do you wish to attack from?":
                 battleFrom(input, player);
+                break;
             case "What country do you wish to attack?":
                 attackCountry(input, player);
+                break;
             case "How many units do you wish to attack for you?":
                 setAttackUnits(input, nextPlayer);
+                break;
             case "How many units do you wish to defend for you?":
                 setDefenceUnits(input, player, nextPlayer);
+                break;
             case "Do you want to move any additional troops to your new territory?":
                 askToMoveAdditionalTroops(input, player, nextPlayer);
+                break;
             case "How many troops do you want to add? (There must still be 1 troop left in your original territory)":
                 moveTroops(input, player, nextPlayer);
+                break;
             case "Would you like to:\n 1, continue the invasion.\n2, invade a new territory.\n 3, end combat.":
                 attackerChoice(input, player, nextPlayer);
+                break;
             case "How many troops do you want to move":
                 troopsToFortify(input, player);
                 break;
@@ -188,13 +196,13 @@ public class UserInput {
         battle.defenceCountryId = userInputLogic.shortCountryName(country);
         boolean adj = battle.assertAdjacent();
         if (!adj) {
-            game.uiController.output.appendText(Constants.COUNTRY_NAMES.get(countryIndex) + " You choose a country that is not adjacent.\n");
+            game.uiController.output.appendText(Constants.COUNTRY_NAMES.get(battle.defenceCountryId) + " You choose a country that is not adjacent.\n");
             game.uiController.askQuestion("What country do you wish to attack?");
-        } else if (game.logic.getCountry_owner()[countryIndex] != player.getColour()) {
-            game.uiController.output.appendText("> You selected the country " + Constants.COUNTRY_NAMES.get(countryIndex) + " to attack.\n");
+        } else if (game.logic.getCountry_owner()[battle.defenceCountryId] != player.getColour()) {
+            game.uiController.output.appendText("> You selected the country " + Constants.COUNTRY_NAMES.get(battle.defenceCountryId) + " to attack.\n");
             game.uiController.askQuestion("How many units do you wish to attack for you?");
         } else {
-            game.uiController.output.appendText(Constants.COUNTRY_NAMES.get(countryIndex) + " You choose a country that you own. \n");
+            game.uiController.output.appendText(Constants.COUNTRY_NAMES.get(battle.defenceCountryId) + " You choose a country that you own. \n");
             game.uiController.askQuestion("What country do you wish to attack?");
         }
     }
@@ -236,13 +244,13 @@ public class UserInput {
         battle.attackCountryId = userInputLogic.shortCountryName(country);
 
         if (game.logic.getTroop_count()[battle.attackCountryId] <= 1) {
-            game.uiController.output.appendText(Constants.COUNTRY_NAMES.get(countryIndex) + " You chose a country that has less than two troops. \n");
+            game.uiController.output.appendText(Constants.COUNTRY_NAMES.get(battle.attackCountryId) + " You chose a country that has less than two troops. \n");
             game.uiController.askQuestion("What country do you wish to attack from?");
-        } else if (game.logic.getCountry_owner()[countryIndex] == player.getColour()) {
-            game.uiController.output.appendText("> You selected the country " + Constants.COUNTRY_NAMES.get(countryIndex) + " to attack from.\n");
+        } else if (game.logic.getCountry_owner()[battle.attackCountryId] == player.getColour()) {
+            game.uiController.output.appendText("> You selected the country " + Constants.COUNTRY_NAMES.get(battle.attackCountryId) + " to attack from.\n");
             game.uiController.askQuestion("What country do you wish to attack?");
         } else {
-            game.uiController.output.appendText(Constants.COUNTRY_NAMES.get(countryIndex) + " You chose a country you do not own. \n");
+            game.uiController.output.appendText(Constants.COUNTRY_NAMES.get(battle.attackCountryId) + " You chose a country you do not own. \n");
             game.uiController.askQuestion("What country do you wish to attack from?");
         }
     }
@@ -326,9 +334,7 @@ public class UserInput {
             if (neutralTurnCountdown == 0)
                 chooseNeutralTerritory(nextPlayer);
             else {
-                //Asks Battle Question START OF BATTLE
-                game.uiController.output.appendText("Would you like to invade another country? (yes/no)");
-                player.onlineGameHandler.sendIntArray(game.logic.troop_count, player.getCsc());
+                // player.onlineGameHandler.sendIntArray(game.logic.troop_count, player.getCsc());
                 askForTroops(nextPlayer);
             }
         }

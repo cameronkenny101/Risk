@@ -299,7 +299,9 @@ public class Game {
             }
         } else {
             uiController.output.appendText("> FINISHED WEEK 2! \n");
-            uiController.askQuestion("Do you want to fortify your territories");
+            //Asks Battle Question START OF BATTLE
+            uiController.askQuestion("Would you like to invade a country? (yes/no)");
+            //uiController.askQuestion("Do you want to fortify your territories");
         }
     }
 
