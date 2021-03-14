@@ -326,19 +326,24 @@ public class Game {
     }
 
     public void reinforcementTurn(Player player, Player nextPlayer) throws IOException {
+        boolean cont = nextPlayer.getCsc().receiveBoolean();
         int troops = nextPlayer.getCsc().receiveInt();
         int countryIndex = nextPlayer.getCsc().receiveInt();
         int[] countryArray = nextPlayer.getCsc().receiveIntArrayInfo();
         setCountry(countryIndex, player.getColour(), troops - logic.troop_count[countryIndex]);
         userInput.neutralTurnCountdown--;
         player.setTroops(player.getTroops() - 3);
-        if(!Arrays.equals(countryArray, logic.getTroop_count())) {
+        if (!Arrays.equals(countryArray, logic.getTroop_count())) {
+            logic.setTroop_count(countryArray);
             uiController.setMap(countryArray, logic.getCountry_owner());
             uiController.output.appendText("> Neutrals have reinforced there territories\n");
         }
         userInput.userInputLogic.nextTurn(player, nextPlayer);
-        uiController.output.appendText("> " + nextPlayer.getName() + ", you will now fortify your territories. You can place 3 troops at a time. You have " + nextPlayer.getTroops() + " troops left to place.\n");
-        uiController.askQuestion("How many troops do you want to place");
+        if(cont) {
+            uiController.output.appendText("> " + nextPlayer.getName() + ", you will now fortify your territories. You can place 3 troops at a time. You have " + nextPlayer.getTroops() + " troops left to place.\n");
+            uiController.askQuestion("How many troops do you want to place");
+        } else
+            uiController.output.appendText("FINISHED SPRINT 2!");
     }
 
     public void receiveUserInput(UserInput userInput) {

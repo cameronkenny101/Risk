@@ -58,6 +58,7 @@ public class Server {
             waitForDiceWinner();
             setPlayerTurn();
             initPhase();
+            System.out.println("Init phase finished");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -108,16 +109,23 @@ public class Server {
 
     public void initPhase() throws IOException {
         while (true) {
+            boolean cont;
             if (player1Turn) {
+                cont = player1.getBoolean();
+                player2.sendBoolean(cont);
                 player2.sendInt(player1.getInt());
                 player2.sendInt(player1.getInt());
                 player2.sendIntArray(player1.getIntArray());
             } else {
+                cont = player2.getBoolean();
+                player1.sendBoolean(cont);
                 player1.sendInt(player2.getInt());
                 player1.sendInt(player2.getInt());
                 player1.sendIntArray(player2.getIntArray());
             }
             player1Turn = !player1Turn;
+            if(!cont)
+                break;
         }
     }
 

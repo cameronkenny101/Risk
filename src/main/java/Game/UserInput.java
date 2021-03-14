@@ -346,7 +346,8 @@ public class UserInput {
     }
 
     private void handleOnlineReinforcement(Player player, Player nextPlayer) {
-        if(game.isOnline) {
+        if(game.isOnline && game.logic.getInitPhase()) {
+            player.getCsc().writeBoolean(true);
             player.onlineGameHandler.sendInt(game.logic.getTroop_count()[countryIndex], player.getCsc());
             player.onlineGameHandler.sendInt(countryIndex, player.getCsc());
             player.onlineGameHandler.sendIntArray(game.logic.getTroop_count(), player.getCsc());
@@ -359,6 +360,12 @@ public class UserInput {
                 }
             });
             t.start();
+        } else {
+            System.out.println("YOOOO");
+            player.getCsc().writeBoolean(false);
+            player.onlineGameHandler.sendInt(game.logic.getTroop_count()[countryIndex], player.getCsc());
+            player.onlineGameHandler.sendInt(countryIndex, player.getCsc());
+            player.onlineGameHandler.sendIntArray(game.logic.getTroop_count(), player.getCsc());
         }
     }
 
