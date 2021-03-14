@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class OnlineGameHandler {
 
-    private static OnlineGameHandler instance = new OnlineGameHandler();
+    private static final OnlineGameHandler instance = new OnlineGameHandler();
 
     private OnlineGameHandler() { }
 
@@ -31,6 +31,10 @@ public class OnlineGameHandler {
 
     public void sendIntArray(int[] array, ClientSideConnection csc) {
         csc.writeIntArrayInfo(array);
+    }
+
+    public void sendInt(int num, ClientSideConnection csc) {
+        csc.writeInt(num);
     }
 
     public void sendNextMove(ClientSideConnection csc) {

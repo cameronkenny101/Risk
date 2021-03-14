@@ -334,7 +334,10 @@ public class UserInput {
             if (neutralTurnCountdown == 0)
                 chooseNeutralTerritory(nextPlayer);
             else {
-                // player.onlineGameHandler.sendIntArray(game.logic.troop_count, player.getCsc());
+                if(game.isOnline) {
+                    player.onlineGameHandler.sendInt(game.logic.getTroop_count()[countryIndex], player.getCsc());
+                    player.onlineGameHandler.sendInt(countryIndex, player.getCsc());
+                }
                 askForTroops(nextPlayer);
             }
         }

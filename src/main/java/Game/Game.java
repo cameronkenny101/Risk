@@ -209,10 +209,10 @@ public class Game {
             uiController.output.appendText("> The dice roll was a draw. Try again \n");
             logic.setDiceToZero(player1, player2);
             if(isOnline && isPlayer1) {
-                initOnlineDiceRoll(player2, player1);
                 player1.getCsc().writeBoolean(true);
-            } else {
                 uiController.askQuestion("Press enter to roll the dice");
+            } else {
+                initOnlineDiceRoll(player2, player1);
             }
         }
     }
@@ -294,7 +294,7 @@ public class Game {
             if(isOnline)
                 setOnlineTurn(player, nextPlayer);
             else {
-                uiController.output.appendText("> " + player.getName() + ", you will now fortify your territories. You can place 3 troops at a time\n");
+                uiController.output.appendText("> " + player.getName() + ", you will now reinforce your territories. You can place 3 troops at a time\n");
                 uiController.askQuestion("How many troops do you want to place");
             }
         } else {
@@ -313,7 +313,7 @@ public class Game {
             uiController.output.appendText("> Wait for " + player.getName() + " to fortify there territories\n");
             Thread t = new Thread(() -> {
                 try {
-                    reinforcementTurn(nextPlayer);
+                    reinforcementTurn(player, nextPlayer);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -322,8 +322,13 @@ public class Game {
         }
     }
 
-    private void reinforcementTurn(Player player) throws IOException {
-        logic.setTroop_count(player.getCsc().receiveIntArrayInfo());
+    private void reinforcementTurn(Player player, Player nextPlayer) throws IOException {
+        System.out.println("here boi");
+        int troops = nextPlayer.getCsc().receiveInt();
+        System.out.println("IM HERE WITH " + troops);
+        int countryIndex = nextPlayer.getCsc().receiveInt();
+        System.out.println("IM HERE WITH " + countryIndex);
+        setCountry(countryIndex, player.getColour(), troops - logic.troop_count[countryIndex]);
     }
 
 

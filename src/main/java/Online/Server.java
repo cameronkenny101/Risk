@@ -58,9 +58,11 @@ public class Server {
             waitForDiceWinner();
             setPlayerTurn();
             if(player1Turn) {
-                player2.sendIntArray(player1.getIntArray());
+                player2.sendInt(player1.getInt());
+                player2.sendInt(player1.getInt());
             } else {
-                player1.sendIntArray(player2.getIntArray());
+                player1.sendInt(player2.getInt());
+                player1.sendInt(player2.getInt());
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
