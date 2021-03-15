@@ -156,13 +156,10 @@ public class UserInput {
 
             //Execute battle sequence
             battle.calculateBattleSequence(attackerDice, defenderDice);
-            //set the regions in the UI
-            game.uiController.setRegion(battle.defenceCountryId, defender.getColour(), battle.numAttackUnits);
-            game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId] - battle.numAttackUnits);
 
-            //Set Troop Counts:
-            game.logic.getTroop_count()[battle.defenceCountryId] = battle.numAttackUnits;
-            game.logic.getTroop_count()[battle.attackCountryId] -= battle.numAttackUnits;
+            //set the regions in the UI
+            game.uiController.setRegion(battle.defenceCountryId, game.logic.country_owner[battle.defenceCountryId], battle.numAttackUnits);
+            game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId]);
 
             //if we win the battle
             if (battle.invasionVictory) {
