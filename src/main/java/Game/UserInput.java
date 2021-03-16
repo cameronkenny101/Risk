@@ -342,8 +342,11 @@ public class UserInput {
      * @param nextPlayer the player waiting for their turn
      */
     private void endPlacingTroops(Player player, Player nextPlayer) {
-        if (player.getInitTroops() > 0) {
-            game.uiController.output.appendText("> You have " + player.getInitTroops() + " troops left to move \n");
+        if (player.getInitTroops() > 0 && game.logic.getInitPhase()) {
+            game.uiController.output.appendText("> You have " + player.getTroops() + " troops left to move \n");
+            game.uiController.askQuestion("How many troops do you want to place");
+        } else if(player.getTroops() > 0) {
+            game.uiController.output.appendText("> You have " + player.getTroops() + " troops left to move \n");
             game.uiController.askQuestion("How many troops do you want to place");
         } else {
             if (game.isWinner(player, game.logic.country_owner)) {
@@ -433,6 +436,9 @@ public class UserInput {
         } else {
             userInputLogic.nextTurn(player, nextPlayer);
             game.uiController.output.appendText("> It is now " + nextPlayer.getName() + " turn\n");
+            nextPlayer.setTroops(game.logic.calculateReinforcements(nextPlayer));
+            game.uiController.output.appendText("> You have a total of " + nextPlayer.getTroops() + " troops to place\n");
+            game.uiController.askQuestion("How many troops do you want to place");
         }
     }
 
