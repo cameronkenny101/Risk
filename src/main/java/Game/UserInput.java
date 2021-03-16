@@ -173,6 +173,9 @@ public class UserInput {
                 game.logic.getTroop_count()[battle.defenceCountryId] = battle.numAttackUnits;
                 game.logic.getTroop_count()[battle.attackCountryId] -= battle.numAttackUnits;
 
+                System.out.println(game.logic.getTroop_count()[battle.defenceCountryId]);
+                System.out.println(game.logic.getTroop_count()[battle.attackCountryId]);
+
                 //Set Owner
                 game.logic.getCountry_owner()[battle.defenceCountryId] = attacker.getColour();
 
@@ -511,8 +514,7 @@ public class UserInput {
             }
         }
         if (isThere) {
-            game.takeCountry(countryIndex, player.getColour(), troops);
-            game.takeCountry(adjacentIndex, player.getColour(), -troops);
+            game.uiController.askQuestion("How many troops do you want to move?");
         } else {
             game.uiController.output.appendText("> You do not own \n" + Constants.COUNTRY_NAMES.get(adjacentIndex));
             game.uiController.askQuestion("What country will fortify your country");

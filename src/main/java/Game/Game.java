@@ -214,7 +214,7 @@ public class Game {
             if(isOnline && isPlayer1) {
                 player1.getCsc().writeBoolean(true);
                 uiController.askQuestion("Press enter to roll the dice");
-            } else {
+            } else if(isOnline) {
                 initOnlineDiceRoll(player2, player1);
             }
         }
