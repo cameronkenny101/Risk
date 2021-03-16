@@ -312,7 +312,7 @@ public class Game {
         } else {
             //Asks Battle Question START OF BATTLE
             uiController.askQuestion("Would you like to invade a country? (yes/no)");
-            //uiController.askQuestion("Do you want to fortify your territories");
+            // uiController.askQuestion("Do you want to fortify your territories");
         }
     }
 

@@ -163,7 +163,7 @@ public class UserInput {
 
             //if we win the battle
             if (battle.invasionVictory) {
-                game.uiController.output.appendText("You have won the battled and claimed a new territory\n");
+                game.uiController.output.appendText("You have won the battle and claimed a new territory\n");
 
                 //set the regions in the UI
                 game.uiController.setRegion(battle.defenceCountryId, attacker.getColour(), battle.numAttackUnits);
@@ -172,6 +172,9 @@ public class UserInput {
                 //Set Troop Counts:
                 game.logic.getTroop_count()[battle.defenceCountryId] = battle.numAttackUnits;
                 game.logic.getTroop_count()[battle.attackCountryId] -= battle.numAttackUnits;
+
+                //Set Owner
+                game.logic.getCountry_owner()[battle.defenceCountryId] = attacker.getColour();
 
                 game.uiController.askQuestion("Do you want to move any additional troops to your new territory?");
             } else {
@@ -577,5 +580,3 @@ public class UserInput {
         }
     }
 }
-
-
