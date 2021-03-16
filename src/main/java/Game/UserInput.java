@@ -147,7 +147,7 @@ public class UserInput {
     }
 
     public void battle(String input, Player attacker, Player defender) {
-        if (input.equals("yes") && !battle.invasionVictory) {
+        if (input.equals("yes") && !battle.invasionVictory && !battle.invasionLoss) {
             // Roll dice
             ArrayList<Integer> attackerDice = Dice.rollSetOfDice(battle.numAttackUnits);
             ArrayList<Integer> defenderDice = Dice.rollSetOfDice(battle.numDefenceUnits);
@@ -158,12 +158,18 @@ public class UserInput {
             battle.calculateBattleSequence(attackerDice, defenderDice);
 
             //set the regions in the UI
-            game.uiController.setRegion(battle.defenceCountryId, game.logic.country_owner[battle.defenceCountryId], battle.numAttackUnits);
+            game.uiController.setRegion(battle.defenceCountryId, game.logic.country_owner[battle.defenceCountryId], game.logic.getTroop_count()[battle.defenceCountryId]);
             game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId]);
 
+
+            if (battle.invasionLoss) {
+                game.uiController.output.appendText("You have lost the battle.\n");
+
+                game.uiController.askQuestion("Would you like to invade a country? (yes/no)");
+            }
             //if we win the battle
-            if (battle.invasionVictory) {
-                game.uiController.output.appendText("You have won the battled and claimed a new territory\n");
+            else if (battle.invasionVictory) {
+                game.uiController.output.appendText("You have won the battle and claimed a new territory\n");
 
                 //set the regions in the UI
                 game.uiController.setRegion(battle.defenceCountryId, attacker.getColour(), battle.numAttackUnits);
@@ -531,6 +537,7 @@ public class UserInput {
         int numAttackUnits;
         int numDefenceUnits;
         boolean invasionVictory;
+        boolean invasionLoss;
 
         /**
          * Asserts that the two countries are adjacent
@@ -571,6 +578,7 @@ public class UserInput {
                     break;
                 }
                 if (numAttackUnits == 0) {
+                    invasionLoss = false;
                     break;
                 }
             }
