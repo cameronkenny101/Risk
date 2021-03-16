@@ -199,7 +199,7 @@ public class UserInput {
         battle.numDefenceUnits = Integer.parseInt(troops);
         boolean valid = battle.assertValidDefenders();
         if (!valid) {
-            game.uiController.output.appendText("You chose an invalid number of troops. You have " + game.logic.getTroop_count()[battle.numDefenceUnits] + " troops available and you may only choose between 1 and 3. \n");
+            game.uiController.output.appendText("You chose an invalid number of troops. You have " + game.logic.getTroop_count()[battle.numDefenceUnits] + " troops available and you may only choose between 1 and 2. \n");
             game.uiController.askQuestion("How many units do you wish to defend for you?");
         } else {
             battle("yes", attacker, defender);
