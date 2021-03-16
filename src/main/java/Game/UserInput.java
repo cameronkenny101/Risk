@@ -353,14 +353,20 @@ public class UserInput {
                 game.isWinner(player, game.logic.country_owner);
             }
             //Todo: check logic of next player
-            userInputLogic.nextTurn(player, nextPlayer);
-            neutralTurnCountdown--;
-            if (neutralTurnCountdown == 0)
-                chooseNeutralTerritory(nextPlayer);
-            else
-                askForTroops(nextPlayer);
-            if (game.isOnline)
-                handleOnlineReinforcement(player, nextPlayer);
+            if(game.logic.getInitPhase()) {
+                userInputLogic.nextTurn(player, nextPlayer);
+                neutralTurnCountdown--;
+                if (neutralTurnCountdown == 0)
+                    chooseNeutralTerritory(nextPlayer);
+                else
+                    askForTroops(nextPlayer);
+                if (game.isOnline)
+                    handleOnlineReinforcement(player, nextPlayer);
+            } else {
+                if(game.isOnline)
+                    handleOnlineReinforcement(player, nextPlayer);
+                game.uiController.askQuestion("Would you like to invade a country? (yes/no)");
+            }
         }
     }
 
