@@ -179,6 +179,12 @@ public class UserInput {
                 game.logic.getTroop_count()[battle.defenceCountryId] = battle.numAttackUnits;
                 game.logic.getTroop_count()[battle.attackCountryId] -= battle.numAttackUnits;
 
+                System.out.println(game.logic.getTroop_count()[battle.defenceCountryId]);
+                System.out.println(game.logic.getTroop_count()[battle.attackCountryId]);
+
+                //Set Owner
+                game.logic.getCountry_owner()[battle.defenceCountryId] = attacker.getColour();
+
                 game.uiController.askQuestion("Do you want to move any additional troops to your new territory?");
             } else {
                 game.uiController.askQuestion("Would you like to:\n1, continue the invasion.\n2, invade a new territory.\n3, end combat.");
@@ -342,22 +348,31 @@ public class UserInput {
      * @param nextPlayer the player waiting for their turn
      */
     private void endPlacingTroops(Player player, Player nextPlayer) {
-        if (player.getInitTroops() > 0) {
-            game.uiController.output.appendText("> You have " + player.getInitTroops() + " troops left to move \n");
+        if (player.getInitTroops() > 0 && game.logic.getInitPhase()) {
+            game.uiController.output.appendText("> You have " + player.getTroops() + " troops left to move \n");
+            game.uiController.askQuestion("How many troops do you want to place");
+        } else if(player.getTroops() > 0) {
+            game.uiController.output.appendText("> You have " + player.getTroops() + " troops left to move \n");
             game.uiController.askQuestion("How many troops do you want to place");
         } else {
             if (game.isWinner(player, game.logic.country_owner)) {
                 game.isWinner(player, game.logic.country_owner);
             }
             //Todo: check logic of next player
-            userInputLogic.nextTurn(player, nextPlayer);
-            neutralTurnCountdown--;
-            if (neutralTurnCountdown == 0)
-                chooseNeutralTerritory(nextPlayer);
-            else
-                askForTroops(nextPlayer);
-            if (game.isOnline)
-                handleOnlineReinforcement(player, nextPlayer);
+            if(game.logic.getInitPhase()) {
+                userInputLogic.nextTurn(player, nextPlayer);
+                neutralTurnCountdown--;
+                if (neutralTurnCountdown == 0)
+                    chooseNeutralTerritory(nextPlayer);
+                else
+                    askForTroops(nextPlayer);
+                if (game.isOnline)
+                    handleOnlineReinforcement(player, nextPlayer);
+            } else {
+                if(game.isOnline)
+                    handleOnlineReinforcement(player, nextPlayer);
+                game.uiController.askQuestion("Would you like to invade a country? (yes/no)");
+            }
         }
     }
 
@@ -433,6 +448,9 @@ public class UserInput {
         } else {
             userInputLogic.nextTurn(player, nextPlayer);
             game.uiController.output.appendText("> It is now " + nextPlayer.getName() + " turn\n");
+            nextPlayer.setTroops(game.logic.calculateReinforcements(nextPlayer));
+            game.uiController.output.appendText("> You have a total of " + nextPlayer.getTroops() + " troops to place\n");
+            game.uiController.askQuestion("How many troops do you want to place");
         }
     }
 
@@ -514,8 +532,7 @@ public class UserInput {
             }
         }
         if (isThere) {
-            game.takeCountry(countryIndex, player.getColour(), troops);
-            game.takeCountry(adjacentIndex, player.getColour(), -troops);
+            game.uiController.askQuestion("How many troops do you want to move?");
         } else {
             game.uiController.output.appendText("> You do not own \n" + Constants.COUNTRY_NAMES.get(adjacentIndex));
             game.uiController.askQuestion("What country will fortify your country");
@@ -585,5 +602,3 @@ public class UserInput {
         }
     }
 }
-
-
