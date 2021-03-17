@@ -1,10 +1,9 @@
 package Game;
 
-<<<<<<< HEAD
+
 import UI.GameScreen.GameScreenController;
-=======
 //import GameScreen.GameScreenController;
->>>>>>> 5d5c8d16c507176450ed6ce3db28e12fae6a008d
+
 import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
 
@@ -12,33 +11,20 @@ import java.util.ArrayList;
 
 public class GameLogicTest extends TestCase {
 
-    GameLogic logic = new GameLogic();
 
     @Test
-    public void testTakeCountryColor() {
+    public void testTakeCountryLogic() {
+        GameLogic logic = new GameLogic();
         Constants.PLAYER_COLOUR[] country_owner = {Constants.PLAYER_COLOUR.RED, Constants.PLAYER_COLOUR.ORANGE};
-        int[] troopCount = {2, 4};
         logic.takeCountryLogic(0, Constants.PLAYER_COLOUR.GREEN, 1);
         logic.takeCountryLogic(1, Constants.PLAYER_COLOUR.GREY, 2);
         assertEquals(country_owner[0], Constants.PLAYER_COLOUR.GREEN);
         assertEquals(country_owner[1], Constants.PLAYER_COLOUR.GREY);
-
-    }
-
-    @Test
-    public void testTakeCountryTroops() {
-        Constants.PLAYER_COLOUR[] country_owner = {Constants.PLAYER_COLOUR.RED, Constants.PLAYER_COLOUR.ORANGE, Constants.PLAYER_COLOUR.PURPLE};
-        int[] troopCount = {0, 0, 0};
-        logic.takeCountryLogic(0, Constants.PLAYER_COLOUR.GREY, 2);
-        logic.takeCountryLogic(1, Constants.PLAYER_COLOUR.GREY, 3);
-        logic.takeCountryLogic(2, Constants.PLAYER_COLOUR.GREY, 5);
-        assertEquals(2, troopCount[0]);
-        assertEquals(3, troopCount[1]);
-        assertEquals(5, troopCount[2]);
     }
 
     @Test
     public void testSetDiceToZero() {
+        GameLogic logic = new GameLogic();
         Player player1 = new Player("Cam", Constants.PLAYER_COLOUR.GREY);
         Player player2 = new Player("Mike", Constants.PLAYER_COLOUR.BLUE);
         player1.setDiceNum(2);
@@ -49,25 +35,10 @@ public class GameLogicTest extends TestCase {
     }
 
     @Test
-    public void testSetRandomCountries() {
-        ArrayList<Integer> list = new ArrayList<>();
-        logic.setRandomCountries();
-        assertNotNull(list);
-        assertTrue(list.get(0) >= 0 && list.get(0) <= 2);
-        assertTrue(list.get(1) >= 0 && list.get(1) <= 2);
-        assertTrue(list.get(2) >= 0 && list.get(2) <= 2);
-    }
-
-    @Test
-<<<<<<< HEAD
-    public void testCalculateReinforcements() {
-        Player testPlayer = new Player("Max", Constants.PLAYER_COLOUR.RED);
-        for (int i = 0; i < 7; i++) {
-=======
     public void testCalculateReinforcements(){
+        GameLogic logic = new GameLogic();
         Player testPlayer = new Player("Max", Constants.PLAYER_COLOUR.RED);
         for(int i = 0 ; i < 7 ; i ++) {
->>>>>>> 5d5c8d16c507176450ed6ce3db28e12fae6a008d
             logic.country_owner[i] = Constants.PLAYER_COLOUR.RED;
         }
         assertEquals(3, logic.calculateReinforcements(testPlayer));
@@ -95,15 +66,10 @@ public class GameLogicTest extends TestCase {
     }
 
     @Test
-<<<<<<< HEAD
-    public void testCalculateContReinforcements() {
-        Player player = new Player("MARK", Constants.PLAYER_COLOUR.RED);
-        for (int i = 0; i < 42; i++) {
-=======
     public void testCalculateContReinforcements(){
+        GameLogic logic = new GameLogic();
         Player player = new Player("MARK", Constants.PLAYER_COLOUR.RED);
         for(int i = 0; i < 42;i++){
->>>>>>> 5d5c8d16c507176450ed6ce3db28e12fae6a008d
             logic.country_owner[i] = Constants.PLAYER_COLOUR.RED;
         }
 
@@ -127,6 +93,121 @@ public class GameLogicTest extends TestCase {
 
 
     }
+
+    @Test
+    public void testSetRandomCountries() {
+        GameLogic logic = new GameLogic();
+        ArrayList<Integer> list = new ArrayList<>();
+        logic.setRandomCountries();
+        assertNotNull(list);
+        assertTrue(list.get(0) >= 0 && list.get(0) <= 2);
+        assertTrue(list.get(1) >= 0 && list.get(1) <= 2);
+        assertTrue(list.get(2) >= 0 && list.get(2) <= 2);
+    }
+
+    @Test
+    public void testTakeCountryTroops() {
+        GameLogic logic = new GameLogic();
+        Constants.PLAYER_COLOUR[] country_owner = {Constants.PLAYER_COLOUR.RED, Constants.PLAYER_COLOUR.ORANGE, Constants.PLAYER_COLOUR.PURPLE};
+        int[] troopCount = {0, 0, 0};
+        logic.takeCountryLogic(0, Constants.PLAYER_COLOUR.GREY, 3);
+        logic.takeCountryLogic(1, Constants.PLAYER_COLOUR.GREY, 3);
+        logic.takeCountryLogic(2, Constants.PLAYER_COLOUR.GREY, 5);
+        assertEquals(2, troopCount[0]);
+        assertEquals(3, troopCount[1]);
+        assertEquals(5, troopCount[2]);
+    }
+
+    @Test
+    public void testendInitPhaseANDgetInitPhase(){
+        GameLogic logic = new GameLogic();
+        assertTrue(logic.getInitPhase());
+        logic.endInitPhase();
+        assertFalse(logic.getInitPhase());
+    }
+
+    @Test
+    public void testgetCountryIndexANDsetCountryIndex(){
+        GameLogic logic = new GameLogic();
+        assertEquals(0,logic.getCountryIndex());
+        logic.setCountryIndex(4);
+        assertEquals(4,logic.getCountryIndex());
+        logic.setCountryIndex(100);
+        assertEquals(100,logic.getCountryIndex());
+        logic.setCountryIndex(432);
+        assertEquals(432,logic.getCountryIndex());
+    }
+
+    @Test
+    public void testsetRandomCountriesANDgetRandomCountries(){
+        GameLogic logic = new GameLogic();
+        logic.setRandomCountries();
+        assertEquals(42,logic.getRandomCountries().size());
+    }
+
+    /**
+     * This is to test the getters for each of the colour lists
+     */
+    @Test
+    public void testgetOwnedColours(){
+        GameLogic logic = new GameLogic();
+        for(int i = 0; i < 10 ; i++) {
+            logic.setOwnedGray(i, i);
+        }
+        assertEquals(1,logic.getOwnedGray().get(1).intValue());
+        assertEquals(4,logic.getOwnedGray().get(4).intValue());
+        assertNotSame(1, logic.getOwnedGray().get(4).intValue());
+        assertEquals(5,logic.getOwnedGray().get(5).intValue());
+
+        for(int i = 0; i < 10 ; i++) {
+            logic.setOwnedGreen(i, i);
+        }
+        assertEquals(1,logic.getOwnedGreen().get(1).intValue());
+        assertEquals(2,logic.getOwnedGreen().get(2).intValue());
+        assertNotSame(1,logic.getOwnedGreen().get(5).intValue());
+        assertEquals(9,logic.getOwnedGreen().get(9).intValue());
+
+        for(int i = 0; i < 10 ; i++) {
+            logic.setOwnedPurple(i, i);
+        }
+        assertEquals(1,logic.getOwnedPurple().get(1).intValue());
+        assertEquals(3,logic.getOwnedPurple().get(3).intValue());
+        assertNotSame(6,logic.getOwnedPurple().get(5).intValue());
+        assertEquals(7,logic.getOwnedPurple().get(7).intValue());
+
+        for(int i = 0; i < 10 ; i++) {
+            logic.setOwnedOrange(i, i);
+        }
+        assertEquals(4,logic.getOwnedOrange().get(4).intValue());
+        assertEquals(2,logic.getOwnedOrange().get(2).intValue());
+        assertNotSame(7,logic.getOwnedOrange().get(4).intValue());
+        assertEquals(8,logic.getOwnedOrange().get(8).intValue());
+
+
+        //These below tests the conditional statements of the setters
+        logic.setOwnedOrange(8,9);
+        assertEquals(9,logic.getOwnedOrange().get(8).intValue());
+        assertEquals(9,logic.getOwnedOrange().get(9).intValue());
+
+        System.out.println(logic.getOwnedGreen().size());
+        logic.setOwnedGreen(10,3);
+        assertEquals(3,logic.getOwnedGreen().get(10).intValue());
+
+    }
+
+    @Test
+    public void testgetTroop_countANDsetTroopCount(){
+        GameLogic logic = new GameLogic();
+        int[]arr = {1,2,3,4,5};
+        logic.setTroop_count(arr);
+        assertEquals(arr,logic.getTroop_count());
+    }
+
+
+
+
+
+
 
 
 }
