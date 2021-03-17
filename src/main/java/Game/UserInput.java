@@ -573,7 +573,7 @@ public class UserInput {
 
         public boolean assertValidAttackers() {
             //Assert that the number of troops used to attack is valid
-            return numAttackUnits >= 2 && game.logic.troop_count[attackCountryId] - 1 >= numAttackUnits && numAttackUnits <= 3;
+            return numAttackUnits >= 1 && game.logic.troop_count[attackCountryId] - 1 >= numAttackUnits && numAttackUnits <= 3;
         }
 
         public boolean assertValidDefenders() {
