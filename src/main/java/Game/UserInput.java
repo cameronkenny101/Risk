@@ -82,7 +82,7 @@ public class UserInput {
                 attackCountry(input, player);
                 break;
             case "How many units do you wish to attack for you?":
-                setAttackUnits(input, nextPlayer);
+                setAttackUnits(input, player, nextPlayer);
                 break;
             case "How many units do you wish to defend for you?":
                 setDefenceUnits(input, player, nextPlayer);
@@ -199,21 +199,29 @@ public class UserInput {
         battle.numDefenceUnits = Integer.parseInt(troops);
         boolean valid = battle.assertValidDefenders();
         if (!valid) {
-            game.uiController.output.appendText("You chose an invalid number of troops. You have " + game.logic.getTroop_count()[battle.numDefenceUnits] + " troops available and you may only choose between 1 and 3. \n");
+            game.uiController.output.appendText("You chose an invalid number of troops. You have " + game.logic.getTroop_count()[battle.numDefenceUnits] + " troops available and you may only choose between 1 and 2. \n");
             game.uiController.askQuestion("How many units do you wish to defend for you?");
         } else {
             battle("yes", attacker, defender);
         }
     }
 
-    public void setAttackUnits(String troops, Player player) {
+    public void setAttackUnits(String troops, Player attacker, Player defender) {
         battle.numAttackUnits = Integer.parseInt(troops);
         boolean valid = battle.assertValidAttackers();
         if (!valid) {
             game.uiController.output.appendText("You chose an invalid number of troops. You have " + game.logic.getTroop_count()[battle.attackCountryId] + " troops available and you may only choose between 1 and 3. \n");
             game.uiController.askQuestion("How many units do you wish to attack for you?");
+        }
+        //Skips asking for defending player response if the troops available are 1 or if it's a neutral territory
+        else if (game.logic.troop_count[battle.defenceCountryId] == 1 || game.logic.country_owner[battle.defenceCountryId] != defender.getColour()) {
+            battle("yes", attacker, defender);
+            if (game.logic.troop_count[battle.defenceCountryId] == 1)
+                battle.numDefenceUnits = 1;
+            else
+                battle.numDefenceUnits = Math.min(game.logic.troop_count[battle.defenceCountryId], 2);
         } else {
-            game.uiController.output.appendText("The defending player, " + player.getName() + ", must now choose how many units to defend with.\n");
+            game.uiController.output.appendText("The defending player, " + defender.getName() + ", must now choose how many units to defend with.\n");
             game.uiController.askQuestion("How many units do you wish to defend for you?");
         }
     }
@@ -351,7 +359,7 @@ public class UserInput {
         if (player.getInitTroops() > 0 && game.logic.getInitPhase()) {
             game.uiController.output.appendText("> You have " + player.getTroops() + " troops left to move \n");
             game.uiController.askQuestion("How many troops do you want to place");
-        } else if(player.getTroops() > 0) {
+        } else if (player.getTroops() > 0) {
             game.uiController.output.appendText("> You have " + player.getTroops() + " troops left to move \n");
             game.uiController.askQuestion("How many troops do you want to place");
         } else {
@@ -359,7 +367,7 @@ public class UserInput {
                 game.isWinner(player, game.logic.country_owner);
             }
             //Todo: check logic of next player
-            if(game.logic.getInitPhase()) {
+            if (game.logic.getInitPhase()) {
                 userInputLogic.nextTurn(player, nextPlayer);
                 neutralTurnCountdown--;
                 if (neutralTurnCountdown == 0)
@@ -369,7 +377,7 @@ public class UserInput {
                 if (game.isOnline)
                     handleOnlineReinforcement(player, nextPlayer);
             } else {
-                if(game.isOnline)
+                if (game.isOnline)
                     handleOnlineReinforcement(player, nextPlayer);
                 game.uiController.askQuestion("Would you like to invade a country? (yes/no)");
             }
