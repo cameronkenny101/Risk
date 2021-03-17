@@ -100,8 +100,6 @@ public class GameLogic {
     }
 
 
-
-
     public void endInitPhase() {
         initPhase = false;
     }
@@ -152,5 +150,24 @@ public class GameLogic {
 
     public ArrayList<Integer> getOwnedOrange() {
         return ownedOrange;
+    }
+
+    //I ADDED IN THESE SETTERS FOR TESTING ONLY.
+    protected void setOwnedGreen(int index,int value){
+        if(index == getOwnedGreen().size()){ownedGreen.add(index, value);}
+        if(index < getOwnedGreen().size()){ownedGreen.set(index, value);} }
+
+    protected void setOwnedGray(int index,int value){
+        if(index == getOwnedGray().size()){ownedGray.add(index, value);}
+        if(index < getOwnedGray().size()){ownedGray.set(index, value);}
+    }
+
+    protected void setOwnedPurple(int index,int value){
+        if(index == getOwnedPurple().size()){ownedPurple.add(index, value);}
+        if(index < getOwnedPurple().size()){ownedPurple.set(index, value);} }
+
+    protected void setOwnedOrange(int index,int value){
+        if(index == getOwnedOrange().size()){ownedOrange.add(index, value);}
+        if(index < getOwnedOrange().size()){ownedOrange.set(index, value);}
     }
 }

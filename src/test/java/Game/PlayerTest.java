@@ -39,13 +39,6 @@ public class PlayerTest extends TestCase {
         assertFalse(player2.isTurn());
     }
 
-    @Test
-    public void testTroops() {
-        Player player = new Player("Cameron", Constants.PLAYER_COLOUR.RED);
-        assertEquals(player.getTroops(), Constants.INIT_UNITS_PLAYER - Constants.INIT_COUNTRIES_PLAYER);
-        player.setTroops(12);
-        assertEquals(player.getTroops(), 12);
-    }
 
     @Test
     public void testInitTroops() {
