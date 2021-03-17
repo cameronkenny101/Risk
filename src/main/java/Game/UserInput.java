@@ -624,7 +624,6 @@ public class UserInput {
         }
 
         public void calculateBattleSequence(ArrayList<Integer> attackerDice, ArrayList<Integer> defenderDice) {
-            System.out.println("Attacking units: " + numAttackUnits);
             for (int i = 0; i < Math.min(numAttackUnits, numDefenceUnits); i++) {
                 if (attackerDice.get(i) > defenderDice.get(i)) {
                     game.logic.getTroop_count()[defenceCountryId]--;
