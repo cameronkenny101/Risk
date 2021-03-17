@@ -311,9 +311,26 @@ public class Game {
             }
         } else {
             //Asks Battle Question START OF BATTLE
-            uiController.askQuestion("Would you like to invade a country? (yes/no)");
+            if(isOnline) {
+                if (isPlayer1 && player1.isTurn() || !isPlayer1 && player2.isTurn())
+                    uiController.askQuestion("Would you like to invade a country? (yes/no)");
+                else if (!isPlayer1) {
+                    uiController.output.appendText("> Wait for " + player1.getName() + " to finish the battle sequence\n");
+                    Thread t = new Thread(() -> waitForBattle(player2, player1));
+                    t.start();
+                } else {
+                    uiController.output.appendText("> Wait for " + player2.getName() + " to finish the battle sequence\n");
+                    Thread t = new Thread(() -> waitForBattle(player1, player2));
+                    t.start();
+                }
+            } else
+                uiController.askQuestion("Would you like to invade a country? (yes/no)");
             // uiController.askQuestion("Do you want to fortify your territories");
         }
+    }
+
+    private void waitForBattle(Player player, Player nextPlayer) {
+
     }
 
     private void setOnlineTurn(Player player, Player nextPlayer) {
