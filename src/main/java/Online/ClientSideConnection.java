@@ -75,7 +75,7 @@ public class ClientSideConnection {
     }
 
     public void writeInt(int number) {
-        System.out.println("Sending number for next move");
+        System.out.println("Sending number");
         try {
             dataOut.writeInt(number);
             dataOut.flush();

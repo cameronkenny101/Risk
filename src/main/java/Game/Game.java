@@ -316,12 +316,10 @@ public class Game {
                     uiController.askQuestion("Would you like to invade a country? (yes/no)");
                 else if (!isPlayer1) {
                     uiController.output.appendText("> Wait for " + player1.getName() + " to finish the battle sequence\n");
-                    Thread t = new Thread(() -> waitForBattle(player2, player1));
-                    t.start();
+                    threadForBattle(player2, player1);
                 } else {
                     uiController.output.appendText("> Wait for " + player2.getName() + " to finish the battle sequence\n");
-                    Thread t = new Thread(() -> waitForBattle(player1, player2));
-                    t.start();
+                    threadForBattle(player1, player2);
                 }
             } else
                 uiController.askQuestion("Would you like to invade a country? (yes/no)");
@@ -329,8 +327,15 @@ public class Game {
         }
     }
 
-    private void waitForBattle(Player player, Player nextPlayer) {
-
+    private void threadForBattle(Player player, Player nextPlayer) {
+        Thread t = new Thread(() -> {
+            try {
+                waitForBattle(player, nextPlayer);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        t.start();
     }
 
     private void setOnlineTurn(Player player, Player nextPlayer) {
@@ -348,6 +353,16 @@ public class Game {
             });
             t.start();
         }
+    }
+
+    private void waitForBattle(Player player, Player nextPlayer) throws IOException {
+        int numAttackingTroops = player.getCsc().receiveInt();
+        int attackCountry = player.getCsc().receiveInt();
+        int defendingCountry = player.getCsc().receiveInt();
+        userInput.battle.defenceCountryId = defendingCountry;
+        uiController.output.appendText("> " + Constants.COUNTRY_NAMES.get(defendingCountry) + " is under attack from " + Constants.COUNTRY_NAMES.get(attackCountry) + "!\n");
+        uiController.output.appendText("> " + Constants.COUNTRY_NAMES.get(attackCountry) + " is attacking with " + numAttackingTroops + "\n");
+        uiController.askQuestion("How many units do you wish to defend for you?");
     }
 
     public void reinforcementTurn(Player player, Player nextPlayer) throws IOException {

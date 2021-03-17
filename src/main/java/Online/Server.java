@@ -61,6 +61,8 @@ public class Server {
             System.out.println("Init phase finished");
             waitForDiceWinner();
             setPlayerTurn();
+            sendAttackingData();
+            sendNumDefenders();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -106,6 +108,30 @@ public class Server {
         } else {
             player1Turn = false;
             System.out.println("Player 2 has won the dice roll");
+        }
+    }
+
+    public void sendAttackingData() throws IOException {
+        if(player1Turn) {
+            player2.sendInt(player1.getInt());
+            player2.sendInt(player1.getInt());
+            player2.sendInt(player1.getInt());
+        } else {
+            player1.sendInt(player2.getInt());
+            player1.sendInt(player2.getInt());
+            player1.sendInt(player2.getInt());
+        }
+    }
+
+    public void sendNumDefenders() throws IOException {
+        if(player1Turn) {
+            int troops = player2.getInt();
+            System.out.println(troops);
+            player1.sendInt(troops);
+        } else {
+            int troops = player1.getInt();
+            System.out.println(troops);
+            player2.sendInt(troops);
         }
     }
 

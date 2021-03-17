@@ -210,8 +210,10 @@ public class UserInput {
         battle.numDefenceUnits = Integer.parseInt(troops);
         boolean valid = battle.assertValidDefenders();
         if (!valid) {
-            game.uiController.output.appendText("You chose an invalid number of troops. You have " + game.logic.getTroop_count()[battle.numDefenceUnits] + " troops available and you may only choose between 1 and 2. \n");
+            game.uiController.output.appendText("You chose an invalid number of troops. You may only choose between 1 and 2. \n");
             game.uiController.askQuestion("How many units do you wish to defend for you?");
+        } else if(game.isOnline) {
+            defender.onlineGameHandler.sendInt(battle.numDefenceUnits, defender.getCsc());
         } else {
             battle("yes", attacker, defender);
         }
@@ -232,9 +234,30 @@ public class UserInput {
                 battle.numDefenceUnits = Math.min(game.logic.troop_count[battle.defenceCountryId], 2);
             battle("yes", attacker, defender);
         } else {
-            game.uiController.output.appendText("The defending player, " + defender.getName() + ", must now choose how many units to defend with.\n");
-            game.uiController.askQuestion("How many units do you wish to defend for you?");
+            if(game.isOnline) {
+                game.uiController.output.appendText("> Please wait for " + defender.getName() + " to defend there territory\n");
+                game.onlineGameHandler.sendInt(battle.numAttackUnits, attacker.getCsc());
+                game.onlineGameHandler.sendInt(battle.attackCountryId, attacker.getCsc());
+                game.onlineGameHandler.sendInt(battle.defenceCountryId, attacker.getCsc());
+                Thread t = new Thread(() -> {
+                    try {
+                        waitForDefender(attacker, defender);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                t.start();
+            } else {
+                game.uiController.output.appendText("The defending player, " + defender.getName() + ", must now choose how many units to defend with.\n");
+                game.uiController.askQuestion("How many units do you wish to defend for you?");
+            }
         }
+    }
+
+    private void waitForDefender(Player attacker, Player defender) throws IOException {
+        battle.numDefenceUnits = attacker.getCsc().receiveInt();
+        game.uiController.output.appendText("> " + defender.getName() + " is defending with " + battle.numDefenceUnits + " troops\n");
+        battle("yes", attacker, defender);
     }
 
     public void attackCountry(String country, Player player) {
@@ -412,7 +435,6 @@ public class UserInput {
             });
             t.start();
         } else {
-            System.out.println("YOOOO");
             player.getCsc().writeBoolean(false);
             player.onlineGameHandler.sendInt(game.logic.getTroop_count()[countryIndex], player.getCsc());
             player.onlineGameHandler.sendInt(countryIndex, player.getCsc());
@@ -598,7 +620,7 @@ public class UserInput {
 
         public boolean assertValidDefenders() {
             //Assert number of defence units is valid
-            return numDefenceUnits <= 1 && numDefenceUnits <= game.logic.troop_count[defenceCountryId];
+            return numDefenceUnits >= 1 && numDefenceUnits <= game.logic.troop_count[defenceCountryId] && numDefenceUnits <= 2;
         }
 
         public void calculateBattleSequence(ArrayList<Integer> attackerDice, ArrayList<Integer> defenderDice) {
