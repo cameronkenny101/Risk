@@ -263,18 +263,23 @@ public class UserInput {
         int defenseTroops = defender.getCsc().receiveInt();
         int attackTroops = defender.getCsc().receiveInt();
         boolean sameColor = defender.getCsc().receiveBoolean();
+        boolean canContinue = defender.getCsc().receiveBoolean();
         game.logic.getTroop_count()[battle.attackCountryId] = attackTroops;
         game.logic.getTroop_count()[battle.defenceCountryId] = defenseTroops;
+        Platform.runLater(() -> {
+            game.uiController.setMap(game.logic.troop_count, game.logic.getCountry_owner());
+        });
         if(!sameColor) {
             game.logic.getCountry_owner()[battle.defenceCountryId] = attacker.getColour();
             game.uiController.output.appendText("> " + Constants.COUNTRY_NAMES.get(battle.defenceCountryId) + " has been invaded by " + Constants.COUNTRY_NAMES.get(battle.attackCountryId) + "\n");
+            if(canContinue) {
+                Thread t = new Thread(() -> isFortifying(attacker, defender));
+                t.start();
+            }
         } else {
             game.uiController.output.appendText("> " + Constants.COUNTRY_NAMES.get(battle.attackCountryId) + " could not successfully invade " + Constants.COUNTRY_NAMES.get(battle.defenceCountryId) + "\n");
+            game.threadForBattle(defender, attacker);
         }
-        game.uiController.setMap(game.logic.troop_count, game.logic.getCountry_owner());
-        Thread t = new Thread(() -> isFortifying(attacker, defender));
-        t.start();
-        // game.threadForBattle(defender, attacker);
     }
 
     private void isFortifying(Player attacker, Player defender) {
@@ -430,8 +435,9 @@ public class UserInput {
         try {
             troops = Integer.parseInt(input);
         } catch (Exception e) {
-            game.uiController.output.appendText("> Invalid number");
+            game.uiController.output.appendText("> Invalid number\n");
             game.uiController.askQuestion("How many troops do you want to place");
+            return;
         }
         troops = Integer.parseInt(input);
 

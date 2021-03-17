@@ -178,11 +178,13 @@ public class Server {
             player2.sendInt(player1.getInt());
             player2.sendBoolean(player1.getBoolean());
             successfulAttack = player1.getBoolean();
+            player2.sendBoolean(successfulAttack);
         } else {
             player1.sendInt(player2.getInt());
             player1.sendInt(player2.getInt());
             player1.sendBoolean(player2.getBoolean());
             successfulAttack = player2.getBoolean();
+            player1.sendBoolean(successfulAttack);
         }
     }
 
