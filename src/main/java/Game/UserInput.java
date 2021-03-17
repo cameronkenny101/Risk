@@ -591,12 +591,12 @@ public class UserInput {
 
     /*Stores variables for attacking*/
     public class Battle {
-        int attackCountryId;
-        int defenceCountryId;
-        int numAttackUnits;
-        int numDefenceUnits;
-        boolean invasionVictory;
-        boolean invasionLoss;
+        public int attackCountryId;
+        public int defenceCountryId;
+        public int numAttackUnits;
+        public int numDefenceUnits;
+        public boolean invasionVictory;
+        public boolean invasionLoss;
 
         /**
          * Asserts that the two countries are adjacent
