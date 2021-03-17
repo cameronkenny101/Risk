@@ -216,6 +216,10 @@ public class UserInput {
         //Skips asking for defending player response if the troops available are 1 or if it's a neutral territory
         else if (game.logic.troop_count[battle.defenceCountryId] == 1 || game.logic.country_owner[battle.defenceCountryId] != defender.getColour()) {
             battle("yes", attacker, defender);
+            if (game.logic.troop_count[battle.defenceCountryId] == 1)
+                battle.numDefenceUnits = 1;
+            else
+                battle.numDefenceUnits = Math.min(game.logic.troop_count[battle.defenceCountryId], 2);
         } else {
             game.uiController.output.appendText("The defending player, " + defender.getName() + ", must now choose how many units to defend with.\n");
             game.uiController.askQuestion("How many units do you wish to defend for you?");
