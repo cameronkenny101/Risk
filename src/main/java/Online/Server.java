@@ -11,6 +11,7 @@ public class Server {
     private ServerSideConnection player1;
     private ServerSideConnection player2;
     boolean player1Turn;
+    boolean successfulAttack;
 
     public Server() {
         System.out.println("*******  G A M E  S E R V E R  *******");
@@ -61,9 +62,16 @@ public class Server {
             System.out.println("Init phase finished");
             waitForDiceWinner();
             setPlayerTurn();
-            if(sendAttackingData())
-                sendNumDefenders();
-            sendAttackResults();
+            while (getAttackStatus()) {
+                if (sendAttackingData())
+                    sendNumDefenders();
+                sendAttackResults();
+                if(successfulAttack) {
+                    if (ifPlacingTroops()) {
+                        sendPostAttackData();
+                    }
+                }
+            }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -112,6 +120,16 @@ public class Server {
         }
     }
 
+    private void sendPostAttackData() throws IOException {
+        if(player1Turn) {
+            player2.sendInt(player1.getInt());
+            player2.sendInt(player1.getInt());
+        } else {
+            player1.sendInt(player2.getInt());
+            player1.sendInt(player2.getInt());
+        }
+    }
+
     public boolean sendAttackingData() throws IOException {
         boolean getData;
         if(player1Turn) {
@@ -130,16 +148,41 @@ public class Server {
         return getData;
     }
 
+    private boolean ifPlacingTroops() throws IOException {
+        boolean isFortifying;
+        if(player1Turn) {
+            isFortifying = player1.getBoolean();
+            player2.sendBoolean(isFortifying);
+        } else {
+            isFortifying = player2.getBoolean();
+            player1.sendBoolean(isFortifying);
+        }
+        return isFortifying;
+    }
+
+    private boolean getAttackStatus() throws IOException {
+        boolean isAttack;
+        if(player1Turn) {
+            isAttack = player1.getBoolean();
+            player2.sendBoolean(isAttack);
+        } else {
+            isAttack = player2.getBoolean();
+            player1.sendBoolean(isAttack);
+        }
+        return isAttack;
+    }
+
     private void sendAttackResults() throws IOException {
-        System.out.println("here!");
         if(player1Turn) {
             player2.sendInt(player1.getInt());
             player2.sendInt(player1.getInt());
             player2.sendBoolean(player1.getBoolean());
+            successfulAttack = player1.getBoolean();
         } else {
             player1.sendInt(player2.getInt());
             player1.sendInt(player2.getInt());
             player1.sendBoolean(player2.getBoolean());
+            successfulAttack = player2.getBoolean();
         }
     }
 

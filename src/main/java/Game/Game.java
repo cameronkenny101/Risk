@@ -316,15 +316,27 @@ public class Game {
                     uiController.askQuestion("Would you like to invade a country? (yes/no)");
                 else if (!isPlayer1) {
                     uiController.output.appendText("> Wait for " + player1.getName() + " to finish the battle sequence\n");
-                    threadForBattle(player2, player1);
+                    threadForQuestion(player2, player1);
                 } else {
                     uiController.output.appendText("> Wait for " + player2.getName() + " to finish the battle sequence\n");
-                    threadForBattle(player1, player2);
+                    threadForQuestion(player1, player2);
                 }
             } else
                 uiController.askQuestion("Would you like to invade a country? (yes/no)");
-            // uiController.askQuestion("Do you want to fortify your territories");
         }
+    }
+
+    public void threadForQuestion(Player player, Player nextPlayer) {
+        Thread t = new Thread(() -> {
+            boolean attack = player.getCsc().receiveBoolean();
+            if(attack) {
+                threadForBattle(player, nextPlayer);
+            } else {
+                uiController.output.appendText("> " + nextPlayer.getName() + " has finished battling. Wait for them to finish fortifying there territories\n");
+                // thread for fortifying
+            }
+        });
+        t.start();
     }
 
     public void threadForBattle(Player player, Player nextPlayer) {

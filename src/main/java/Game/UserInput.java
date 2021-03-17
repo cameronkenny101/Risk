@@ -76,7 +76,7 @@ public class UserInput {
                 countryToGive(input, player);
                 break;
             case "Would you like to invade a country? (yes/no)":
-                askToBattle(input);
+                askToBattle(input, player);
                 break;
             case "What country do you wish to attack from?":
                 battleFrom(input, player);
@@ -114,7 +114,7 @@ public class UserInput {
                 continueInvasion();
                 break;
             case 2:
-                askToBattle("yes");
+                askToBattle("yes", player);
                 break;
             default:
                 game.uiController.askQuestion("Do you want to fortify your territories");
@@ -137,6 +137,11 @@ public class UserInput {
 
             game.uiController.setRegion(battle.defenceCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.defenceCountryId]);
             game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId]);
+
+            if(game.isOnline) {
+                attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.defenceCountryId], attacker.getCsc());
+                attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.attackCountryId], attacker.getCsc());
+            }
             game.uiController.askQuestion("Would you like to invade a country? (yes/no)");
         } else {
             game.uiController.output.appendText("Invalid number of troops\n");
@@ -154,7 +159,9 @@ public class UserInput {
     public void askToMoveAdditionalTroops(String input, Player attacker, Player defender) {
         if (input.equals("yes")) {
             game.uiController.askQuestion("How many troops do you want to add? (There must still be 1 troop left in your original territory)");
+            attacker.getCsc().writeBoolean(true);
         } else {
+            attacker.getCsc().writeBoolean(false);
             battle("no", attacker, defender);
         }
     }
@@ -184,6 +191,7 @@ public class UserInput {
                 attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.defenceCountryId], attacker.getCsc());
                 attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.attackCountryId], attacker.getCsc());
                 attacker.getCsc().writeBoolean(true);
+                attacker.getCsc().writeBoolean(false);
             }
 
             if (battle.invasionLoss) {
@@ -210,21 +218,22 @@ public class UserInput {
                     attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.defenceCountryId], attacker.getCsc());
                     attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.attackCountryId], attacker.getCsc());
                     attacker.getCsc().writeBoolean(false);
+                    attacker.getCsc().writeBoolean(game.logic.getTroop_count()[battle.attackCountryId] > 1);
                     Platform.runLater(() -> {
                         game.uiController.setRegion(battle.defenceCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.defenceCountryId]);
                         game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId]);
                     });
                 }
 
-                if(game.logic.getTroop_count()[battle.attackCountryId] > 1)
+                if(game.logic.getTroop_count()[battle.attackCountryId] > 1) {
                     game.uiController.askQuestion("Do you want to move any additional troops to your new territory?");
-                else
+                } else {
                     game.uiController.askQuestion("Would you like to:\n1, continue the invasion.\n2, invade a new territory.\n3, end combat.");
+                }
             } else {
                 game.uiController.askQuestion("Would you like to:\n1, continue the invasion.\n2, invade a new territory.\n3, end combat.");
             }
         } else {
-
             game.uiController.askQuestion("Would you like to:\n1, continue the invasion.\n2, invade a new territory.\n3, end combat.");
         }
     }
@@ -256,10 +265,42 @@ public class UserInput {
         boolean sameColor = defender.getCsc().receiveBoolean();
         game.logic.getTroop_count()[battle.attackCountryId] = attackTroops;
         game.logic.getTroop_count()[battle.defenceCountryId] = defenseTroops;
-        if(!sameColor)
+        if(!sameColor) {
             game.logic.getCountry_owner()[battle.defenceCountryId] = attacker.getColour();
+            game.uiController.output.appendText("> " + Constants.COUNTRY_NAMES.get(battle.defenceCountryId) + " has been invaded by " + Constants.COUNTRY_NAMES.get(battle.attackCountryId) + "\n");
+        } else {
+            game.uiController.output.appendText("> " + Constants.COUNTRY_NAMES.get(battle.attackCountryId) + " could not successfully invade " + Constants.COUNTRY_NAMES.get(battle.defenceCountryId) + "\n");
+        }
         game.uiController.setMap(game.logic.troop_count, game.logic.getCountry_owner());
-        game.threadForBattle(defender, attacker);
+        Thread t = new Thread(() -> isFortifying(attacker, defender));
+        t.start();
+        // game.threadForBattle(defender, attacker);
+    }
+
+    private void isFortifying(Player attacker, Player defender) {
+        boolean fortify = defender.getCsc().receiveBoolean();
+        if(fortify) {
+            Thread t = new Thread(() -> {
+                try {
+                    threadForUpdating(attacker, defender);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            t.start();
+        }
+        else
+            game.threadForQuestion(defender, attacker);
+    }
+
+    private void threadForUpdating(Player attacker, Player defender) throws IOException {
+        int defenseTroops = defender.getCsc().receiveInt();
+        int attackTroops = defender.getCsc().receiveInt();
+        game.logic.getTroop_count()[battle.attackCountryId] = attackTroops;
+        game.logic.getTroop_count()[battle.defenceCountryId] = defenseTroops;
+        game.uiController.output.appendText("> " + attacker.getName() + " fortified " + Constants.COUNTRY_NAMES.get(battle.defenceCountryId));
+        game.uiController.setMap(game.logic.troop_count, game.logic.getCountry_owner());
+        game.threadForQuestion(defender, attacker);
     }
 
     public void setAttackUnits(String troops, Player attacker, Player defender) {
@@ -330,14 +371,19 @@ public class UserInput {
      *
      * @param input yes or no string to start battle
      */
-    private void askToBattle(String input) {
+    private void askToBattle(String input, Player player) {
         if (input.equals("yes")) {
             resetBattle();
             game.uiController.askQuestion("What country do you wish to attack from?");
+            if(game.isOnline)
+                player.getCsc().writeBoolean(true);
         } else {
             //END OF BATTLE
             game.uiController.output.appendText("> You chose not to battle.\n");
             game.uiController.askQuestion("Do you want to fortify your territories");
+            if(game.isOnline)
+                player.getCsc().writeBoolean(false);
+
         }
     }
 
