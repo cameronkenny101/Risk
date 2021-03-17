@@ -699,12 +699,12 @@ public class UserInput {
 
     /*Stores variables for attacking*/
     public class Battle {
-        int attackCountryId;
-        int defenceCountryId;
-        int numAttackUnits;
-        int numDefenceUnits;
-        boolean invasionVictory;
-        boolean invasionLoss;
+        public int attackCountryId;
+        public int defenceCountryId;
+        public int numAttackUnits;
+        public int numDefenceUnits;
+        public boolean invasionVictory;
+        public boolean invasionLoss;
 
         /**
          * Asserts that the two countries are adjacent
@@ -732,7 +732,6 @@ public class UserInput {
         }
 
         public void calculateBattleSequence(ArrayList<Integer> attackerDice, ArrayList<Integer> defenderDice) {
-            System.out.println("Attacking units: " + numAttackUnits);
             for (int i = 0; i < Math.min(numAttackUnits, numDefenceUnits); i++) {
                 if (attackerDice.get(i) > defenderDice.get(i)) {
                     game.logic.getTroop_count()[defenceCountryId]--;
