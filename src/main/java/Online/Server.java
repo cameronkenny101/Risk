@@ -61,8 +61,9 @@ public class Server {
             System.out.println("Init phase finished");
             waitForDiceWinner();
             setPlayerTurn();
-            sendAttackingData();
-            sendNumDefenders();
+            if(sendAttackingData())
+                sendNumDefenders();
+            sendAttackResults();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -111,15 +112,34 @@ public class Server {
         }
     }
 
-    public void sendAttackingData() throws IOException {
+    public boolean sendAttackingData() throws IOException {
+        boolean getData;
         if(player1Turn) {
+            getData = player1.getBoolean();
+            player2.sendBoolean(getData);
             player2.sendInt(player1.getInt());
             player2.sendInt(player1.getInt());
             player2.sendInt(player1.getInt());
         } else {
+            getData = player2.getBoolean();
+            player1.sendBoolean(getData);
             player1.sendInt(player2.getInt());
             player1.sendInt(player2.getInt());
             player1.sendInt(player2.getInt());
+        }
+        return getData;
+    }
+
+    private void sendAttackResults() throws IOException {
+        System.out.println("here!");
+        if(player1Turn) {
+            player2.sendInt(player1.getInt());
+            player2.sendInt(player1.getInt());
+            player2.sendBoolean(player1.getBoolean());
+        } else {
+            player1.sendInt(player2.getInt());
+            player1.sendInt(player2.getInt());
+            player1.sendBoolean(player2.getBoolean());
         }
     }
 

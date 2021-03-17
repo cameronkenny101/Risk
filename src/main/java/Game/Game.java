@@ -327,7 +327,7 @@ public class Game {
         }
     }
 
-    private void threadForBattle(Player player, Player nextPlayer) {
+    public void threadForBattle(Player player, Player nextPlayer) {
         Thread t = new Thread(() -> {
             try {
                 waitForBattle(player, nextPlayer);
@@ -356,13 +356,26 @@ public class Game {
     }
 
     private void waitForBattle(Player player, Player nextPlayer) throws IOException {
+        boolean getData = player.getCsc().receiveBoolean();
         int numAttackingTroops = player.getCsc().receiveInt();
         int attackCountry = player.getCsc().receiveInt();
         int defendingCountry = player.getCsc().receiveInt();
         userInput.battle.defenceCountryId = defendingCountry;
+        userInput.battle.attackCountryId = attackCountry;
         uiController.output.appendText("> " + Constants.COUNTRY_NAMES.get(defendingCountry) + " is under attack from " + Constants.COUNTRY_NAMES.get(attackCountry) + "!\n");
-        uiController.output.appendText("> " + Constants.COUNTRY_NAMES.get(attackCountry) + " is attacking with " + numAttackingTroops + "\n");
-        uiController.askQuestion("How many units do you wish to defend for you?");
+        uiController.output.appendText("> " + Constants.COUNTRY_NAMES.get(attackCountry) + " is attacking with " + numAttackingTroops + " troops\n");
+        if(getData) {
+            uiController.askQuestion("How many units do you wish to defend for you?");
+        } else {
+            Thread t = new Thread(() -> {
+                try {
+                    userInput.updateAfterAttack(nextPlayer, player);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            t.start();
+        }
     }
 
     public void reinforcementTurn(Player player, Player nextPlayer) throws IOException {
@@ -397,7 +410,7 @@ public class Game {
      *                         manually because the testisWinner would give me a null pointer if i didnt pass it in
      * @return a boolean value if the player has successfully taken over all the countries
      */
-    public boolean isWinner(Player p,Constants.PLAYER_COLOUR[] arrayOfCountries) {
+    public boolean isWinner(Player p, Constants.PLAYER_COLOUR[] arrayOfCountries) {
         for (Constants.PLAYER_COLOUR arrayOfCountry : arrayOfCountries) {
             if (arrayOfCountry != p.getColour()) {
                 return false;

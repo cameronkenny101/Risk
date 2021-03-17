@@ -1,5 +1,7 @@
 package Game;
 
+import javafx.application.Platform;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -42,6 +44,7 @@ public class UserInput {
     public void receiveInput(String question, String input) {
         Player player = game.player1.isTurn() ? game.player1 : game.player2;
         Player nextPlayer = game.player1.isTurn() ? game.player2 : game.player1;
+        game.uiController.clearQuestion();
 
         switch (question) {
             case "Press enter to choose your 9 cards from the deck":
@@ -98,6 +101,8 @@ public class UserInput {
                 break;
             case "How many troops do you want to move":
                 troopsToFortify(input, player);
+                break;
+            case "":
                 break;
         }
     }
@@ -166,9 +171,20 @@ public class UserInput {
             battle.calculateBattleSequence(attackerDice, defenderDice);
 
             //set the regions in the UI
+            if(game.isOnline) {
+                Platform.runLater(() -> {
+                    game.uiController.setRegion(battle.defenceCountryId, game.logic.country_owner[battle.defenceCountryId], game.logic.getTroop_count()[battle.defenceCountryId]);
+                    game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId]);
+                });
+            }
             game.uiController.setRegion(battle.defenceCountryId, game.logic.country_owner[battle.defenceCountryId], game.logic.getTroop_count()[battle.defenceCountryId]);
             game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId]);
 
+            if(!battle.invasionVictory && game.isOnline) {
+                attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.defenceCountryId], attacker.getCsc());
+                attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.attackCountryId], attacker.getCsc());
+                attacker.getCsc().writeBoolean(true);
+            }
 
             if (battle.invasionLoss) {
                 game.uiController.output.appendText("You have lost the battle.\n");
@@ -187,11 +203,18 @@ public class UserInput {
                 game.logic.getTroop_count()[battle.defenceCountryId] = battle.numAttackUnits;
                 game.logic.getTroop_count()[battle.attackCountryId] -= battle.numAttackUnits;
 
-                System.out.println(game.logic.getTroop_count()[battle.defenceCountryId]);
-                System.out.println(game.logic.getTroop_count()[battle.attackCountryId]);
-
                 //Set Owner
                 game.logic.getCountry_owner()[battle.defenceCountryId] = attacker.getColour();
+
+                if(game.isOnline) {
+                    attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.defenceCountryId], attacker.getCsc());
+                    attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.attackCountryId], attacker.getCsc());
+                    attacker.getCsc().writeBoolean(false);
+                    Platform.runLater(() -> {
+                        game.uiController.setRegion(battle.defenceCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.defenceCountryId]);
+                        game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId]);
+                    });
+                }
 
                 if(game.logic.getTroop_count()[battle.attackCountryId] > 1)
                     game.uiController.askQuestion("Do you want to move any additional troops to your new territory?");
@@ -214,9 +237,29 @@ public class UserInput {
             game.uiController.askQuestion("How many units do you wish to defend for you?");
         } else if(game.isOnline) {
             defender.onlineGameHandler.sendInt(battle.numDefenceUnits, defender.getCsc());
+            Thread t = new Thread(() -> {
+                try {
+                    updateAfterAttack(attacker, defender);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            t.start();
         } else {
             battle("yes", attacker, defender);
         }
+    }
+
+    public void updateAfterAttack(Player attacker, Player defender) throws IOException {
+        int defenseTroops = defender.getCsc().receiveInt();
+        int attackTroops = defender.getCsc().receiveInt();
+        boolean sameColor = defender.getCsc().receiveBoolean();
+        game.logic.getTroop_count()[battle.attackCountryId] = attackTroops;
+        game.logic.getTroop_count()[battle.defenceCountryId] = defenseTroops;
+        if(!sameColor)
+            game.logic.getCountry_owner()[battle.defenceCountryId] = attacker.getColour();
+        game.uiController.setMap(game.logic.troop_count, game.logic.getCountry_owner());
+        game.threadForBattle(defender, attacker);
     }
 
     public void setAttackUnits(String troops, Player attacker, Player defender) {
@@ -228,6 +271,8 @@ public class UserInput {
         }
         //Skips asking for defending player response if the troops available are 1 or if it's a neutral territory
         else if (game.logic.troop_count[battle.defenceCountryId] == 1 || game.logic.country_owner[battle.defenceCountryId] != defender.getColour()) {
+            if(game.isOnline)
+                sendAttackData(attacker, false);
             if (game.logic.troop_count[battle.defenceCountryId] == 1)
                 battle.numDefenceUnits = 1;
             else
@@ -236,9 +281,7 @@ public class UserInput {
         } else {
             if(game.isOnline) {
                 game.uiController.output.appendText("> Please wait for " + defender.getName() + " to defend there territory\n");
-                game.onlineGameHandler.sendInt(battle.numAttackUnits, attacker.getCsc());
-                game.onlineGameHandler.sendInt(battle.attackCountryId, attacker.getCsc());
-                game.onlineGameHandler.sendInt(battle.defenceCountryId, attacker.getCsc());
+                sendAttackData(attacker, true);
                 Thread t = new Thread(() -> {
                     try {
                         waitForDefender(attacker, defender);
@@ -252,6 +295,13 @@ public class UserInput {
                 game.uiController.askQuestion("How many units do you wish to defend for you?");
             }
         }
+    }
+
+    private void sendAttackData(Player attacker, boolean getData) {
+        attacker.getCsc().writeBoolean(getData);
+        game.onlineGameHandler.sendInt(battle.numAttackUnits, attacker.getCsc());
+        game.onlineGameHandler.sendInt(battle.attackCountryId, attacker.getCsc());
+        game.onlineGameHandler.sendInt(battle.defenceCountryId, attacker.getCsc());
     }
 
     private void waitForDefender(Player attacker, Player defender) throws IOException {
@@ -331,6 +381,12 @@ public class UserInput {
      * @param player the player placing them
      */
     private void placeTroops(String input, Player player) {
+        try {
+            troops = Integer.parseInt(input);
+        } catch (Exception e) {
+            game.uiController.output.appendText("> Invalid number");
+            game.uiController.askQuestion("How many troops do you want to place");
+        }
         troops = Integer.parseInt(input);
 
         if (troops < 0 || troops > player.getTroops())

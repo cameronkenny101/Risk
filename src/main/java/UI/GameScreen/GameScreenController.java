@@ -280,6 +280,11 @@ public class GameScreenController {
         output.appendText("> " + question + "\n");
     }
 
+    @FXML
+    public void clearQuestion() {
+        question = "";
+    }
+
     /**
      * This is used to pass in the question previously asked, with the user's answer which is then compared to decide
      * next course of action
