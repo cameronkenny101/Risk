@@ -226,11 +226,27 @@ public class testUserInputLogic extends TestCase {
         userInput.battle.invasionLoss = false;
         userInput.battle.invasionVictory = false;
         userInput.battle.calculateBattleSequence(attack,def);
-        System.out.println(userInput.battle.numDefenceUnits + " AND " + userInput.battle.numAttackUnits);
+       // System.out.println(userInput.battle.numDefenceUnits + " AND " + userInput.battle.numAttackUnits);
         assertFalse(userInput.battle.invasionLoss);  //note this
         assertTrue(userInput.battle.invasionVictory);
 
     }
 
+    @Test
+    public void testResetBattle(){
+        userInput.battle.invasionVictory = true;
+        userInput.battle.invasionLoss = true;
+        userInput.battle.attackCountryId = 1;
+        userInput.battle.defenceCountryId = 1;
+        userInput.battle.numAttackUnits = 1;
+        userInput.battle.numDefenceUnits = 1;
 
+        userInput.resetBattle();
+        assertFalse(userInput.battle.invasionVictory);
+        assertFalse(userInput.battle.invasionLoss);
+        assertEquals(-1,userInput.battle.attackCountryId);
+        assertEquals(-1,userInput.battle.defenceCountryId);
+        assertEquals(-1,userInput.battle.numAttackUnits);
+        assertEquals(-1,userInput.battle.numDefenceUnits);
+    }
 }
