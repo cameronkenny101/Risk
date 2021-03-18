@@ -231,4 +231,6 @@ public class testUserInputLogic extends TestCase {
         assertTrue(userInput.battle.invasionVictory);
 
     }
+
+
 }
