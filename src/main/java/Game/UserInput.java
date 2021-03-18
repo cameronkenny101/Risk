@@ -736,14 +736,18 @@ public class UserInput {
                 if (attackerDice.get(i) > defenderDice.get(i)) {
                     game.logic.getTroop_count()[defenceCountryId]--;
                     numDefenceUnits--;
+                    System.out.println("NOW :" + numDefenceUnits + "   BEFORE:  " + (numDefenceUnits+1));
                 } else {
                     game.logic.getTroop_count()[attackCountryId]--;
                     numAttackUnits--;
                 }
                 if (numDefenceUnits == 0) {
+                    System.out.println(invasionVictory);
                     invasionVictory = true;
+                    System.out.println(invasionVictory);
                     break;
                 }
+                //System.out.println("WEI SHEN ME2");
                 if (numAttackUnits == 0) {
                     invasionLoss = true;
                     break;
