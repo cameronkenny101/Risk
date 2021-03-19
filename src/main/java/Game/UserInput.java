@@ -111,22 +111,27 @@ public class UserInput {
         int num = Integer.parseInt(input);
         switch (num) {
             case 1:
-                continueInvasion();
+                continueInvasion(player);
                 break;
             case 2:
                 askToBattle("yes", player);
                 break;
             default:
+                if(game.isOnline)
+                    player.getCsc().writeBoolean(false);
                 game.uiController.askQuestion("Do you want to fortify your territories");
                 break;
         }
     }
 
-    private void continueInvasion() {
+    private void continueInvasion(Player player) {
         if(battle.invasionVictory)
             game.uiController.askQuestion("Would you like to:\n1, continue the invasion.\n2, invade a new territory.\n3, end combat.");
-        else
+        else {
             game.uiController.askQuestion("How many units do you wish to attack for you?");
+            if(game.isOnline)
+                player.getCsc().writeBoolean(true);
+        }
     }
 
     public void moveTroops(String troops, Player attacker, Player defender) {
@@ -183,9 +188,10 @@ public class UserInput {
                     game.uiController.setRegion(battle.defenceCountryId, game.logic.country_owner[battle.defenceCountryId], game.logic.getTroop_count()[battle.defenceCountryId]);
                     game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId]);
                 });
+            } else {
+                game.uiController.setRegion(battle.defenceCountryId, game.logic.country_owner[battle.defenceCountryId], game.logic.getTroop_count()[battle.defenceCountryId]);
+                game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId]);
             }
-            game.uiController.setRegion(battle.defenceCountryId, game.logic.country_owner[battle.defenceCountryId], game.logic.getTroop_count()[battle.defenceCountryId]);
-            game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId]);
 
             if(!battle.invasionVictory && game.isOnline) {
                 attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.defenceCountryId], attacker.getCsc());
@@ -203,10 +209,6 @@ public class UserInput {
             else if (battle.invasionVictory) {
                 game.uiController.output.appendText("You have won the battle and claimed a new territory\n");
 
-                //set the regions in the UI
-                game.uiController.setRegion(battle.defenceCountryId, attacker.getColour(), battle.numAttackUnits);
-                game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId] - battle.numAttackUnits);
-
                 //Set Troop Counts:
                 game.logic.getTroop_count()[battle.defenceCountryId] = battle.numAttackUnits;
                 game.logic.getTroop_count()[battle.attackCountryId] -= battle.numAttackUnits;
@@ -215,14 +217,21 @@ public class UserInput {
                 game.logic.getCountry_owner()[battle.defenceCountryId] = attacker.getColour();
 
                 if(game.isOnline) {
+                    System.out.println("def: " + game.logic.getTroop_count()[battle.defenceCountryId]);
+                    System.out.println("att: " + game.logic.getTroop_count()[battle.attackCountryId]);
                     attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.defenceCountryId], attacker.getCsc());
                     attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.attackCountryId], attacker.getCsc());
                     attacker.getCsc().writeBoolean(false);
                     attacker.getCsc().writeBoolean(game.logic.getTroop_count()[battle.attackCountryId] > 1);
                     Platform.runLater(() -> {
+                        // Potential bug
                         game.uiController.setRegion(battle.defenceCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.defenceCountryId]);
                         game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId]);
                     });
+                } else {
+                    //set the regions in the UI
+                    game.uiController.setRegion(battle.defenceCountryId, attacker.getColour(), battle.numAttackUnits);
+                    game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId] - battle.numAttackUnits);
                 }
 
                 if(game.logic.getTroop_count()[battle.attackCountryId] > 1) {
@@ -266,19 +275,19 @@ public class UserInput {
         boolean canContinue = defender.getCsc().receiveBoolean();
         game.logic.getTroop_count()[battle.attackCountryId] = attackTroops;
         game.logic.getTroop_count()[battle.defenceCountryId] = defenseTroops;
-        Platform.runLater(() -> {
-            game.uiController.setMap(game.logic.troop_count, game.logic.getCountry_owner());
-        });
+        Platform.runLater(() -> game.uiController.setMap(game.logic.troop_count, game.logic.getCountry_owner()));
         if(!sameColor) {
             game.logic.getCountry_owner()[battle.defenceCountryId] = attacker.getColour();
             game.uiController.output.appendText("> " + Constants.COUNTRY_NAMES.get(battle.defenceCountryId) + " has been invaded by " + Constants.COUNTRY_NAMES.get(battle.attackCountryId) + "\n");
             if(canContinue) {
                 Thread t = new Thread(() -> isFortifying(attacker, defender));
                 t.start();
+            } else {
+                game.threadForQuestion(defender, attacker);
             }
         } else {
             game.uiController.output.appendText("> " + Constants.COUNTRY_NAMES.get(battle.attackCountryId) + " could not successfully invade " + Constants.COUNTRY_NAMES.get(battle.defenceCountryId) + "\n");
-            game.threadForBattle(defender, attacker);
+            game.threadForQuestion(defender, attacker);
         }
     }
 

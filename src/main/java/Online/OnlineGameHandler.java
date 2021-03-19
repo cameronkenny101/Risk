@@ -34,6 +34,7 @@ public class OnlineGameHandler {
     }
 
     public void sendInt(int num, ClientSideConnection csc) {
+        System.out.println(num);
         csc.writeInt(num);
     }
 

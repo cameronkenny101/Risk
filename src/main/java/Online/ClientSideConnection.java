@@ -76,6 +76,7 @@ public class ClientSideConnection {
 
     public void writeInt(int number) {
         System.out.println("Sending number");
+        System.out.println(number);
         try {
             dataOut.writeInt(number);
             dataOut.flush();
@@ -112,7 +113,6 @@ public class ClientSideConnection {
         int[] array = new int[size];
         for(int i = 0; i < size; i++) {
             array[i] = dataIn.readInt();
-            System.out.println(array[i]);
         }
         return array;
     }

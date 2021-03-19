@@ -63,6 +63,7 @@ public class Server {
             waitForDiceWinner();
             setPlayerTurn();
             while (getAttackStatus()) {
+                System.out.println("here1");
                 if (sendAttackingData())
                     sendNumDefenders();
                 sendAttackResults();
@@ -71,6 +72,7 @@ public class Server {
                         sendPostAttackData();
                     }
                 }
+                System.out.println("here2");
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

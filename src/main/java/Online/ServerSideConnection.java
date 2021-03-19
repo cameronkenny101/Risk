@@ -79,7 +79,6 @@ public class ServerSideConnection implements Runnable {
         dataOut.writeInt(array.length);
         for (int i : array) {
             dataOut.writeInt(i);
-            System.out.println(i);
         }
         dataOut.flush();
     }
@@ -94,10 +93,13 @@ public class ServerSideConnection implements Runnable {
     }
 
     public int getInt() throws IOException {
-        return dataIn.readInt();
+        int integer = dataIn.readInt();
+        System.out.println(integer);
+        return integer;
     }
 
     public void sendInt(int number) throws IOException {
+        System.out.println("Sending: " + number);
         dataOut.writeInt(number);
         dataOut.flush();
     }

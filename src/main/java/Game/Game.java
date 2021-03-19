@@ -110,6 +110,7 @@ public class Game {
                 uiController.askQuestion("Press enter to let neutrals choose their cards");
             }
         });
+
     }
 
     public void receiveDiceRoll(Player player, Player nextPlayer) throws IOException {
@@ -369,9 +370,13 @@ public class Game {
 
     private void waitForBattle(Player player, Player nextPlayer) throws IOException {
         boolean getData = player.getCsc().receiveBoolean();
+        System.out.println("HERE " + player.getColour());
         int numAttackingTroops = player.getCsc().receiveInt();
         int attackCountry = player.getCsc().receiveInt();
         int defendingCountry = player.getCsc().receiveInt();
+        System.out.println(numAttackingTroops);
+        System.out.println(attackCountry);
+        System.out.println(defendingCountry);
         userInput.battle.defenceCountryId = defendingCountry;
         userInput.battle.attackCountryId = attackCountry;
         uiController.output.appendText("> " + Constants.COUNTRY_NAMES.get(defendingCountry) + " is under attack from " + Constants.COUNTRY_NAMES.get(attackCountry) + "!\n");
@@ -395,7 +400,7 @@ public class Game {
         int troops = nextPlayer.getCsc().receiveInt();
         int countryIndex = nextPlayer.getCsc().receiveInt();
         int[] countryArray = nextPlayer.getCsc().receiveIntArrayInfo();
-        setCountry(countryIndex, player.getColour(), troops - logic.troop_count[countryIndex]);
+        Platform.runLater(() -> setCountry(countryIndex, player.getColour(), troops - logic.troop_count[countryIndex]));
         userInput.neutralTurnCountdown--;
         player.setTroops(player.getTroops() - 3);
         if (!Arrays.equals(countryArray, logic.getTroop_count())) {
