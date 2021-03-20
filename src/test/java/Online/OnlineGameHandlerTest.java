@@ -1,5 +1,6 @@
 package Online;
 
+import Game.Constants;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,7 +19,10 @@ class OnlineGameHandlerTest {
 
     @Test
     void startGame() {
-        ClientSideConnection P = new ClientSideConnection();
+    //    ClientSideConnection P = new ClientSideConnection();
+    //    OnlineGameHandler ogh = new OnlineGameHandler();
+//        ogh.startGame("Mark", Constants.PLAYER_COLOUR.RED,P);
+  //      assertEquals("Mark",P.dataOut.toString());
     }
 
     @Test

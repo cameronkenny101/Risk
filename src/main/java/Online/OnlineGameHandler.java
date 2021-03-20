@@ -10,7 +10,7 @@ public class OnlineGameHandler {
 
     private static final OnlineGameHandler instance = new OnlineGameHandler();
 
-    private OnlineGameHandler() { }
+    protected OnlineGameHandler() { }
 
     public static OnlineGameHandler getInstance() {
         return instance;
