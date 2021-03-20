@@ -1,8 +1,11 @@
 package Game;
 
+import UI.GameScreen.GameScreenController;
+import javafx.stage.Stage;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
 import org.junit.jupiter.api.Test;
+
 
 import java.util.ArrayList;
 
@@ -249,4 +252,6 @@ public class testUserInputLogic extends TestCase {
         assertEquals(-1,userInput.battle.numAttackUnits);
         assertEquals(-1,userInput.battle.numDefenceUnits);
     }
+
+
 }

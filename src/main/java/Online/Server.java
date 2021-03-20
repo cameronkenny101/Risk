@@ -6,10 +6,10 @@ import java.net.Socket;
 
 public class Server {
 
-    private ServerSocket ss;
-    private int numPlayers;
-    private ServerSideConnection player1;
-    private ServerSideConnection player2;
+    protected ServerSocket ss;
+    protected int numPlayers;
+    public ServerSideConnection player1;
+    public ServerSideConnection player2;
     boolean player1Turn;
     boolean successfulAttack;
 
@@ -150,7 +150,7 @@ public class Server {
         return getData;
     }
 
-    private boolean ifPlacingTroops() throws IOException {
+    protected boolean ifPlacingTroops() throws IOException {
         boolean isFortifying;
         if(player1Turn) {
             isFortifying = player1.getBoolean();
