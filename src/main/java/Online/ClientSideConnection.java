@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 public class ClientSideConnection {
 
-    private Socket socket;
-    private DataInputStream dataIn;
-    private DataOutputStream dataOut;
-    private int playerID;
+    protected Socket socket;
+    protected DataInputStream dataIn;
+    protected DataOutputStream dataOut;
+    protected int playerID;
 
     public ClientSideConnection() {
         System.out.println("****  C L I E N T   ****");

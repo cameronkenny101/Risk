@@ -31,3 +31,11 @@ jar {
 javafx {
     modules = ['javafx.controls', 'javafx.fxml']
 }
+
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
