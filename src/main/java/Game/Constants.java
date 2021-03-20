@@ -19,7 +19,7 @@ public class Constants {
         BLUE,
         ORANGE,
         GREEN,
-        PURPLE,
+        PURPLE
     }
 
     public static final ArrayList<String> COUNTRY_NAMES = new ArrayList<>(Arrays.asList(
