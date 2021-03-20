@@ -11,6 +11,7 @@ class OnlineGameHandlerTest {
     void getInstance() {
         assertTrue(OnlineGameHandler.getInstance() != null);
         assertTrue(OnlineGameHandler.getInstance() instanceof OnlineGameHandler);
+
     }
 
     @Test
