@@ -217,6 +217,8 @@ public class Game {
                 uiController.askQuestion("Press enter to roll the dice");
             } else if(isOnline) {
                 initOnlineDiceRoll(player2, player1);
+            } else {
+                uiController.askQuestion("Press enter to roll the dice");
             }
         }
     }
