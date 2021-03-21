@@ -515,8 +515,8 @@ public class UserInput {
             game.uiController.output.appendText("> You have " + player.getTroops() + " troops left to move \n");
             game.uiController.askQuestion("How many troops do you want to place");
         } else {
-            if (game.isWinner(player, game.logic.country_owner)) {
-                game.isWinner(player, game.logic.country_owner);
+            if (game.isWinner(player, game.logic.country_owner)){
+                game.uiController.output.appendText(player.getName() + " has won!");
             }
             //Todo: check logic of next player
             if (game.logic.getInitPhase()) {

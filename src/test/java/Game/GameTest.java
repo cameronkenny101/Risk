@@ -1,5 +1,6 @@
 package Game;
 
+import UI.GameScreen.GameScreenController;
 import com.sun.source.tree.AssertTree;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
@@ -23,4 +24,5 @@ public class GameTest extends TestCase {
         Arrays.fill(gameLogic.country_owner, Constants.PLAYER_COLOUR.BLUE);
         assertTrue(game.isWinner(player2,gameLogic.country_owner));
     }
+
 }
