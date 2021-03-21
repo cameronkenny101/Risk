@@ -341,7 +341,7 @@ public class GameScreenController {
     }
 
     public void setMap(int[] troopCount, Constants.PLAYER_COLOUR[] owner) {
-        for(int i = 0; i < Constants.NUM_COUNTRIES; i++) {
+        for (int i = 0; i < Constants.NUM_COUNTRIES; i++) {
             setRegion(i, owner[i], troopCount[i]);
         }
     }
@@ -376,10 +376,9 @@ public class GameScreenController {
                 circle.setCenterX(circle.getCenterX() - 25);
             }
             // Fix for the number bubble completely covering Iceland when reached doubled digits, this moves the button down below iceland proper
-            if(path.getContent().equals("M425 156c-2,-1 -5,-2 -8,-2 0,-2 0,-3 -1,-5 3,0 3,0 3,-1 -1,0 -3,0 -4,0 0,-1 0,-2 0,-3 1,0 3,0 4,0 0,0 0,-1 0,-1 -1,0 -3,0 -4,0 0,-1 1,-2 1,-3 4,-2 4,-2 8,-1 0,0 0,1 0,2 7,0 15,-1 23,-1 1,1 2,1 3,2 -1,1 -1,1 -2,2 1,0 2,0 3,0 -2,12 -17,10 -26,11z")){
+            if (path.getContent().equals("M425 156c-2,-1 -5,-2 -8,-2 0,-2 0,-3 -1,-5 3,0 3,0 3,-1 -1,0 -3,0 -4,0 0,-1 0,-2 0,-3 1,0 3,0 4,0 0,0 0,-1 0,-1 -1,0 -3,0 -4,0 0,-1 1,-2 1,-3 4,-2 4,-2 8,-1 0,0 0,1 0,2 7,0 15,-1 23,-1 1,1 2,1 3,2 -1,1 -1,1 -2,2 1,0 2,0 3,0 -2,12 -17,10 -26,11z")) {
                 circle.setCenterY(circle.getCenterY() + 15);
             }
-
 
 
             root.getChildren().addAll(circle, text);
