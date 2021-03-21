@@ -41,7 +41,7 @@ public class MenuItem extends StackPane {
             });
         }
 
-        if(value == 1) {
+        if (value == 1) {
             setOnMouseClicked(event -> {
                 try {
                     switchScene(true);
@@ -70,13 +70,13 @@ public class MenuItem extends StackPane {
 
     private void switchScene(boolean online) throws Exception {
         Stage stage = (Stage) getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../NameScreen/NameScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/NameScreen/NameScreen.fxml"));
         Parent root = loader.load();
         NameScreenController playerScreenController = loader.getController();
         Scene scene = new Scene(root, 1023, 437);
         stage.setScene(scene);
 
-        if(online)
+        if (online)
             playerScreenController.setOnline();
     }
 }

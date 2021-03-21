@@ -50,7 +50,7 @@ public class NameScreenController {
 
     private void writingDetailsForPlayers() throws Exception {
         Stage stage = (Stage) username.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../GameScreen/gameScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/GameScreen/gameScreen.fxml"));
         Parent root = (Parent) loader.load();
         GameScreenController gameScreenController = loader.getController();
 
