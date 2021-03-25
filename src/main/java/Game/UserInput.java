@@ -508,10 +508,7 @@ public class UserInput {
      * @param nextPlayer the player waiting for their turn
      */
     private void endPlacingTroops(Player player, Player nextPlayer) {
-        if (player.getInitTroops() > 0 && game.logic.getInitPhase()) {
-            game.uiController.output.appendText("> You have " + player.getTroops() + " troops left to move \n");
-            game.uiController.askQuestion("How many troops do you want to place");
-        } else if (player.getTroops() > 0) {
+        if (player.getInitTroops() > 0 && game.logic.getInitPhase() || player.getTroops() > 0) {
             game.uiController.output.appendText("> You have " + player.getTroops() + " troops left to move \n");
             game.uiController.askQuestion("How many troops do you want to place");
         } else {
@@ -524,7 +521,7 @@ public class UserInput {
                 neutralTurnCountdown--;
                 if (neutralTurnCountdown == 0)
                     chooseNeutralTerritory(nextPlayer);
-                else
+                else if(!game.isOnline)
                     askForTroops(nextPlayer);
                 if (game.isOnline)
                     handleOnlineReinforcement(player, nextPlayer);
