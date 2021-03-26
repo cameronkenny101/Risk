@@ -20,30 +20,6 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
-spotless {
-    format 'misc', {
-        target fileTree('.') {
-            include '**/*.gradle', '**/*.md', '**/.gitignore'
-            exclude '**/build/**'
-        }
-
-        trimTrailingWhitespace()
-        indentWithSpaces(4)
-        endWithNewline()
-    }
-
-    format 'xml', {
-        target fileTree('src') {
-            include '**/*.xml', '**/*.xsd', '**/*.fxml'
-        }
-
-        eclipseWtp('xml').configFile 'spotless.xmlformat.prefs'
-    }
-
-    java {
-        googleJavaFormat("1.7").aosp()
-    }
-}
 
 mainClassName = 'Main'
 application {
