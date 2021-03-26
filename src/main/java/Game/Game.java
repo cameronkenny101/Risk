@@ -254,6 +254,8 @@ public class Game {
         logic.takeCountryLogic(countryId, colour, troops);
         if(isOnline)
             Platform.runLater(() -> uiController.setRegion(countryId, colour, logic.getTroop_count()[countryId]));
+        else
+            uiController.setRegion(countryId, colour, logic.getTroop_count()[countryId]);
         if (troops > 0)
             uiController.output.appendText("> " + colour + " puts " + troops + " into " + Constants.COUNTRY_NAMES.get(countryId) + "\n");
         else
