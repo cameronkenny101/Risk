@@ -77,7 +77,7 @@ public class Constants {
     };
     public static final int NUM_CONTINENTS = 6;
     public static final String[] CONTINENT_NAMES = {"N America", "Europe", "Asia", "Australia", "S America", "Africa"};  // for reference
-    public static final int[] COUNTRY_INSIGNIAS = {1, 2, 2, 0, 1, 2, 0, 1, 0, 1, 0, 1, 2, 1, 0, 1, 0, 0, 2, 0, 1, 1, 1, 2, 0, 2, 2, 1, 0, 1, 2, 1, 2, 1, 2, 0, 1, 0, 2, 0, 2, 0};
+    public static final int[] COUNTRY_INSIGNIAS = {1, 2, 2, 0, 1, 2, 0, 1, 0, 1, 0, 1, 2, 1, 0, 1, 0, 0, 2, 0, 1, 1, 1, 2, 0, 2, 2, 1, 0, 1, 2, 1, 2, 1, 2, 0, 1, 0, 2, 0, 2, 0, 4, 4};
     public static final int[] CONTINENT_IDS = {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5};
     public static final int[] CONTINENT_VALUES = {5, 5, 7, 2, 2, 3};
     private static final int FRAME_WIDTH = 1000;    // must be even

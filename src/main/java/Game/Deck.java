@@ -6,7 +6,7 @@ import java.util.Collections;
 public class Deck {
 
     private ArrayList<Card> cards;
-    private ArrayList<Integer> shuffle;
+    private ArrayList<Integer> shuffle = new ArrayList<>();
     private int cardsRemoved;
 
     public Deck() {
@@ -18,7 +18,7 @@ public class Deck {
     }
 
     private void shuffleDeck() {
-        for(int i = 0; i < Constants.NUM_CARDS; i++)
+        for(int i = 0; i < 44; i++)
             shuffle.add(i);
         Collections.shuffle(shuffle);
     }

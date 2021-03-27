@@ -31,6 +31,7 @@ public class Game {
         this.player1 = player1;
         this.player2 = player2;
         initClasses();
+        logic.createDeck();
         printPlayerToConsole();
     }
 
@@ -40,6 +41,7 @@ public class Game {
         this.isOnline = true;
         this.onlineGameHandler = OnlineGameHandler.getInstance();
         initClasses();
+        logic.createDeck();
         if(player.getCsc().getPlayerID() == 1) {
             this.player1 = player;
             isPlayer1 = true;

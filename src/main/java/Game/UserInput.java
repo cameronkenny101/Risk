@@ -164,9 +164,11 @@ public class UserInput {
     public void askToMoveAdditionalTroops(String input, Player attacker, Player defender) {
         if (input.equals("yes")) {
             game.uiController.askQuestion("How many troops do you want to add? (There must still be 1 troop left in your original territory)");
-            attacker.getCsc().writeBoolean(true);
+            if(game.isOnline)
+                attacker.getCsc().writeBoolean(true);
         } else {
-            attacker.getCsc().writeBoolean(false);
+            if(game.isOnline)
+                attacker.getCsc().writeBoolean(false);
             battle("no", attacker, defender);
         }
     }
@@ -604,6 +606,15 @@ public class UserInput {
         if (input.equals("yes")) {
             game.uiController.askQuestion("What country do you want to fortify");
         } else {
+            if (player.isConquerTerritory()) {
+                // ASK TO DRAW CARD
+                game.uiController.output.appendText("> You conquered a territory. You will now be given a territory card\n");
+                Card card = game.logic.deck.removeCard();
+                game.uiController.output.appendText("> You selected a " + card.printCard() + ".\n");
+                player.addCardToHand(card);
+                game.uiController.output.appendText("> " + player.printCardHand());
+                player.setConquerTerritory(false); //resetting it to false
+            }
             userInputLogic.nextTurn(player, nextPlayer);
             game.uiController.output.appendText("> It is now " + nextPlayer.getName() + " turn\n");
             nextPlayer.setTroops(game.logic.calculateReinforcements(nextPlayer));
