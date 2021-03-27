@@ -117,7 +117,7 @@ public class UserInput {
                 askToBattle("yes", player);
                 break;
             default:
-                if(game.isOnline)
+                if (game.isOnline)
                     player.getCsc().writeBoolean(false);
                 game.uiController.askQuestion("Do you want to fortify your territories");
                 break;
@@ -125,11 +125,11 @@ public class UserInput {
     }
 
     private void continueInvasion(Player player) {
-        if(battle.invasionVictory)
+        if (battle.invasionVictory)
             game.uiController.askQuestion("Would you like to:\n1, continue the invasion.\n2, invade a new territory.\n3, end combat.");
         else {
             game.uiController.askQuestion("How many units do you wish to attack for you?");
-            if(game.isOnline)
+            if (game.isOnline)
                 player.getCsc().writeBoolean(true);
         }
     }
@@ -143,7 +143,7 @@ public class UserInput {
             game.uiController.setRegion(battle.defenceCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.defenceCountryId]);
             game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId]);
 
-            if(game.isOnline) {
+            if (game.isOnline) {
                 attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.defenceCountryId], attacker.getCsc());
                 attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.attackCountryId], attacker.getCsc());
             }
@@ -183,7 +183,7 @@ public class UserInput {
             battle.calculateBattleSequence(attackerDice, defenderDice);
 
             //set the regions in the UI
-            if(game.isOnline) {
+            if (game.isOnline) {
                 Platform.runLater(() -> {
                     game.uiController.setRegion(battle.defenceCountryId, game.logic.country_owner[battle.defenceCountryId], game.logic.getTroop_count()[battle.defenceCountryId]);
                     game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId]);
@@ -193,7 +193,7 @@ public class UserInput {
                 game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId]);
             }
 
-            if(!battle.invasionVictory && game.isOnline) {
+            if (!battle.invasionVictory && game.isOnline) {
                 attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.defenceCountryId], attacker.getCsc());
                 attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.attackCountryId], attacker.getCsc());
                 attacker.getCsc().writeBoolean(true);
@@ -219,7 +219,7 @@ public class UserInput {
                 //Set Owner
                 game.logic.getCountry_owner()[battle.defenceCountryId] = attacker.getColour();
 
-                if(game.isOnline) {
+                if (game.isOnline) {
                     System.out.println("def: " + game.logic.getTroop_count()[battle.defenceCountryId]);
                     System.out.println("att: " + game.logic.getTroop_count()[battle.attackCountryId]);
                     attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.defenceCountryId], attacker.getCsc());
@@ -237,7 +237,7 @@ public class UserInput {
                     game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId]);
                 }
 
-                if(game.logic.getTroop_count()[battle.attackCountryId] > 1) {
+                if (game.logic.getTroop_count()[battle.attackCountryId] > 1) {
                     game.uiController.askQuestion("Do you want to move any additional troops to your new territory?");
                 } else {
                     game.uiController.askQuestion("Would you like to:\n1, continue the invasion.\n2, invade a new territory.\n3, end combat.");
@@ -256,7 +256,7 @@ public class UserInput {
         if (!valid) {
             game.uiController.output.appendText("You chose an invalid number of troops. You may only choose between 1 and 2. \n");
             game.uiController.askQuestion("How many units do you wish to defend for you?");
-        } else if(game.isOnline) {
+        } else if (game.isOnline) {
             defender.onlineGameHandler.sendInt(battle.numDefenceUnits, defender.getCsc());
             Thread t = new Thread(() -> {
                 try {
@@ -279,10 +279,10 @@ public class UserInput {
         game.logic.getTroop_count()[battle.attackCountryId] = attackTroops;
         game.logic.getTroop_count()[battle.defenceCountryId] = defenseTroops;
         Platform.runLater(() -> game.uiController.setMap(game.logic.troop_count, game.logic.getCountry_owner()));
-        if(!sameColor) {
+        if (!sameColor) {
             game.logic.getCountry_owner()[battle.defenceCountryId] = attacker.getColour();
             game.uiController.output.appendText("> " + Constants.COUNTRY_NAMES.get(battle.defenceCountryId) + " has been invaded by " + Constants.COUNTRY_NAMES.get(battle.attackCountryId) + "\n");
-            if(canContinue) {
+            if (canContinue) {
                 Thread t = new Thread(() -> isFortifying(attacker, defender));
                 t.start();
             } else {
@@ -296,7 +296,7 @@ public class UserInput {
 
     private void isFortifying(Player attacker, Player defender) {
         boolean fortify = defender.getCsc().receiveBoolean();
-        if(fortify) {
+        if (fortify) {
             Thread t = new Thread(() -> {
                 try {
                     threadForUpdating(attacker, defender);
@@ -305,8 +305,7 @@ public class UserInput {
                 }
             });
             t.start();
-        }
-        else
+        } else
             game.threadForQuestion(defender, attacker);
     }
 
@@ -329,7 +328,7 @@ public class UserInput {
         }
         //Skips asking for defending player response if the troops available are 1 or if it's a neutral territory
         else if (game.logic.troop_count[battle.defenceCountryId] == 1 || game.logic.country_owner[battle.defenceCountryId] != defender.getColour()) {
-            if(game.isOnline)
+            if (game.isOnline)
                 sendAttackData(attacker, false);
             if (game.logic.troop_count[battle.defenceCountryId] == 1)
                 battle.numDefenceUnits = 1;
@@ -337,7 +336,7 @@ public class UserInput {
                 battle.numDefenceUnits = Math.min(game.logic.troop_count[battle.defenceCountryId], 2);
             battle("yes", attacker, defender);
         } else {
-            if(game.isOnline) {
+            if (game.isOnline) {
                 game.uiController.output.appendText("> Please wait for " + defender.getName() + " to defend there territory\n");
                 sendAttackData(attacker, true);
                 Thread t = new Thread(() -> {
@@ -392,13 +391,13 @@ public class UserInput {
         if (input.equals("yes")) {
             resetBattle();
             game.uiController.askQuestion("What country do you wish to attack from?");
-            if(game.isOnline)
+            if (game.isOnline)
                 player.getCsc().writeBoolean(true);
         } else {
             //END OF BATTLE
             game.uiController.output.appendText("> You chose not to battle.\n");
             game.uiController.askQuestion("Do you want to fortify your territories");
-            if(game.isOnline)
+            if (game.isOnline)
                 player.getCsc().writeBoolean(false);
 
         }
@@ -428,7 +427,7 @@ public class UserInput {
         if (game.logic.getCountry_owner()[battle.attackCountryId] != player.getColour()) {
             game.uiController.output.appendText(Constants.COUNTRY_NAMES.get(battle.attackCountryId) + " You chose a country you do not own. \n");
             game.uiController.askQuestion("What country do you wish to attack from?");
-        } else if(game.logic.getTroop_count()[battle.attackCountryId] <= 1) {
+        } else if (game.logic.getTroop_count()[battle.attackCountryId] <= 1) {
             game.uiController.output.appendText(Constants.COUNTRY_NAMES.get(battle.attackCountryId) + " You chose a country that has less than two troops. \n");
             game.uiController.askQuestion("What country do you wish to attack from?");
         } else {
@@ -515,7 +514,7 @@ public class UserInput {
             game.uiController.output.appendText("> You have " + player.getTroops() + " troops left to move \n");
             game.uiController.askQuestion("How many troops do you want to place");
         } else {
-            if (game.isWinner(player, game.logic.country_owner)){
+            if (game.isWinner(player, game.logic.country_owner)) {
                 game.uiController.output.appendText(player.getName() + " has won!");
             }
             //Todo: check logic of next player
@@ -524,7 +523,7 @@ public class UserInput {
                 neutralTurnCountdown--;
                 if (neutralTurnCountdown == 0)
                     chooseNeutralTerritory(nextPlayer);
-                else if(!game.isOnline)
+                else if (!game.isOnline)
                     askForTroops(nextPlayer);
                 if (game.isOnline)
                     handleOnlineReinforcement(player, nextPlayer);
@@ -672,13 +671,14 @@ public class UserInput {
             game.takeCountry(countryIndex, player.getColour(), troops);
             game.takeCountry(Constants.ADJACENT[countryIndex][adjacentIndex], player.getColour(), -troops);
         }
-        if(player.isConquerTerritory()) {
+        if (player.isConquerTerritory()) {
             // ASK TO DRAW CARD
             game.uiController.output.appendText("> You conquered a territory. You will now be given a territory card\n");
             Card card = game.logic.deck.removeCard();
             game.uiController.output.appendText("> You selected a " + card.printCard() + ".\n");
             player.addCardToHand(card);
             game.uiController.output.appendText("> " + player.printCardHand());
+            player.setConquerTerritory(false);//resetting it to false
         } else {
             fortifyCountry("no", player, nextPlayer);
         }
