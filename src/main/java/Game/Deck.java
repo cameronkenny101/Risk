@@ -1,0 +1,39 @@
+package Game;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Deck {
+
+    private ArrayList<Card> cards;
+    private ArrayList<Integer> shuffle;
+    private int cardsRemoved;
+
+    public Deck() {
+        cards = new ArrayList<Card>();
+        shuffleDeck();
+        for(int i = 0; i < Constants.NUM_CARDS; i++)
+            cards.add(new Card(Constants.COUNTRY_INSIGNIAS[shuffle.get(i)], shuffle.get(i)));
+        setCardsRemoved(0);
+    }
+
+    private void shuffleDeck() {
+        for(int i = 0; i < Constants.NUM_CARDS; i++)
+            shuffle.add(i);
+        Collections.shuffle(shuffle);
+    }
+
+    public Card removeCard() {
+        Card removedCard = cards.remove(getCardsRemoved());
+        setCardsRemoved(getCardsRemoved() + 1);
+        return removedCard;
+    }
+
+    public int getCardsRemoved() {
+        return cardsRemoved;
+    }
+
+    public void setCardsRemoved(int cardsRemoved) {
+        this.cardsRemoved = cardsRemoved;
+    }
+}

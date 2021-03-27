@@ -14,6 +14,7 @@ public class GameLogic {
     private int countryIndex = 0;
     private boolean initPhase = true;
     private ArrayList<Integer> randomCountries = new ArrayList<>();
+    Deck deck;
 
     /**
      * Logic for taking a territory
@@ -97,6 +98,10 @@ public class GameLogic {
             return bonusTroops;
         }
         return 0;
+    }
+
+    public void createDeck() {
+        deck = new Deck();
     }
 
 

@@ -17,7 +17,7 @@ public class ClientSideConnection {
         System.out.println("****  C L I E N T   ****");
 
         try {
-            socket = new Socket("ec2-34-253-76-28.eu-west-1.compute.amazonaws.com", 30000);
+            socket = new Socket("localhost", 30000);
             dataIn = new DataInputStream(socket.getInputStream());
             dataOut = new DataOutputStream(socket.getOutputStream());
             playerID = dataIn.readInt();

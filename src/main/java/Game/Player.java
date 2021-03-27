@@ -3,6 +3,10 @@ package Game;
 import Online.ClientSideConnection;
 import Online.OnlineGameHandler;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 /**
  * This class is used for storing critical game data
  */
@@ -10,10 +14,13 @@ public class Player {
 
     private String name;
     private Constants.PLAYER_COLOUR colour;
+    private ArrayList<Card> cardsInHand;
     private int diceNum;
     private int troops;
     private int initTroops;
     private boolean isTurn;
+    private boolean conquerTerritory;
+
     OnlineGameHandler onlineGameHandler;
     private ClientSideConnection csc;
 
@@ -29,6 +36,7 @@ public class Player {
         setTroops(Constants.INIT_UNITS_PLAYER - Constants.INIT_COUNTRIES_PLAYER); // Player must place 1 troop of each country it initializes with
         setTroops(3); // Player must place 1 troop of each country it initializes with
         setInitTroops(3);
+        cardsInHand = new ArrayList<Card>();
     }
 
     // Constructors for online game
@@ -105,5 +113,28 @@ public class Player {
 
     public void setInitTroops(int initTroops) {
         this.initTroops = initTroops;
+    }
+
+    public boolean isConquerTerritory() {
+        return conquerTerritory;
+    }
+
+    public void setConquerTerritory(boolean conquerTerritory) {
+        this.conquerTerritory = conquerTerritory;
+    }
+
+    public void addCardToHand(Card card) {
+        cardsInHand.add(card);
+    }
+
+    public String printCardHand() {
+        StringBuilder ans = new StringBuilder();
+        ans.append("Your current hand: \n");
+
+        for(int i = 0; i < cardsInHand.size(); i++) {
+            // print hand
+        }
+
+        return ans.toString();
     }
 }
