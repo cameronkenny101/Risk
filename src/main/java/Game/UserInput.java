@@ -212,6 +212,8 @@ public class UserInput {
                 //Set Troop Counts:
                 game.logic.getTroop_count()[battle.defenceCountryId] = battle.numAttackUnits;
                 game.logic.getTroop_count()[battle.attackCountryId] -= battle.numAttackUnits;
+                System.out.println("def: " + game.logic.getTroop_count()[battle.defenceCountryId]);
+                System.out.println("att: " + game.logic.getTroop_count()[battle.attackCountryId]);
 
                 //Set Owner
                 game.logic.getCountry_owner()[battle.defenceCountryId] = attacker.getColour();
@@ -231,7 +233,7 @@ public class UserInput {
                 } else {
                     //set the regions in the UI
                     game.uiController.setRegion(battle.defenceCountryId, attacker.getColour(), battle.numAttackUnits);
-                    game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId] - battle.numAttackUnits);
+                    game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId]);
                 }
 
                 if(game.logic.getTroop_count()[battle.attackCountryId] > 1) {
@@ -738,7 +740,8 @@ public class UserInput {
         }
 
         public void calculateBattleSequence(ArrayList<Integer> attackerDice, ArrayList<Integer> defenderDice) {
-            for (int i = 0; i < Math.min(numAttackUnits, numDefenceUnits); i++) {
+            int iter = Math.min(numAttackUnits, numDefenceUnits);
+            for (int i = 0; i < iter; i++) {
                 if (attackerDice.get(i) > defenderDice.get(i)) {
                     game.logic.getTroop_count()[defenceCountryId]--;
                     numDefenceUnits--;
