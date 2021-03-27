@@ -252,8 +252,7 @@ public class Game {
      */
     public void takeCountry(int countryId, Constants.PLAYER_COLOUR colour, int troops) {
         logic.takeCountryLogic(countryId, colour, troops);
-        if(isOnline)
-            Platform.runLater(() -> uiController.setRegion(countryId, colour, logic.getTroop_count()[countryId]));
+        uiController.setRegion(countryId, colour, logic.getTroop_count()[countryId]);
         if (troops > 0)
             uiController.output.appendText("> " + colour + " puts " + troops + " into " + Constants.COUNTRY_NAMES.get(countryId) + "\n");
         else
@@ -403,7 +402,7 @@ public class Game {
         int troops = nextPlayer.getCsc().receiveInt();
         int countryIndex = nextPlayer.getCsc().receiveInt();
         int[] countryArray = nextPlayer.getCsc().receiveIntArrayInfo();
-        setCountry(countryIndex, player.getColour(), troops - logic.troop_count[countryIndex]);
+        Platform.runLater(() -> setCountry(countryIndex, player.getColour(), troops - logic.troop_count[countryIndex]));
         userInput.neutralTurnCountdown--;
         player.setTroops(player.getTroops() - 3);
         if (!Arrays.equals(countryArray, logic.getTroop_count())) {
