@@ -100,7 +100,7 @@ public class UserInput {
                 attackerChoice(input, player, nextPlayer);
                 break;
             case "How many troops do you want to move":
-                troopsToFortify(input, player);
+                troopsToFortify(input, player, nextPlayer);
                 break;
             case "":
                 break;
@@ -208,6 +208,7 @@ public class UserInput {
             //if we win the battle
             else if (battle.invasionVictory) {
                 game.uiController.output.appendText("You have won the battle and claimed a new territory\n");
+                attacker.setConquerTerritory(true);
 
                 //Set Troop Counts:
                 game.logic.getTroop_count()[battle.defenceCountryId] = battle.numAttackUnits;
@@ -663,7 +664,7 @@ public class UserInput {
      * @param input  user input for number of troops to fortify
      * @param player player instance
      */
-    private void troopsToFortify(String input, Player player) {
+    private void troopsToFortify(String input, Player player, Player nextPlayer) {
         int troops = Integer.parseInt(input);
         if (troops < 0 || troops >= game.logic.getTroop_count()[Constants.ADJACENT[countryIndex][adjacentIndex]])
             incorrectNumber();
@@ -671,7 +672,12 @@ public class UserInput {
             game.takeCountry(countryIndex, player.getColour(), troops);
             game.takeCountry(Constants.ADJACENT[countryIndex][adjacentIndex], player.getColour(), -troops);
         }
-        game.uiController.askQuestion("Do you want to fortify your territories");
+        if(player.isConquerTerritory()) {
+            // ASK TO DRAW CARD
+            // player.addCardToHand();
+        } else {
+            fortifyCountry("no", player, nextPlayer);
+        }
     }
 
     /**
