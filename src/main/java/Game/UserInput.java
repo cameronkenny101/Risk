@@ -676,7 +676,7 @@ public class UserInput {
             // ASK TO DRAW CARD
             game.uiController.output.appendText("> You conquered a territory. You will now be given a territory card\n");
             Card card = game.logic.deck.removeCard();
-            game.uiController.output.appendText("> You selected a " + card.printCard(card.getInsignia()) + ".\n");
+            game.uiController.output.appendText("> You selected a " + card.printCard() + ".\n");
             player.addCardToHand(card);
             game.uiController.output.appendText("> " + player.printCardHand());
         } else {

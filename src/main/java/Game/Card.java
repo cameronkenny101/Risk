@@ -36,12 +36,12 @@ public class Card {
         this.wildCard = wildCard;
     }
 
-    public String printCard(int cardType) {
-        if(cardType == 0)
+    public String printCard() {
+        if(insignia == 0)
             return "Infantry";
-        else if(cardType == 1)
+        else if(insignia == 1)
             return "Cavalry";
-        else if(cardType == 2)
+        else if(insignia == 2)
             return "Battalion";
         else
             return "Wildcard";

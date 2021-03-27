@@ -129,9 +129,9 @@ public class Player {
 
     public String printCardHand() {
         StringBuilder ans = new StringBuilder();
-        ans.append("Your current hand: \n");
+        ans.append(name + "'s (" + colour + ") current hand:\n");
 
-        for(int i = 0; i < cardsInHand.size(); i++) {
+        for (int i = 0; i < cardsInHand.size(); i++) {
             // print hand
         }
 
