@@ -132,7 +132,7 @@ public class Player {
         ans.append(name + "'s (" + colour + ") current hand:\n");
 
         for (int i = 0; i < cardsInHand.size(); i++) {
-            // print hand
+            ans.append(cardsInHand.get(i).printCard() + "\n");
         }
 
         return ans.toString();
