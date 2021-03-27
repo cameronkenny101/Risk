@@ -674,7 +674,11 @@ public class UserInput {
         }
         if(player.isConquerTerritory()) {
             // ASK TO DRAW CARD
-            // player.addCardToHand();
+            game.uiController.output.appendText("> You conquered a territory. You will now be given a territory card\n");
+            Card card = game.logic.deck.removeCard();
+            game.uiController.output.appendText("> You selected a " + card.printCard(card.getInsignia()) + ".\n");
+            player.addCardToHand(card);
+            game.uiController.output.appendText("> " + player.printCardHand());
         } else {
             fortifyCountry("no", player, nextPlayer);
         }

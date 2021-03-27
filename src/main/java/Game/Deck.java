@@ -14,11 +14,26 @@ public class Deck {
         shuffleDeck();
         for(int i = 0; i < Constants.NUM_CARDS; i++)
             cards.add(new Card(Constants.COUNTRY_INSIGNIAS[shuffle.get(i)], shuffle.get(i)));
+        setCardsRemoved(0);
     }
 
     private void shuffleDeck() {
         for(int i = 0; i < Constants.NUM_CARDS; i++)
             shuffle.add(i);
         Collections.shuffle(shuffle);
+    }
+
+    public Card removeCard() {
+        Card removedCard = cards.remove(getCardsRemoved());
+        setCardsRemoved(getCardsRemoved() + 1);
+        return removedCard;
+    }
+
+    public int getCardsRemoved() {
+        return cardsRemoved;
+    }
+
+    public void setCardsRemoved(int cardsRemoved) {
+        this.cardsRemoved = cardsRemoved;
     }
 }

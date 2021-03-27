@@ -35,4 +35,15 @@ public class Card {
     public void setWildCard(boolean wildCard) {
         this.wildCard = wildCard;
     }
+
+    public String printCard(int cardType) {
+        if(cardType == 0)
+            return "Infantry";
+        else if(cardType == 1)
+            return "Cavalry";
+        else if(cardType == 2)
+            return "Battalion";
+        else
+            return "Wildcard";
+    }
 }

@@ -4,6 +4,8 @@ import Online.ClientSideConnection;
 import Online.OnlineGameHandler;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * This class is used for storing critical game data
@@ -123,5 +125,16 @@ public class Player {
 
     public void addCardToHand(Card card) {
         cardsInHand.add(card);
+    }
+
+    public String printCardHand() {
+        StringBuilder ans = new StringBuilder();
+        ans.append("Your current hand: \n");
+
+        for(int i = 0; i < cardsInHand.size(); i++) {
+            // print hand
+        }
+
+        return ans.toString();
     }
 }
