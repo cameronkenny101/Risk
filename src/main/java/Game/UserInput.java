@@ -102,9 +102,24 @@ public class UserInput {
             case "How many troops do you want to move":
                 troopsToFortify(input, player, nextPlayer);
                 break;
+            case "Do you want to exchange any of your cards?":
+                askToPlayCards(player, input);
+                break;
             case "":
                 break;
         }
+    }
+
+    private void askToPlayCards(Player player, String answer) {
+        if (answer.equals("yes")) {
+            //TODO:
+        } else {
+            //TODO:
+        }
+    }
+    private void exchangeCards(Player player)
+    {
+
     }
 
     public void attackerChoice(String input, Player player, Player nextPlayer) {
@@ -164,10 +179,10 @@ public class UserInput {
     public void askToMoveAdditionalTroops(String input, Player attacker, Player defender) {
         if (input.equals("yes")) {
             game.uiController.askQuestion("How many troops do you want to add? (There must still be 1 troop left in your original territory)");
-            if(game.isOnline)
+            if (game.isOnline)
                 attacker.getCsc().writeBoolean(true);
         } else {
-            if(game.isOnline)
+            if (game.isOnline)
                 attacker.getCsc().writeBoolean(false);
             battle("no", attacker, defender);
         }
@@ -610,10 +625,12 @@ public class UserInput {
                 // ASK TO DRAW CARD
                 game.uiController.output.appendText("> You conquered a territory. You will now be given a territory card\n");
                 Card card = game.logic.deck.removeCard();
-                game.uiController.output.appendText("> You selected a " + card.printCard() + ".\n");
+                game.uiController.output.appendText("> You selected a " + card.toString() + ".\n");
                 player.addCardToHand(card);
                 game.uiController.output.appendText("> " + player.printCardHand());
                 player.setConquerTerritory(false); //resetting it to false
+
+                game.uiController.askQuestion("Do you want to play any of your cards? (yes/no)");
             }
             userInputLogic.nextTurn(player, nextPlayer);
             game.uiController.output.appendText("> It is now " + nextPlayer.getName() + " turn\n");
@@ -686,7 +703,7 @@ public class UserInput {
             // ASK TO DRAW CARD
             game.uiController.output.appendText("> You conquered a territory. You will now be given a territory card\n");
             Card card = game.logic.deck.removeCard();
-            game.uiController.output.appendText("> You selected a " + card.printCard() + ".\n");
+            game.uiController.output.appendText("> You selected a " + card.toString() + ".\n");
             player.addCardToHand(card);
             game.uiController.output.appendText("> " + player.printCardHand());
             player.setConquerTerritory(false);//resetting it to false
@@ -694,6 +711,8 @@ public class UserInput {
             fortifyCountry("no", player, nextPlayer);
         }
     }
+
+
 
     /**
      * Takes the adjacent country and competes a fortify action

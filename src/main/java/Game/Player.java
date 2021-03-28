@@ -4,8 +4,7 @@ import Online.ClientSideConnection;
 import Online.OnlineGameHandler;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Arrays;
 
 /**
  * This class is used for storing critical game data
@@ -14,7 +13,8 @@ public class Player {
 
     private String name;
     private Constants.PLAYER_COLOUR colour;
-    private ArrayList<Card> cardsInHand;
+    private ArrayList<Card> cardsInHand;//Cards in hand
+    private int[] insignias = new int[4];//Keeps track of the number of each insignia
     private int diceNum;
     private int troops;
     private int initTroops;
@@ -125,16 +125,42 @@ public class Player {
 
     public void addCardToHand(Card card) {
         cardsInHand.add(card);
+        insignias[card.getCardIndex()]++;
     }
 
     public String printCardHand() {
-        StringBuilder ans = new StringBuilder();
-        ans.append(name + "'s (" + colour + ") current hand:\n");
+        return "Deck:\n" + "Infantry: " + insignias[0] + "\n"
+                + "Cavalry: " + insignias[1] + "\n"
+                + "Artillery: " + insignias[2] + "\n"
+                + "Wild Card: " + insignias[3] + "\n";
+    }
 
-        for (int i = 0; i < cardsInHand.size(); i++) {
-            ans.append(cardsInHand.get(i).printCard() + "\n");
+    private boolean isAvailableCards(int[] insigniasID) {
+        int[] insigniaCopy = insignias.clone();//Copy of the insignia count
+
+        for (int i = 0; i < Card.SET_SIZE; i++) {
+            if (insigniaCopy[insigniasID[i]]-- < 0) {
+                return false;
+            }
         }
 
-        return ans.toString();
+        return true;
+    }
+
+    public boolean exchangeCards(int[] insigniasID) {
+        if (!Card.isValidSet(insigniasID))
+            throw new IllegalArgumentException("Not a valid set of insignias");
+        if (!isAvailableCards(insigniasID))
+            throw new IllegalArgumentException("You don't have enough cards");
+
+        for (int i = 0; i < Card.SET_SIZE; i++) {
+            for (int j = 0; j < cardsInHand.size(); j++) {
+                if (insigniasID[i] == cardsInHand.get(j).getInsignia()) {
+                    cardsInHand.remove(j);
+                    break;
+                }
+            }
+        }
+        return true;
     }
 }
