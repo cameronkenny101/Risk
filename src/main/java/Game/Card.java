@@ -6,25 +6,6 @@ public class Card {
     private int cardIndex;
     private boolean wildCard;
 
-    public static final int INFANTRY = 0;
-    public static final int CAVALRY = 1;
-    public static final int ARTILLERY = 2;
-    public static final int WILD_CARD = 3;
-    public static final int[][] POSSIBLE_SETS = {
-            {INFANTRY, INFANTRY, INFANTRY},
-            {CAVALRY, CAVALRY, CAVALRY},
-            {ARTILLERY, ARTILLERY, ARTILLERY},
-            {INFANTRY, CAVALRY, ARTILLERY},
-            {INFANTRY, INFANTRY, WILD_CARD},
-            {INFANTRY, WILD_CARD, WILD_CARD},
-            {CAVALRY, CAVALRY, WILD_CARD},
-            {CAVALRY, WILD_CARD, WILD_CARD},
-            {ARTILLERY, ARTILLERY, WILD_CARD},
-            {ARTILLERY, WILD_CARD, WILD_CARD},
-            {CAVALRY, ARTILLERY, WILD_CARD},
-            {INFANTRY, ARTILLERY, WILD_CARD},
-            {INFANTRY, CAVALRY, WILD_CARD}};
-    public static final int SET_SIZE = 3;
     public Card(int insignia, int cardIndex) {
         setInsignia(insignia);
         setCardIndex(cardIndex);
@@ -55,22 +36,15 @@ public class Card {
         this.wildCard = wildCard;
     }
 
-    public static boolean isValidSet(int[] insigniasID) {
-        for (int[] possibleSet : POSSIBLE_SETS) {
-            if ((insigniasID[0] == possibleSet[0]) && (insigniasID[1] == possibleSet[1]) && (insigniasID[2] == possibleSet[2]))
-                return true;
-        }
-        return false;
-    }
-
     @Override
     public String toString() {
+
         if (insignia == 0)
-            return "Infantry";
+            return Constants.COUNTRY_NAMES.get(cardIndex) + " Infantry";
         else if (insignia == 1)
-            return "Cavalry";
+            return Constants.COUNTRY_NAMES.get(cardIndex) + " Cavalry";
         else if (insignia == 2)
-            return "Battalion";
+            return Constants.COUNTRY_NAMES.get(cardIndex) + " Battalion";
         else
             return "Wildcard";
     }

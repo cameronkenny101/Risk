@@ -125,11 +125,11 @@ public class Player {
 
     public void addCardToHand(Card card) {
         cardsInHand.add(card);
-        insignias[card.getCardIndex()]++;
+        insignias[card.getInsignia()]++;
     }
 
     public String printCardHand() {
-        return "Deck:\n" + "Infantry: " + insignias[0] + "\n"
+        return "Cards in hand:\n" + "Infantry: " + insignias[0] + "\n"
                 + "Cavalry: " + insignias[1] + "\n"
                 + "Artillery: " + insignias[2] + "\n"
                 + "Wild Card: " + insignias[3] + "\n";
@@ -138,7 +138,7 @@ public class Player {
     private boolean isAvailableCards(int[] insigniasID) {
         int[] insigniaCopy = insignias.clone();//Copy of the insignia count
 
-        for (int i = 0; i < Card.SET_SIZE; i++) {
+        for (int i = 0; i < Sets.SET_SIZE; i++) {
             if (insigniaCopy[insigniasID[i]]-- < 0) {
                 return false;
             }
@@ -147,13 +147,17 @@ public class Player {
         return true;
     }
 
+    public int[] getInsignias() {
+        return insignias;
+    }
+
     public boolean exchangeCards(int[] insigniasID) {
-        if (!Card.isValidSet(insigniasID))
+        if (!Sets.isValidSet(insigniasID))
             throw new IllegalArgumentException("Not a valid set of insignias");
         if (!isAvailableCards(insigniasID))
             throw new IllegalArgumentException("You don't have enough cards");
 
-        for (int i = 0; i < Card.SET_SIZE; i++) {
+        for (int i = 0; i < Sets.SET_SIZE; i++) {
             for (int j = 0; j < cardsInHand.size(); j++) {
                 if (insigniasID[i] == cardsInHand.get(j).getInsignia()) {
                     cardsInHand.remove(j);

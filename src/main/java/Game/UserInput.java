@@ -629,14 +629,16 @@ public class UserInput {
                 player.addCardToHand(card);
                 game.uiController.output.appendText("> " + player.printCardHand());
                 player.setConquerTerritory(false); //resetting it to false
-
-                game.uiController.askQuestion("Do you want to play any of your cards? (yes/no)");
             }
-            userInputLogic.nextTurn(player, nextPlayer);
-            game.uiController.output.appendText("> It is now " + nextPlayer.getName() + " turn\n");
-            nextPlayer.setTroops(game.logic.calculateReinforcements(nextPlayer));
-            game.uiController.output.appendText("> You have a total of " + nextPlayer.getTroops() + " troops to place\n");
-            game.uiController.askQuestion("How many troops do you want to place");
+            if(Sets.isValidSet(player.getInsignias()))
+                game.uiController.askQuestion("Do you want to play any of your cards? (yes/no)");
+            else {
+                userInputLogic.nextTurn(player, nextPlayer);
+                game.uiController.output.appendText("> It is now " + nextPlayer.getName() + " turn\n");
+                nextPlayer.setTroops(game.logic.calculateReinforcements(nextPlayer));
+                game.uiController.output.appendText("> You have a total of " + nextPlayer.getTroops() + " troops to place\n");
+                game.uiController.askQuestion("How many troops do you want to place");
+            }
         }
     }
 
@@ -699,17 +701,7 @@ public class UserInput {
             game.takeCountry(countryIndex, player.getColour(), troops);
             game.takeCountry(Constants.ADJACENT[countryIndex][adjacentIndex], player.getColour(), -troops);
         }
-        if (player.isConquerTerritory()) {
-            // ASK TO DRAW CARD
-            game.uiController.output.appendText("> You conquered a territory. You will now be given a territory card\n");
-            Card card = game.logic.deck.removeCard();
-            game.uiController.output.appendText("> You selected a " + card.toString() + ".\n");
-            player.addCardToHand(card);
-            game.uiController.output.appendText("> " + player.printCardHand());
-            player.setConquerTerritory(false);//resetting it to false
-        } else {
-            fortifyCountry("no", player, nextPlayer);
-        }
+        fortifyCountry("no", player, nextPlayer);
     }
 
 
