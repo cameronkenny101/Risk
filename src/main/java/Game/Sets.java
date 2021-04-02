@@ -12,14 +12,14 @@ public class Sets {
             {"ARTILLERY ", "ARTILLERY ", "ARTILLERY"},
             {"INFANTRY ", "CAVALRY ", "ARTILLERY"},
             {"INFANTRY ", "INFANTRY ", "WILD_CARD"},
-            {"INFANTRY ", "WILD_CARD ", "WILD_CARD"},
+            {"INFANTRY ", "WILD_CARD ", "WILD_CARD"}, //5
             {"CAVALRY ", "CAVALRY ", "WILD_CARD"},
             {"CAVALRY ", "WILD_CARD ", "WILD_CARD"},
             {"ARTILLERY ", "ARTILLERY ", "WILD_CARD"},
             {"ARTILLERY ", "WILD_CARD ", "WILD_CARD"},
-            {"CAVALRY ", "ARTILLERY ", "WILD_CARD"},
+            {"CAVALRY ", "ARTILLERY ", "WILD_CARD"}, //10
             {"INFANTRY ", "ARTILLERY ", "WILD_CARD"},
-            {"INFANTRY ", "CAVALRY ", "WILD_CARD"}};
+            {"INFANTRY ", "CAVALRY ", "WILD_CARD"}}; //12
 
     public static final int[][] POSSIBLE_SETS = {
             {3, 0, 0, 0},
@@ -27,14 +27,14 @@ public class Sets {
             {0, 0, 3, 0},
             {1, 1, 1, 0},
             {2, 0, 0, 1},
-            {1, 0, 0, 2},
+            {1, 0, 0, 2},//5
             {0, 2, 0, 1},
             {0, 1, 0, 2},
             {0, 0, 2, 1},
             {0, 0, 1, 2},
-            {0, 1, 1, 1},
+            {0, 1, 1, 1}, //10
             {1, 0, 1, 1},
-            {1, 1, 0, 1}};
+            {1, 1, 0, 1}}; //12
 
     public static int setsValue = 4;
     public static int validSet = 1;
