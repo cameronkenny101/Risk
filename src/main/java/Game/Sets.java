@@ -19,6 +19,16 @@ public class Sets {
             {1, 0, 1, 1},
             {1, 1, 0, 1}};
 
+    public static int setsExchanged = 0;
+
+    public static int getSetsExchanged() {
+        return setsExchanged;
+    }
+
+    public static void setSetsExchanged(int setsExchanged) {
+        Sets.setsExchanged = setsExchanged;
+    }
+
     public static boolean isValidSet(int[] insigniasID) {
         for (int[] possibleSet : POSSIBLE_SETS) {
             if ((insigniasID[0] == possibleSet[0]) && (insigniasID[1] == possibleSet[1]) && (insigniasID[2] == possibleSet[2]))

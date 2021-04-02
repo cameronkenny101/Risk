@@ -13,8 +13,8 @@ public class Player {
 
     private String name;
     private Constants.PLAYER_COLOUR colour;
-    private ArrayList<Card> cardsInHand;//Cards in hand
-    private int[] insignias = new int[4];//Keeps track of the number of each insignia
+    private int cardsInHand = 0;//Cards in hand
+    private final int[] insignias = new int[4];//Keeps track of the number of each insignia
     private int diceNum;
     private int troops;
     private int initTroops;
@@ -36,7 +36,6 @@ public class Player {
         setTroops(Constants.INIT_UNITS_PLAYER - Constants.INIT_COUNTRIES_PLAYER); // Player must place 1 troop of each country it initializes with
         setTroops(3); // Player must place 1 troop of each country it initializes with
         setInitTroops(3);
-        cardsInHand = new ArrayList<Card>();
     }
 
     // Constructors for online game
@@ -124,7 +123,7 @@ public class Player {
     }
 
     public void addCardToHand(Card card) {
-        cardsInHand.add(card);
+        cardsInHand++;
         insignias[card.getInsignia()]++;
     }
 
@@ -151,19 +150,16 @@ public class Player {
         return insignias;
     }
 
+    public int getCardsInHand() {
+        return cardsInHand;
+    }
+
     public boolean exchangeCards(int[] insigniasID) {
         if (!Sets.isValidSet(insigniasID))
             throw new IllegalArgumentException("Not a valid set of insignias");
-        if (!isAvailableCards(insigniasID))
-            throw new IllegalArgumentException("You don't have enough cards");
 
         for (int i = 0; i < Sets.SET_SIZE; i++) {
-            for (int j = 0; j < cardsInHand.size(); j++) {
-                if (insigniasID[i] == cardsInHand.get(j).getInsignia()) {
-                    cardsInHand.remove(j);
-                    break;
-                }
-            }
+
         }
         return true;
     }

@@ -112,7 +112,7 @@ public class UserInput {
 
     private void askToPlayCards(Player player, String answer) {
         if (answer.equals("yes")) {
-            //TODO:
+
         } else {
             //TODO:
         }
@@ -630,8 +630,11 @@ public class UserInput {
                 game.uiController.output.appendText("> " + player.printCardHand());
                 player.setConquerTerritory(false); //resetting it to false
             }
-            if(Sets.isValidSet(player.getInsignias()))
-                game.uiController.askQuestion("Do you want to play any of your cards? (yes/no)");
+            if(player.getCardsInHand() >= 5) {
+                game.uiController.output.appendText("> You have 5 or more cards. You must exchange your cards\n");
+                askToPlayCards(player, "yes");
+            } else if(Sets.isValidSet(player.getInsignias()))
+                game.uiController.askQuestion("Do you want to exchange any of your cards?");
             else {
                 userInputLogic.nextTurn(player, nextPlayer);
                 game.uiController.output.appendText("> It is now " + nextPlayer.getName() + " turn\n");
