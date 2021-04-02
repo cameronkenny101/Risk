@@ -103,23 +103,36 @@ public class UserInput {
                 troopsToFortify(input, player, nextPlayer);
                 break;
             case "Do you want to exchange any of your cards?":
-                askToPlayCards(player, input);
+                askToPlayCards(player, nextPlayer, input);
                 break;
+            case "Enter the number for the set you want to exchange" :
+                exchangeCards(player, nextPlayer, input);
             case "":
                 break;
         }
     }
 
-    private void askToPlayCards(Player player, String answer) {
+    private void askToPlayCards(Player player, Player nextPlayer, String answer) {
         if (answer.equals("yes")) {
-
+            Sets.setsToPlay(player.getInsignias());
+            game.uiController.askQuestion("Enter the number for the set you want to exchange");
         } else {
-            //TODO:
+            switchTurn(player, nextPlayer);
         }
     }
-    private void exchangeCards(Player player)
-    {
 
+    private void exchangeCards(Player player, Player nextPlayer, String input) {
+        int num = Integer.parseInt(input);
+        if(num < 1 || num > Sets.validSet) {
+            game.uiController.output.appendText("> Invalid set number. Try again");
+            game.uiController.askQuestion("Enter the number for the set you want to exchange");
+        } else {
+            player.exchangeCards(num);
+            player.updateTroops(Sets.getSetsValue());
+            game.uiController.output.appendText("> You have exchanged your cards and got " + Sets.getSetsValue() + " troops \n");
+            Sets.updateSetsValue();
+            switchTurn(player, nextPlayer);
+        }
     }
 
     public void attackerChoice(String input, Player player, Player nextPlayer) {
@@ -632,17 +645,21 @@ public class UserInput {
             }
             if(player.getCardsInHand() >= 5) {
                 game.uiController.output.appendText("> You have 5 or more cards. You must exchange your cards\n");
-                askToPlayCards(player, "yes");
+                askToPlayCards(player, nextPlayer, "yes");
             } else if(Sets.isValidSet(player.getInsignias()))
                 game.uiController.askQuestion("Do you want to exchange any of your cards?");
             else {
-                userInputLogic.nextTurn(player, nextPlayer);
-                game.uiController.output.appendText("> It is now " + nextPlayer.getName() + " turn\n");
-                nextPlayer.setTroops(game.logic.calculateReinforcements(nextPlayer));
-                game.uiController.output.appendText("> You have a total of " + nextPlayer.getTroops() + " troops to place\n");
-                game.uiController.askQuestion("How many troops do you want to place");
+                switchTurn(player, nextPlayer);
             }
         }
+    }
+
+    private void switchTurn(Player player, Player nextPlayer) {
+        userInputLogic.nextTurn(player, nextPlayer);
+        game.uiController.output.appendText("> It is now " + nextPlayer.getName() + " turn\n");
+        nextPlayer.setTroops(game.logic.calculateReinforcements(nextPlayer));
+        game.uiController.output.appendText("> You have a total of " + nextPlayer.getTroops() + " troops to place\n");
+        game.uiController.askQuestion("How many troops do you want to place");
     }
 
     /**

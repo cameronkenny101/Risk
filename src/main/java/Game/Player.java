@@ -154,13 +154,29 @@ public class Player {
         return cardsInHand;
     }
 
-    public boolean exchangeCards(int[] insigniasID) {
-        if (!Sets.isValidSet(insigniasID))
+    public void exchangeCards(int num) {
+        if (!Sets.isValidSet(insignias))
             throw new IllegalArgumentException("Not a valid set of insignias");
-
-        for (int i = 0; i < Sets.SET_SIZE; i++) {
-
+        int hand = 1;
+        int i = 0;
+        for (int[] possibleSet : Sets.POSSIBLE_SETS) {
+            if ((insignias[0] == possibleSet[0]) && (insignias[1] == possibleSet[1]) && (insignias[2] == possibleSet[2])) {
+                if(num == hand) {
+                    removeCards(Sets.POSSIBLE_SETS[i]);
+                } else
+                    hand++;
+            }
+            i++;
         }
-        return true;
+    }
+
+    private void removeCards(int[] cardsToRemove) {
+        for(int i = 0; i < insignias.length; i++) {
+            insignias[i] -= cardsToRemove[i];
+        }
+    }
+
+    public void updateTroops(int add) {
+        troops += add;
     }
 }
