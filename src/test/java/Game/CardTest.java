@@ -81,5 +81,16 @@ class CardTest extends TestCase {
 
     @Test
     void TestToString() {
+        Card card = new Card(0,3);
+        assertEquals("Alberta Infantry",card.toString());
+
+        Card card2 = new Card(1,8);
+        assertEquals("Alaska Cavalry",card2.toString());
+
+        Card card3 = new Card(2,12);
+        assertEquals("Ukraine Battalion",card3.toString());
+
+        Card card4 = new Card(33,3);
+        assertEquals("Wildcard",card4.toString());
     }
 }
