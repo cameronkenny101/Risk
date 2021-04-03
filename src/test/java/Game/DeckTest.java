@@ -12,14 +12,17 @@ class DeckTest extends TestCase {
         Deck deck = new Deck();
         deck.setCardsRemoved(5);
         assertEquals(deck.cards.get(5),deck.removeCard());
+
         deck.setCardsRemoved(1);
         assertEquals(deck.cards.get(1),deck.removeCard());
+
         deck.setCardsRemoved(32);
         assertEquals(deck.cards.get(32),deck.removeCard());
+
         deck.setCardsRemoved(27);
         assertEquals(deck.cards.get(27),deck.removeCard());
-        assertNotEquals(deck.cards.get(23),deck.removeCard());
 
+        assertNotEquals(deck.cards.get(23),deck.removeCard());
     }
 
 
