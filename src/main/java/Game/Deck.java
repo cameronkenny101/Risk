@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class Deck {
 
-    private ArrayList<Card> cards;
+    protected ArrayList<Card> cards;
     private ArrayList<Integer> shuffle = new ArrayList<>();
     private int cardsRemoved;
 
@@ -22,6 +22,7 @@ public class Deck {
             shuffle.add(i);
         Collections.shuffle(shuffle);
     }
+
 
     public Card removeCard() {
         Card removedCard = cards.remove(getCardsRemoved());
