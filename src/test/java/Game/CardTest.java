@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CardTest extends TestCase {
 
     @Test
-    void getCardIndex() {
+    void Test_getCardIndex() {
         Card card = new Card(0,5);
         assertEquals(5,card.getCardIndex());
 
@@ -20,7 +20,7 @@ class CardTest extends TestCase {
     }
 
     @Test
-    void setCardIndex() {
+    void Test_setCardIndex() {
         Card card = new Card(0,5);
         assertEquals(5,card.getCardIndex());
         card.setCardIndex(3);
@@ -38,7 +38,7 @@ class CardTest extends TestCase {
     }
 
     @Test
-    void getInsignia() {
+    void Test_getInsignia() {
         Card card = new Card(0,5);
         assertEquals(0,card.getInsignia());
 
@@ -50,7 +50,7 @@ class CardTest extends TestCase {
     }
 
     @Test
-    void setInsignia() {
+    void Test_setInsignia() {
         Card card = new Card(0,5);
         assertEquals(0,card.getInsignia());
         card.setInsignia(6);
@@ -68,7 +68,7 @@ class CardTest extends TestCase {
     }
 
     @Test
-    void isWildCardANDsetWildCard() {
+    void Test_isWildCardANDsetWildCard() {
         Card card = new Card(0,5);
         card.setWildCard(true);
         assertTrue(card.isWildCard());
@@ -80,6 +80,6 @@ class CardTest extends TestCase {
     }
 
     @Test
-    void testToString() {
+    void TestToString() {
     }
 }
