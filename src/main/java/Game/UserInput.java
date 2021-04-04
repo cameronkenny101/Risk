@@ -167,9 +167,8 @@ public class UserInput {
                 if(game.logic.getTroop_count()[battle.attackCountryId] == 1) {
                     game.uiController.output.appendText("> You only have 1 troop left. Try again\n");
                     game.uiController.askQuestion("Would you like to:\n1, continue the invasion.\n2, invade a new territory.\n3, end combat.");
-
-                }
-                continueInvasion(player);
+                } else
+                    continueInvasion(player);
                 break;
             case 2:
                 if(checkInvasionIsAvailable(player))
