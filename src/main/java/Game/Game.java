@@ -35,7 +35,14 @@ public class Game {
         printPlayerToConsole();
     }
 
-    // Online Constructor
+    /**
+     *       *********** ONLINE CONSTRUCTOR  *********
+     * Used to start up the game and create player objects and a uiController when being
+     * used for an online game
+     *
+     * @param uiController this is used to control the gameplay on the screen
+     * @param player      this is used to interact with the player1 instance of the player class
+     */
     public Game(GameScreenController uiController, Player player) {
         this.uiController = uiController;
         this.isOnline = true;
@@ -62,6 +69,9 @@ public class Game {
         }
     }
 
+    /**
+     * Used to initialise a new GameLogic object for set up
+     */
     private void initClasses() {
         logic = new GameLogic();
         logic.setRandomCountries();
@@ -92,6 +102,9 @@ public class Game {
             uiController.askQuestion("Press enter to choose your 9 cards from the deck");
     }
 
+    /**
+     * Used to start the game and initialise some of the player elements
+     */
     public void startGame() {
         String[] playerInfo = player1.getCsc().receivePlayerInfo();
         this.player2 = new Player(playerInfo[0], Constants.PLAYER_COLOUR.BLUE);
@@ -100,6 +113,11 @@ public class Game {
         player2.setTurn(false);
     }
 
+    /**
+     * Used so a user can get their territory cards at the start of the game
+     * @param player player who's turn it is
+     * @param nextPlayer player who whos turn it will be after this
+     */
     public void pickUserTerritories(Player player, Player nextPlayer) {
         System.out.println(nextPlayer.getCsc().receiveBoolean());
         Platform.runLater(() -> {
@@ -115,6 +133,12 @@ public class Game {
 
     }
 
+    /**
+     * Used to display and assign the number that a roll of the dice would grant to a player
+     * @param player player who's turn it is
+     * @param nextPlayer player who whos turn it will be after this
+     * @throws IOException
+     */
     public void receiveDiceRoll(Player player, Player nextPlayer) throws IOException {
         int diceNum = player.getCsc().receiveInt();
         System.out.println("Receiving dice roll " + diceNum);
@@ -126,6 +150,10 @@ public class Game {
             uiController.askQuestion("Press enter to roll the dice");
     }
 
+    /**
+     * This is used for when it's the neutral territories turn to be assigned their countries
+     * @param nextPlayer the player who will be playing next
+     */
     public void pickNeutralTerritories(Player nextPlayer) {
         System.out.println(nextPlayer.getCsc().receiveBoolean());
         Platform.runLater(() -> {
@@ -137,6 +165,11 @@ public class Game {
         });
     }
 
+    /**
+     * Used for Rolling dice in an online game
+     * @param player player in play
+     * @param nextPlayer player who will be playing next
+     */
     public void initOnlineDiceRoll(Player player, Player nextPlayer) {
         uiController.output.appendText("> Wait for " + nextPlayer.getName() + " to roll the dice\n");
         Thread thread = new Thread(() -> {
@@ -206,6 +239,9 @@ public class Game {
         }
     }
 
+    /**
+     * this is used for rolling dice in an online game
+     */
     public void diceRollWinner() {
         if (Dice.bestRoll(player1.getDiceNum(), player2.getDiceNum()) > 0) {
             setTurn(player1, player2);
