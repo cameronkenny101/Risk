@@ -4,8 +4,7 @@ import java.util.Arrays;
 
 public class Sets {
 
-    public static final int SET_SIZE = 3;
-
+    // String representation of every set
     public static final String[][] STRING_SETS = {
             {"INFANTRY", "INFANTRY", "INFANTRY"},
             {"CAVALRY", "CAVALRY", "CAVALRY"},
@@ -21,6 +20,7 @@ public class Sets {
             {"INFANTRY", "ARTILLERY", "WILD CARD"},
             {"INFANTRY", "CAVALRY", "WILD CARD"}}; //12
 
+    // Array used to compare the users cards too
     public static final int[][] POSSIBLE_SETS = {
             {3, 0, 0, 0},
             {0, 3, 0, 0},
@@ -36,13 +36,15 @@ public class Sets {
             {1, 0, 1, 1},
             {1, 1, 0, 1}}; //12
 
+    // The number of troops you get for trading a set
     public static int setsValue = 4;
+    // Number representing the amount of valid sets you can trade
     public static int validSet = 0;
 
-    public static int getSetsValue() {
-        return setsValue;
-    }
-
+    /**
+     * Used to update the troops given from trading in a set.
+     * Sets valid sets back to zero and increments the value according to risk rules.
+     */
     public static void updateSetsValue() {
         validSet = 0;
         if(setsValue >= 10)
@@ -51,6 +53,11 @@ public class Sets {
             setsValue += 2;
     }
 
+    /**
+     * Checks if a player has a set of cards they can trade.
+     * @param insigniasID An array containing information about the number of insignias they own.
+     * @return true if there is a valid set of cards to trade, otherwise false.
+     */
     public static boolean isValidSet(int[] insigniasID) {
         for (int[] possibleSet : POSSIBLE_SETS) {
             if ((insigniasID[0] >= possibleSet[0]) && (insigniasID[1] >= possibleSet[1]) && (insigniasID[2] >= possibleSet[2]) && (insigniasID[3] >= possibleSet[3]))
@@ -59,6 +66,11 @@ public class Sets {
         return false;
     }
 
+    /**
+     * Builds a string on what cards the player can play.
+     * @param insigniasID An array containing information about the number of insignias they own.
+     * @return String representing the set of cards a user can trade.
+     */
     public static String setsToPlay(int[] insigniasID) {
         StringBuilder builder = new StringBuilder("> You can exchange the following: \n");
         int set = 0;
@@ -70,6 +82,10 @@ public class Sets {
             set++;
         }
         return builder.toString();
+    }
+
+    public static int getSetsValue() {
+        return setsValue;
     }
 
 }
