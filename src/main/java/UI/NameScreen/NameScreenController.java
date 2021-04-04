@@ -32,13 +32,6 @@ public class NameScreenController {
     }
 
     @FXML
-    public void initialize() {
-        //1023 444
-        Bounds bounds = button.getBoundsInLocal();
-        System.out.println("MaxWidth: " + bounds.getWidth());
-    }
-
-    @FXML
     public void ButtonClicked(Event evt) throws Exception {
         TextField();
         username.clear();

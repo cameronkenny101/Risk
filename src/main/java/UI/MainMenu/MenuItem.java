@@ -75,6 +75,7 @@ public class MenuItem extends StackPane {
         NameScreenController playerScreenController = loader.getController();
         Scene scene = new Scene(root, 1023, 437);
         stage.setScene(scene);
+        stage.setResizable(false);
 
         if (online)
             playerScreenController.setOnline();

@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<Pane accessibleRole="BUTTON" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="1023.0" stylesheets="/UI/NameScreen/NameScreen.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.NameScreen.NameScreenController">
+<Pane accessibleRole="BUTTON" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="1023.0" stylesheets="/UI/NameScreen/NameScreen.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.NameScreen.NameScreenController">
     <children>
-        <Text fill="WHITE" layoutX="318.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="ENTER YOUR NAME" wrappingWidth="107.8203125" />
+        <Text fill="WHITE" layoutX="375.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="ENTER YOUR NAME" />
         <TextField fx:id="username" alignment="CENTER" layoutX="411.0" layoutY="137.0" prefHeight="34.0" prefWidth="202.0" styleClass="text-field">
         </TextField>
         <Button fx:id="button" alignment="CENTER" layoutX="480.0" layoutY="210.0" onAction="#ButtonClicked" text="Continue" />

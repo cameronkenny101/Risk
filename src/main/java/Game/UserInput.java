@@ -282,7 +282,7 @@ public class UserInput {
                 if (game.isLoser(defender, game.logic.country_owner)) {
                     game.uiController.output.appendText("> " + defender.getName() + " has been annihilated\n");
                     game.uiController.output.appendText("> " + attacker.getName() + " has won!");
-
+                    return;
                 }
 
                 if (game.isOnline) {
