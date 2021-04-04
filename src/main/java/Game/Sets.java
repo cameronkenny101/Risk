@@ -44,6 +44,7 @@ public class Sets {
     }
 
     public static void updateSetsValue() {
+        validSet = 0;
         if(setsValue >= 10)
             setsValue += 5;
         else

@@ -690,7 +690,7 @@ public class UserInput {
     private void switchTurn(Player player, Player nextPlayer) {
         userInputLogic.nextTurn(player, nextPlayer);
         game.uiController.output.appendText("> It is now " + nextPlayer.getName() + " turn\n");
-        nextPlayer.setTroops(game.logic.calculateReinforcements(nextPlayer));
+        nextPlayer.updateTroops(game.logic.calculateReinforcements(nextPlayer));
         game.uiController.output.appendText("> You have a total of " + nextPlayer.getTroops() + " troops to place\n");
         game.uiController.askQuestion("How many troops do you want to place");
     }
