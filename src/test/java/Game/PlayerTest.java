@@ -85,8 +85,8 @@ public class PlayerTest extends TestCase {
 
             assertEquals(10, player.getCardsInHand());
 
-            int[] cardsToRemove = {0, 0, 0,0};
+            int[] cardsToRemove = {1, 2, 0,0};
             player.removeCards(cardsToRemove);
-            assertEquals(17, player.getCardsInHand());
+            assertEquals(10, player.getCardsInHand());
         }
     }

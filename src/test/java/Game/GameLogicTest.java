@@ -16,10 +16,10 @@ public class GameLogicTest extends TestCase {
     public void testTakeCountryLogic() {
         GameLogic logic = new GameLogic();
         Constants.PLAYER_COLOUR[] country_owner = {Constants.PLAYER_COLOUR.RED, Constants.PLAYER_COLOUR.ORANGE};
-        logic.takeCountryLogic(0, Constants.PLAYER_COLOUR.GREEN, 1);
+        logic.takeCountryLogic(0, Constants.PLAYER_COLOUR.GREEN, 2);
         logic.takeCountryLogic(1, Constants.PLAYER_COLOUR.GREY, 2);
-        assertEquals(country_owner[0], Constants.PLAYER_COLOUR.GREEN);
-        assertEquals(country_owner[1], Constants.PLAYER_COLOUR.GREY);
+        assertEquals(Constants.PLAYER_COLOUR.GREEN,country_owner[0]);
+        assertEquals(Constants.PLAYER_COLOUR.GREY,country_owner[1]);
     }
 
     @Test
