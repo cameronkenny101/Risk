@@ -128,7 +128,7 @@ public class Player {
      */
     public void addCardToHand(Card card) {
         cardsInHand++;
-        insignias[card.getInsignia()] += 4;
+        insignias[card.getInsignia()]++;
     }
 
     public String printCardHand() {
@@ -151,6 +151,7 @@ public class Player {
             throw new IllegalArgumentException("Not a valid set of insignias");
         int hand = 1;
         int i = 0;
+        cardsInHand -= 3;
         for (int[] possibleSet : Sets.POSSIBLE_SETS) {
             if ((insignias[0] >= possibleSet[0]) && (insignias[1] >= possibleSet[1]) && (insignias[2] >= possibleSet[2]) && insignias[3] >= possibleSet[3]) {
                 if(num == hand) {
