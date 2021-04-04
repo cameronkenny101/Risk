@@ -797,7 +797,7 @@ public class UserInput {
      */
     private void troopsToFortify(String input, Player player, Player nextPlayer) {
         int troops = catchIntException(input);
-        System.out.println("TROOPS : " + troops + "\nAdjacent: " + game.logic.getTroop_count()[Constants.ADJACENT[countryIndex][adjacentIndex]]);
+
         if(troops == -1) {
             game.uiController.askQuestion("How many troops do you want to move");
             return;
@@ -826,6 +826,7 @@ public class UserInput {
         boolean isThere = false;
         for (int i = 0; i < Constants.ADJACENT[countryIndex].length; i++) {
             if (Constants.ADJACENT[countryIndex][i] == adjacentIndex) {
+                adjacentIndex = i;
                 isThere = true;
                 break;
             }
