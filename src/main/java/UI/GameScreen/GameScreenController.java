@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class GameScreenController {
     //Africa
@@ -198,6 +199,7 @@ public class GameScreenController {
     /**
      * Code used the get the center of the x coordinate of a bound
      * Used as .getCenterX is not available in java 8's javafx
+     *
      * @param bounds Bounds used to get the center of
      * @return center on the x-axis
      */
@@ -208,6 +210,7 @@ public class GameScreenController {
     /**
      * Code used the get the center of the x coordinate of a bound
      * Used as .getCenterY is not available in java 8's javafx
+     *
      * @param bounds Bounds used to get the center of
      * @return center on the y-axis
      */
@@ -448,6 +451,26 @@ public class GameScreenController {
         this.userInput = userInput;
     }
 
+    /**
+     * Close the Game after a victory
+     */
+    public void closeGame() {
+        input.setDisable(true);
+        output.appendText("> Exiting Game in 3\n");
+        try {
+            Thread.sleep(1000);
+            output.appendText("> Exiting Game in 2\n");
+            Thread.sleep(1000);
+            output.appendText("> Exiting Game in 1\n");
+            Thread.sleep(1000);
+            output.appendText("> GG\n");
+            Thread.sleep(500);
+            Stage stage = (Stage) output.getScene().getWindow();
+            stage.close();
+        } catch (Exception e) {
+            System.out.println("Sleep Exception");
+        }
+    }
 
     /**
      * Stores all the UI components of a country
