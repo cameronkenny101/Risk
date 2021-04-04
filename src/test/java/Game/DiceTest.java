@@ -32,4 +32,12 @@ public class DiceTest extends TestCase {
         assertEquals(10,Dice.bestRoll(10,5));
         assertEquals(5,Dice.bestRoll(-10,5));
     }
+
+    @Test
+    public void TestRollSetOfDice(){
+        assertEquals(2,Dice.rollSetOfDice(2).size());
+        assertEquals(6,Dice.rollSetOfDice(6).size());
+        assertNotSame(4,Dice.rollSetOfDice(2).size());
+        assertNotSame(3,Dice.rollSetOfDice(4).size());
+    }
 }
