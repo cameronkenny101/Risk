@@ -264,9 +264,9 @@ public class Game {
     /**
      * Randomly allocates the countries as if the players drew cards from a deck
      *
-     * @param color          the colour of the player/neutral
-     * @param numCountries   number of countries
-     * @param ownedCountries this is a list of all countries that are already assigned to a player
+     * @param       color          the colour of the player/neutral
+     * @param       numCountries   number of countries
+     * @param       ownedCountries this is a list of all countries that are already assigned to a player
      */
     private void initCountries(Constants.PLAYER_COLOUR color, int numCountries, ArrayList<Integer> ownedCountries) {
         int numOccupyCountries = numCountries + logic.getCountryIndex();
@@ -284,9 +284,9 @@ public class Game {
     /**
      * function used to make a country fall under the ownership of another player
      *
-     * @param countryId a countries ID
-     * @param colour    a players colour
-     * @param troops    amount of troops to be stationed
+     * @param       countryId a countries ID
+     * @param       colour    a players colour
+     * @param       troops    amount of troops to be stationed
      */
     public void takeCountry(int countryId, Constants.PLAYER_COLOUR colour, int troops) {
         logic.takeCountryLogic(countryId, colour, troops);
@@ -300,9 +300,9 @@ public class Game {
     /**
      * Sets the country on initialisation
      *
-     * @param countryId a countries ID
-     * @param colour    a players colour
-     * @param troops    troop number
+     * @param       countryId a countries ID
+     * @param       colour    a players colour
+     * @param       troops    troop number
      */
     public void setCountry(int countryId, Constants.PLAYER_COLOUR colour, int troops) {
         if (logic.getCountry_owner()[countryId] == colour) {
@@ -332,7 +332,7 @@ public class Game {
     /**
      * used to give permission to a player to fortify his territories
      *
-     * @param player player that won the roll
+     * @param   player player that won the roll
      */
     private void setTurn(Player player, Player nextPlayer) {
         if(isOnline && isPlayer1) {
@@ -367,6 +367,11 @@ public class Game {
         }
     }
 
+    /**
+     * Used to create a thread for use in asking a question in an online game
+     * @param player        player in player
+     * @param nextPlayer    next player to play
+     */
     public void threadForQuestion(Player player, Player nextPlayer) {
         Thread t = new Thread(() -> {
             boolean attack = player.getCsc().receiveBoolean();
@@ -380,6 +385,11 @@ public class Game {
         t.start();
     }
 
+    /**
+     *  Used to create a thread for use in a battle sequence in an online game
+     * @param player        player in player
+     * @param nextPlayer    next player to play
+     */
     public void threadForBattle(Player player, Player nextPlayer) {
         Thread t = new Thread(() -> {
             try {
@@ -391,6 +401,11 @@ public class Game {
         t.start();
     }
 
+    /**
+     * Used to for player to fortify your territories in an online game
+     * @param player        player in player
+     * @param nextPlayer    next player to play
+     */
     private void setOnlineTurn(Player player, Player nextPlayer) {
         if(isPlayer1 && (player.getColour() == player1.getColour()) || !isPlayer1 && (player.getColour() == player2.getColour())) {
             uiController.output.appendText("> " + player.getName() + ", you will now fortify your territories. You can place 3 troops at a time. You have " + player.getTroops() + " troops left to place.\n");
@@ -408,15 +423,17 @@ public class Game {
         }
     }
 
+    /**
+     * Used for battle in an online game to show that a country is under attack
+     * @param player        player in player
+     * @param nextPlayer    next player to play
+     * @throws IOException
+     */
     private void waitForBattle(Player player, Player nextPlayer) throws IOException {
         boolean getData = player.getCsc().receiveBoolean();
-        System.out.println("HERE " + player.getColour());
         int numAttackingTroops = player.getCsc().receiveInt();
         int attackCountry = player.getCsc().receiveInt();
         int defendingCountry = player.getCsc().receiveInt();
-        System.out.println(numAttackingTroops);
-        System.out.println(attackCountry);
-        System.out.println(defendingCountry);
         userInput.battle.defenceCountryId = defendingCountry;
         userInput.battle.attackCountryId = attackCountry;
         uiController.output.appendText("> " + Constants.COUNTRY_NAMES.get(defendingCountry) + " is under attack from " + Constants.COUNTRY_NAMES.get(attackCountry) + "!\n");
@@ -435,6 +452,12 @@ public class Game {
         }
     }
 
+    /**
+     * Used for reinforcing  country in an online game
+     * @param player        player in player
+     * @param nextPlayer    next player to play
+     * @throws IOException
+     */
     public void reinforcementTurn(Player player, Player nextPlayer) throws IOException {
         boolean cont = nextPlayer.getCsc().receiveBoolean();
         int troops = nextPlayer.getCsc().receiveInt();
@@ -456,6 +479,10 @@ public class Game {
             endInitPhase();
     }
 
+    /**
+     * initialises user input
+     * @param userInput userInput object
+     */
     public void receiveUserInput(UserInput userInput) {
         this.userInput = userInput;
     }
