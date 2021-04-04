@@ -27,10 +27,13 @@ public class DiceTest extends TestCase {
 
     @Test
     public void testBestRoll(){
-        assertEquals(5,Dice.bestRoll(5,5));
-        assertEquals(7,Dice.bestRoll(5,7));
-        assertEquals(10,Dice.bestRoll(10,5));
-        assertEquals(5,Dice.bestRoll(-10,5));
+        //  0 == is the same number
+        //  1 == means the left number is bigger
+        //  -1 == means the right is bigger
+        assertEquals(0,Dice.bestRoll(5,5))   ;
+        assertEquals(1,Dice.bestRoll(5,4));
+        assertEquals(1,Dice.bestRoll(10,5));
+        assertEquals(-1,Dice.bestRoll(-10,5));
     }
 
     @Test

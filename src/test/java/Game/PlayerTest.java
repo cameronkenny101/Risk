@@ -76,20 +76,17 @@ public class PlayerTest extends TestCase {
     }
 
     @Test
-    public void TestRemoveCards(){
+    public void TestRemoveCards() {
         Player player = new Player("Mark", Constants.PLAYER_COLOUR.RED);
 
-        for(int i = 0; i < 10; i++){
-            player.addCardToHand(new Card(0,0));
-            player.addCardToHand(new Card(1,1));
-            player.addCardToHand(new Card(2,2));
+        for (int i = 0; i < 10; i++) {
+            player.addCardToHand(new Card(0, 2));
         }
 
-        assertEquals(30,player.getCardsInHand());
+            assertEquals(10, player.getCardsInHand());
 
-        int[] cardsToRemove = {0,1,2};
-        player.removeCards(cardsToRemove);
-        assertEquals(17,player.getCardsInHand());
+            int[] cardsToRemove = {1, 2, 0,0};
+            player.removeCards(cardsToRemove);
+            assertEquals(10, player.getCardsInHand());
+        }
     }
-
-}
