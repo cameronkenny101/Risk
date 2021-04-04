@@ -58,7 +58,8 @@ public class UserInput {
                 game.setFirstTurn();
                 break;
             case "How many troops do you want to place":
-                placeTroops(input, player);
+                System.out.println("here");
+                reinforceTroops(input, player);
                 break;
             case "What country do you want to reinforce":
                 askForCountry(input, player);
@@ -544,7 +545,7 @@ public class UserInput {
      * @param input  the amount of troops that want to be placed
      * @param player the player placing them
      */
-    private void placeTroops(String input, Player player) {
+    private void reinforceTroops(String input, Player player) {
         troops = catchIntException(input);
         if(troops == -1) {
             game.uiController.askQuestion("How many troops do you want to place");
@@ -796,13 +797,16 @@ public class UserInput {
      */
     private void troopsToFortify(String input, Player player, Player nextPlayer) {
         int troops = catchIntException(input);
+        System.out.println("TROOPS : " + troops + "\nAdjacent: " + game.logic.getTroop_count()[Constants.ADJACENT[countryIndex][adjacentIndex]]);
         if(troops == -1) {
             game.uiController.askQuestion("How many troops do you want to move");
             return;
         }
-        if (troops < 0 || troops >= game.logic.getTroop_count()[Constants.ADJACENT[countryIndex][adjacentIndex]])
-            incorrectNumber();
-        else {
+        if (troops < 0 || troops >= game.logic.getTroop_count()[Constants.ADJACENT[countryIndex][adjacentIndex]]) {
+            game.uiController.output.appendText("> Incorrect number of troops entered. Try again \n");
+            game.uiController.askQuestion("How many troops do you want to move");
+            return;
+        } else {
             game.takeCountry(countryIndex, player.getColour(), troops);
             game.takeCountry(Constants.ADJACENT[countryIndex][adjacentIndex], player.getColour(), -troops);
         }
@@ -829,7 +833,7 @@ public class UserInput {
         if (isThere) {
             game.uiController.askQuestion("How many troops do you want to move?");
         } else {
-            game.uiController.output.appendText("> You do not own \n" + Constants.COUNTRY_NAMES.get(adjacentIndex));
+            game.uiController.output.appendText("> You do not own " + Constants.COUNTRY_NAMES.get(adjacentIndex) + "\n");
             game.uiController.askQuestion("What country will fortify your country");
         }
     }
