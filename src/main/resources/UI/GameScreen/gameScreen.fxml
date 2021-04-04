@@ -28,6 +28,60 @@
                  content="M241 211c21,-8 13,5 29,10 0,2 1,4 1,6 -1,-1 -3,-1 -4,-2 -1,5 -1,5 -3,6 0,0 0,-1 0,-1 -1,0 -3,0 -4,0 2,-4 3,-6 0,-9 -2,1 -3,2 -4,5 -1,0 -1,0 -2,0 -1,3 -1,7 -2,10 -1,1 -3,1 -5,2 1,-8 3,-11 7,-17 1,0 3,0 5,0 0,-1 0,-2 0,-3 -4,-1 -4,-1 -6,0 0,-1 -1,-2 -2,-3 -4,1 -8,1 -13,2 0,-1 0,-2 0,-3 1,0 2,0 3,0 0,-1 0,-2 0,-3z"/>
 
     </children>
+
+    <!-- Adjacency Lines-->
+    <children>
+        <Line styleClass="adjacency-lines" startX="371.67567030577186" startY="427.45949296101367"
+              endX="381.40539991010974" endY="417.08109492120104"/>
+        <Line styleClass="adjacency-lines" startX="563.8431844359512" startY="511.1816515899487"
+              endX="600.4660057397746" endY="537.2361753035857"/>
+        <Line styleClass="adjacency-lines" startX="600.1520958155138" startY="537.3408055584922"
+              endX="564.7849142087333" endY="537.7593553174299"/>
+        <Line styleClass="adjacency-lines" startX="341.6404416955054" startY="153.45608722860368"
+              endX="349.1003713762822" endY="153.1745783815176"/>
+        <Line styleClass="adjacency-lines" startX="15.218159202875002" startY="137.36233820167783"
+              endX="-0.11743519623208343" endY="137.36233820167783"/>
+        <Line styleClass="adjacency-lines" startX="1014.1675341754946" startY="122.070196817383"
+              endX="1023.7730655577441" endY="122.070196817383"/>
+        <Line styleClass="adjacency-lines" startX="450.033579777314" startY="207.94232679313836"
+              endX="465.7821372284677" endY="208.89679210241786"/>
+        <Line styleClass="adjacency-lines" startX="460.34263725027324" startY="176.19722736681743"
+              endX="465.84251337083856" endY="209.09646961376723"/>
+        <Line styleClass="adjacency-lines" startX="450.442865726293" startY="207.29651115486172"
+              endX="460.24263650642445" endY="175.79723812401545"/>
+        <Line styleClass="adjacency-lines" startX="516.7907289900734" startY="313.1917981289525"
+              endX="516.5375206565741" endY="328.63704284825525"/>
+        <Line styleClass="adjacency-lines" startX="480.79469292254845" startY="305.18780559442973"
+              endX="491.2192717206327" endY="287.56656053087755"/>
+        <Line styleClass="adjacency-lines" startX="441.0986151573825" startY="231.39869347222918"
+              endX="441.3832813827344" endY="233.22055262334123"/>
+        <Line styleClass="adjacency-lines" startX="805.0622295659141" startY="477.0127455057736" endX="804.281780723491"
+              endY="519.9372481055547"/>
+        <Line styleClass="adjacency-lines" startX="900.3491018938438" startY="475.00116823374333"
+              endX="889.3117082220947" endY="504.92284363602334"/>
+        <Line styleClass="adjacency-lines" startX="825.5186597635483" startY="503.86071647275656"
+              endX="886.8968878407818" endY="461.08195144923013"/>
+        <Line styleClass="adjacency-lines" startX="883.1769952300405" startY="451.1622189002341" endX="839.158228162229"
+              endY="449.3022725948634"/>
+        <Line styleClass="adjacency-lines" startX="436.29211643395314" startY="155.84379864460655"
+              endX="439.02767053480176" endY="174.93323411197792"/>
+        <Line styleClass="adjacency-lines" startX="412.9463486928089" startY="133.03748128193592"
+              endX="416.3085366492117" endY="139.9388199980296"/>
+        <Line styleClass="adjacency-lines" startX="451.7884932458967" startY="144.62819252699163"
+              endX="461.96354661721614" endY="145.6899369448522"/>
+        <Line styleClass="adjacency-lines" startX="574.635744958266" startY="409.4329801836201" endX="586.3222580970852"
+              endY="400.66808195533235"/>
+        <Line styleClass="adjacency-lines" startX="309.93581846397626" startY="87.46904210952593"
+              endX="313.44177775529135" endY="76.95116423558065"/>
+        <Line styleClass="adjacency-lines" startX="882.229309118595" startY="239.8608292235669" endX="901.4625232147457"
+              endY="254.28573979567994"/>
+        <Line styleClass="adjacency-lines" startX="892.0387846645589" startY="200.54545064923704"
+              endX="889.3573936288499" endY="200.76286109185347"/>
+        <Line styleClass="adjacency-lines" startX="796.4435930860591" startY="397.22164157451124"
+              endX="816.3872821729057" endY="423.31234304372055"/>
+        <Line styleClass="adjacency-lines" startX="250.75339355420323" startY="172.34641145287316"
+              endX="346.23514321013874" endY="99.23468230616943"/>
+    </children>
     <!-- Africa -->
     <SVGPath fx:id="East_Africa" styleClass="grey-country, country" id="Africa: East Africa"
              onMouseEntered="#hoverCountry" onMouseExited="#removeLabel"
@@ -188,31 +242,6 @@
              onMouseEntered="#hoverCountry" onMouseExited="#removeLabel"
              content="M219 423c0,0 1,-1 1,-1 -2,-1 -2,-1 -16,-6 -2,-6 -10,-6 -16,-10 1,-7 4,-13 5,-21 -1,0 -2,0 -3,-1 0,-3 1,-7 2,-10 1,0 2,0 3,0 0,-2 0,-4 0,-5 2,2 3,3 3,6 1,1 2,1 3,2 0,-2 -1,-4 -1,-6 4,-2 8,-5 12,-8 4,-2 7,-2 12,-5 2,0 3,0 5,-1 1,1 2,2 3,3 -1,1 -2,3 -4,4 1,2 2,3 3,5 0,-2 0,-2 0,-3 1,-1 1,-1 2,-1 0,-1 0,-2 0,-3 5,-1 8,0 13,2 10,0 18,-2 21,9 0,0 1,0 2,0 1,1 1,2 1,4 6,1 9,3 13,7 1,-1 2,-1 2,-2 5,3 16,7 19,9 -3,6 -9,16 -16,11 -6,5 -13,3 -20,4 -1,-6 -1,-6 -4,-13 -8,1 -9,3 -15,4 0,5 0,6 -3,9 -5,0 -7,1 -11,-2 -2,0 -5,1 -7,2 -1,7 4,11 0,18 -3,0 -5,0 -8,0 0,0 -1,-1 -1,-1z"/>
 
-    <Line styleClass="adjacency-lines" startX="371.67567030577186" startY="427.45949296101367" endX="381.40539991010974" endY="417.08109492120104"/>
-    <Line styleClass="adjacency-lines" startX="563.8431844359512" startY="511.1816515899487" endX="600.4660057397746" endY="537.2361753035857"/>
-    <Line styleClass="adjacency-lines" startX="600.1520958155138" startY="537.3408055584922" endX="564.7849142087333" endY="537.7593553174299"/>
-    <Line styleClass="adjacency-lines" startX="341.6404416955054" startY="153.45608722860368" endX="349.1003713762822" endY="153.1745783815176"/>
-    <Line styleClass="adjacency-lines" startX="15.218159202875002" startY="137.36233820167783" endX="-0.11743519623208343" endY="137.36233820167783"/>
-    <Line styleClass="adjacency-lines" startX="1014.1675341754946" startY="122.070196817383" endX="1023.7730655577441" endY="122.070196817383"/>
-    <Line styleClass="adjacency-lines" startX="450.033579777314" startY="207.94232679313836" endX="465.7821372284677" endY="208.89679210241786"/>
-    <Line styleClass="adjacency-lines" startX="460.34263725027324" startY="176.19722736681743" endX="465.84251337083856" endY="209.09646961376723"/>
-    <Line styleClass="adjacency-lines" startX="450.442865726293" startY="207.29651115486172" endX="460.24263650642445" endY="175.79723812401545"/>
-    <Line styleClass="adjacency-lines" startX="516.7907289900734" startY="313.1917981289525" endX="516.5375206565741" endY="328.63704284825525"/>
-    <Line styleClass="adjacency-lines" startX="480.79469292254845" startY="305.18780559442973" endX="491.2192717206327" endY="287.56656053087755"/>
-    <Line styleClass="adjacency-lines" startX="441.0986151573825" startY="231.39869347222918" endX="441.3832813827344" endY="233.22055262334123"/>
-    <Line styleClass="adjacency-lines" startX="805.0622295659141" startY="477.0127455057736" endX="804.281780723491" endY="519.9372481055547"/>
-    <Line styleClass="adjacency-lines" startX="900.3491018938438" startY="475.00116823374333" endX="889.3117082220947" endY="504.92284363602334"/>
-    <Line styleClass="adjacency-lines" startX="825.5186597635483" startY="503.86071647275656" endX="886.8968878407818" endY="461.08195144923013"/>
-    <Line styleClass="adjacency-lines" startX="883.1769952300405" startY="451.1622189002341" endX="839.158228162229" endY="449.3022725948634"/>
-    <Line styleClass="adjacency-lines" startX="436.29211643395314" startY="155.84379864460655" endX="439.02767053480176" endY="174.93323411197792"/>
-    <Line styleClass="adjacency-lines" startX="412.9463486928089" startY="133.03748128193592" endX="416.3085366492117" endY="139.9388199980296"/>
-    <Line styleClass="adjacency-lines" startX="451.7884932458967" startY="144.62819252699163" endX="461.96354661721614" endY="145.6899369448522"/>
-    <Line styleClass="adjacency-lines" startX="574.635744958266" startY="409.4329801836201" endX="586.3222580970852" endY="400.66808195533235"/>
-    <Line styleClass="adjacency-lines" startX="309.93581846397626" startY="87.46904210952593" endX="313.44177775529135" endY="76.95116423558065"/>
-    <Line styleClass="adjacency-lines" startX="882.229309118595" startY="239.8608292235669" endX="901.4625232147457" endY="254.28573979567994"/>
-    <Line styleClass="adjacency-lines" startX="892.0387846645589" startY="200.54545064923704" endX="889.3573936288499" endY="200.76286109185347"/>
-
-
     <Text fx:id="Asia" text="Asia" id="continent"/>
     <Text fx:id="Europe" text="Europe" id="continent"/>
     <Text fx:id="Africa" text="Africa" id="continent"/>
@@ -220,7 +249,7 @@
     <Text fx:id="SA" text="South America" id="continent"/>
     <Text fx:id="Australia" text="Australia" id="continent"/>
 
-    <Text fx:id="countryNameOnHover" id = "continent"/>
+    <Text fx:id="countryNameOnHover" id="continent"/>
 
 
     <VBox translateX="1020" prefWidth="300">
