@@ -126,7 +126,7 @@ public class testUserInputLogic extends TestCase {
         game.logic.troop_count[1] = 2;
         assertTrue(userInput.battle.assertValidDefenders());
 
-        userInput.battle.numDefenceUnits = 5;
+        userInput.battle.numDefenceUnits = 2;
         userInput.battle.defenceCountryId = 22;
         game.logic.troop_count[22] = 4;
         assertTrue(userInput.battle.assertValidDefenders());
