@@ -52,7 +52,7 @@ public class Sets {
 
     public static boolean isValidSet(int[] insigniasID) {
         for (int[] possibleSet : POSSIBLE_SETS) {
-            if ((insigniasID[0] == possibleSet[0]) && (insigniasID[1] == possibleSet[1]) && (insigniasID[2] == possibleSet[2]))
+            if ((insigniasID[0] == possibleSet[0]) && (insigniasID[1] == possibleSet[1]) && (insigniasID[2] == possibleSet[2]) && (insigniasID[3] == possibleSet[3]))
                 return true;
         }
         return false;
