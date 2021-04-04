@@ -291,12 +291,6 @@ public class UserInput {
                 //Set Owner
                 game.logic.getCountry_owner()[battle.defenceCountryId] = attacker.getColour();
 
-                if (game.isLoser(defender, game.logic.country_owner)) {
-                    game.uiController.output.appendText("> " + defender.getName() + " has been annihilated\n");
-                    game.uiController.output.appendText("> " + attacker.getName() + " has won!");
-                    return;
-                }
-
                 if (game.isOnline) {
                     System.out.println("def: " + game.logic.getTroop_count()[battle.defenceCountryId]);
                     System.out.println("att: " + game.logic.getTroop_count()[battle.attackCountryId]);
@@ -313,6 +307,12 @@ public class UserInput {
                     //set the regions in the UI
                     game.uiController.setRegion(battle.defenceCountryId, attacker.getColour(), battle.numAttackUnits);
                     game.uiController.setRegion(battle.attackCountryId, attacker.getColour(), game.logic.getTroop_count()[battle.attackCountryId]);
+                }
+
+                if (game.isLoser(defender, game.logic.country_owner)) {
+                    game.uiController.output.appendText("> " + defender.getName() + " has been annihilated\n");
+                    game.uiController.output.appendText("> " + attacker.getName() + " has won!");
+                    return;
                 }
 
                 if (game.logic.getTroop_count()[battle.attackCountryId] > 1) {
