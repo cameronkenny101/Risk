@@ -129,13 +129,14 @@ public class UserInput {
         }
 
         if(num < 1 || num > Sets.validSet) {
-            game.uiController.output.appendText("> Invalid set number. Try again");
+            game.uiController.output.appendText("> Invalid set number. Try again\n");
             game.uiController.askQuestion("Enter the number for the set you want to exchange");
         } else {
             player.exchangeCards(num);
             player.updateTroops(Sets.getSetsValue());
             game.uiController.output.appendText("> You have exchanged your cards and got " + Sets.getSetsValue() + " troops \n");
             Sets.updateSetsValue();
+            game.uiController.output.appendText(player.printCardHand());
             switchTurn(player, nextPlayer);
         }
     }
@@ -672,7 +673,7 @@ public class UserInput {
                 Card card = game.logic.deck.removeCard();
                 game.uiController.output.appendText("> You selected a " + card.toString() + ".\n");
                 player.addCardToHand(card);
-                game.uiController.output.appendText("> " + player.printCardHand());
+                game.uiController.output.appendText(player.printCardHand());
                 player.setConquerTerritory(false); //resetting it to false
             }
             if(player.getCardsInHand() >= 5) {
