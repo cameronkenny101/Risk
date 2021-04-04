@@ -174,7 +174,7 @@ public class Player {
         }
     }
 
-    private void removeCards(int[] cardsToRemove) {
+    protected void removeCards(int[] cardsToRemove) {
         for(int i = 0; i < insignias.length; i++) {
             insignias[i] -= cardsToRemove[i];
         }
