@@ -1,6 +1,7 @@
 package Game;
 
 import javafx.application.Platform;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.*;
@@ -105,7 +106,7 @@ public class UserInput {
             case "Do you want to exchange any of your cards? (yes/no)":
                 askToPlayCards(player, nextPlayer, input);
                 break;
-            case "Enter the number for the set you want to exchange" :
+            case "Enter the number for the set you want to exchange":
                 exchangeCards(player, nextPlayer, input);
             case "":
                 break;
@@ -115,7 +116,7 @@ public class UserInput {
     private void askToPlayCards(Player player, Player nextPlayer, String answer) {
         if (answer.equals("yes")) {
             game.uiController.output.appendText(Sets.setsToPlay(player.getInsignias()));
-            if(Sets.validSet == 1)
+            if (Sets.validSet == 1)
                 exchangeCards(player, nextPlayer, "1");
             else
                 game.uiController.askQuestion("Enter the number for the set you want to exchange");
@@ -126,12 +127,12 @@ public class UserInput {
 
     private void exchangeCards(Player player, Player nextPlayer, String input) {
         int num = catchIntException(input);
-        if(num == -1) {
+        if (num == -1) {
             game.uiController.askQuestion("Enter the number for the set you want to exchange");
             return;
         }
 
-        if(num < 1 || num > Sets.validSet) {
+        if (num < 1 || num > Sets.validSet) {
             game.uiController.output.appendText("> Invalid set number. Try again\n");
             game.uiController.askQuestion("Enter the number for the set you want to exchange");
         } else {
@@ -157,21 +158,21 @@ public class UserInput {
 
     public void attackerChoice(String input, Player player, Player nextPlayer) {
         int num = catchIntException(input);
-        if(num == -1) {
+        if (num == -1) {
             game.uiController.askQuestion("Would you like to:\n1, continue the invasion.\n2, invade a new territory.\n3, end combat.");
             return;
         }
 
         switch (num) {
             case 1:
-                if(game.logic.getTroop_count()[battle.attackCountryId] == 1) {
+                if (game.logic.getTroop_count()[battle.attackCountryId] == 1) {
                     game.uiController.output.appendText("> You only have 1 troop left. Try again\n");
                     game.uiController.askQuestion("Would you like to:\n1, continue the invasion.\n2, invade a new territory.\n3, end combat.");
                 } else
                     continueInvasion(player);
                 break;
             case 2:
-                if(checkInvasionIsAvailable(player))
+                if (checkInvasionIsAvailable(player))
                     askToBattle("yes", player);
                 else {
                     game.uiController.output.appendText("> You have no territories ready to attack. Try again\n");
@@ -198,7 +199,7 @@ public class UserInput {
 
     public void moveTroops(String troops, Player attacker, Player defender) {
         int num = catchIntException(troops);
-        if(num == -1) {
+        if (num == -1) {
             game.uiController.askQuestion("How many troops do you want to add? (There must still be 1 troop left in your original territory)");
             return;
         }
@@ -214,7 +215,7 @@ public class UserInput {
                 attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.defenceCountryId], attacker.getCsc());
                 attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.attackCountryId], attacker.getCsc());
             }
-            if(checkInvasionIsAvailable(attacker))
+            if (checkInvasionIsAvailable(attacker))
                 game.uiController.askQuestion("Would you like to invade a country? (yes/no)");
             else
                 battle("no", attacker, defender);
@@ -274,7 +275,7 @@ public class UserInput {
 
             if (battle.invasionLoss) {
                 game.uiController.output.appendText("You have lost the battle.\n");
-                if(checkInvasionIsAvailable(attacker))
+                if (checkInvasionIsAvailable(attacker))
                     game.uiController.askQuestion("Would you like to invade a country? (yes/no)");
                 else
                     battle("no", attacker, defender);
@@ -311,7 +312,8 @@ public class UserInput {
 
                 if (game.isLoser(defender, game.logic.country_owner)) {
                     game.uiController.output.appendText("> " + defender.getName() + " has been annihilated\n");
-                    game.uiController.output.appendText("> " + attacker.getName() + " has won!");
+                    game.uiController.output.appendText("> " + attacker.getName() + " has won!\n");
+                    game.uiController.closeGame();
                     return;
                 }
 
@@ -330,7 +332,7 @@ public class UserInput {
 
     public void setDefenceUnits(String troops, Player attacker, Player defender) {
         battle.numDefenceUnits = catchIntException(troops);
-        if(battle.numDefenceUnits == -1) {
+        if (battle.numDefenceUnits == -1) {
             game.uiController.askQuestion("How many units do you wish to defend for you?");
             return;
         }
@@ -403,7 +405,7 @@ public class UserInput {
 
     public void setAttackUnits(String troops, Player attacker, Player defender) {
         battle.numAttackUnits = catchIntException(troops);
-        if(battle.numAttackUnits == -1) {
+        if (battle.numAttackUnits == -1) {
             game.uiController.askQuestion("How many units do you wish to attack for you?");
             return;
         }
@@ -531,7 +533,7 @@ public class UserInput {
      */
     private void placeTroops(String input, Player player) {
         troops = catchIntException(input);
-        if(troops == -1) {
+        if (troops == -1) {
             game.uiController.askQuestion("How many troops do you want to place");
             return;
         }
@@ -611,7 +613,7 @@ public class UserInput {
             } else {
                 if (game.isOnline)
                     handleOnlineReinforcement(player, nextPlayer);
-                if(checkInvasionIsAvailable(player))
+                if (checkInvasionIsAvailable(player))
                     game.uiController.askQuestion("Would you like to invade a country? (yes/no)");
                 else
                     battle("no", player, nextPlayer);
@@ -620,8 +622,8 @@ public class UserInput {
     }
 
     private boolean checkInvasionIsAvailable(Player player) {
-        for(int i = 0; i < Constants.NUM_COUNTRIES; i++) {
-            if(game.logic.getTroop_count()[i] > 1 && game.logic.getCountry_owner()[i] == player.getColour())
+        for (int i = 0; i < Constants.NUM_COUNTRIES; i++) {
+            if (game.logic.getTroop_count()[i] > 1 && game.logic.getCountry_owner()[i] == player.getColour())
                 return true;
         }
 
@@ -706,10 +708,10 @@ public class UserInput {
                 game.uiController.output.appendText(player.printCardHand());
                 player.setConquerTerritory(false); //resetting it to false
             }
-            if(player.getCardsInHand() >= 5) {
+            if (player.getCardsInHand() >= 5) {
                 game.uiController.output.appendText("> You have 5 or more cards. You must exchange your cards\n");
                 askToPlayCards(player, nextPlayer, "yes");
-            } else if(Sets.isValidSet(player.getInsignias()))
+            } else if (Sets.isValidSet(player.getInsignias()))
                 game.uiController.askQuestion("Do you want to exchange any of your cards? (yes/no)");
             else {
                 switchTurn(player, nextPlayer);
@@ -778,7 +780,7 @@ public class UserInput {
      */
     private void troopsToFortify(String input, Player player, Player nextPlayer) {
         int troops = catchIntException(input);
-        if(troops == -1) {
+        if (troops == -1) {
             game.uiController.askQuestion("How many troops do you want to move");
             return;
         }
@@ -790,7 +792,6 @@ public class UserInput {
         }
         fortifyCountry("no", player, nextPlayer);
     }
-
 
 
     /**
