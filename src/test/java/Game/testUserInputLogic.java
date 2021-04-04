@@ -148,90 +148,52 @@ public class testUserInputLogic extends TestCase {
     }
 
     @Test
-    public void testcalculateBattleSequence(){
-        game.logic= new GameLogic();
+    public void testCalculateBattleSequence(){
+        game.logic = new GameLogic();
         userInput.battle.defenceCountryId = 1;
         userInput.battle.attackCountryId = 5;
         userInput.battle.numDefenceUnits = 2;
-        userInput.battle.numAttackUnits = 5;
+        userInput.battle.numAttackUnits = 3;
         game.logic.troop_count[userInput.battle.defenceCountryId] = userInput.battle.numDefenceUnits;
-        game.logic.troop_count[userInput.battle.attackCountryId] = userInput.battle.numAttackUnits;
+        game.logic.troop_count[userInput.battle.attackCountryId] = userInput.battle.numAttackUnits + 1;
         userInput.battle.invasionLoss = false;
         userInput.battle.invasionVictory = false;
 
-        ArrayList <Integer> attack = new ArrayList<>();
-        ArrayList <Integer> def = new ArrayList<>();
+        ArrayList<Integer> attack = new ArrayList<>();
+        ArrayList<Integer> def = new ArrayList<>();
         attack.add(6);
         attack.add(6);
         attack.add(6);
-        attack.add(6);
-        def.add(3);
-        def.add(3);
         def.add(3);
         def.add(3);
 
-        userInput.battle.calculateBattleSequence(attack,def);
-        assertEquals(1,userInput.battle.numDefenceUnits);
-        userInput.battle.calculateBattleSequence(attack,def);
+        userInput.battle.calculateBattleSequence(attack, def);
+        assertEquals(0,userInput.battle.numDefenceUnits);
         assertTrue(userInput.battle.invasionVictory);
         assertFalse(userInput.battle.invasionLoss);
 
-        userInput.battle.numDefenceUnits = 5;
+        attack.remove(0);
+        attack.remove(0);
+        attack.remove(0);
+        def.remove(0);
+        def.remove(0);
+
+        userInput.battle.numDefenceUnits = 2;
         userInput.battle.numAttackUnits = 2;
         game.logic.troop_count[userInput.battle.defenceCountryId] = userInput.battle.numDefenceUnits;
-        game.logic.troop_count[userInput.battle.attackCountryId] = userInput.battle.numAttackUnits;
+        game.logic.troop_count[userInput.battle.attackCountryId] = userInput.battle.numAttackUnits + 1;
         userInput.battle.invasionLoss = false;
         userInput.battle.invasionVictory = false;
-        attack.add(0,2);
-        attack.add(1,2);
-        attack.add(2,2);
-        attack.add(3,2);
-        userInput.battle.calculateBattleSequence(attack,def);
-        assertEquals(1,userInput.battle.numAttackUnits);
 
-        userInput.battle.numDefenceUnits = 5;
-        userInput.battle.numAttackUnits = 5;
-        game.logic.troop_count[userInput.battle.defenceCountryId] = userInput.battle.numDefenceUnits;
-        game.logic.troop_count[userInput.battle.attackCountryId] = userInput.battle.numAttackUnits;
-        userInput.battle.invasionLoss = false;
-        userInput.battle.invasionVictory = false;
-        attack.add(0,2);
-        attack.add(1,6);
-        attack.add(2,2);
-        attack.add(3,6);
-        userInput.battle.calculateBattleSequence(attack,def);
-        assertEquals(4,userInput.battle.numDefenceUnits);
-        assertEquals(3,userInput.battle.numAttackUnits);
-        assertFalse(userInput.battle.invasionVictory);
-        assertFalse(userInput.battle.invasionLoss);
+        attack.add(2);
+        attack.add(2);
+        def.add(5);
+        def.add(2);
 
-        attack.add(0,1);
-        attack.add(1,1);
-        attack.add(2,1);
-        attack.add(3,1);
-        userInput.battle.numDefenceUnits = 5;
-        userInput.battle.numAttackUnits = 1;
-        game.logic.troop_count[userInput.battle.defenceCountryId] = userInput.battle.numDefenceUnits;
-        game.logic.troop_count[userInput.battle.attackCountryId] = userInput.battle.numAttackUnits;
-        userInput.battle.calculateBattleSequence(attack,def);
-        assertFalse(userInput.battle.invasionVictory);
+        userInput.battle.calculateBattleSequence(attack, def);
+        assertEquals(0,userInput.battle.numAttackUnits);
         assertTrue(userInput.battle.invasionLoss);
-
-
-        attack.add(0,6);
-        attack.add(1,6);
-        attack.add(2,6);
-        attack.add(3,6);
-        userInput.battle.numDefenceUnits = 1;
-        userInput.battle.numAttackUnits = 5;
-        game.logic.troop_count[userInput.battle.defenceCountryId] = userInput.battle.numDefenceUnits;
-        game.logic.troop_count[userInput.battle.attackCountryId] = userInput.battle.numAttackUnits;
-        userInput.battle.invasionLoss = false;
-        userInput.battle.invasionVictory = false;
-        userInput.battle.calculateBattleSequence(attack,def);
-       // System.out.println(userInput.battle.numDefenceUnits + " AND " + userInput.battle.numAttackUnits);
-        assertFalse(userInput.battle.invasionLoss);  //note this
-        assertTrue(userInput.battle.invasionVictory);
+        assertFalse(userInput.battle.invasionVictory);
 
     }
 
