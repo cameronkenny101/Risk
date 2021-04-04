@@ -202,7 +202,10 @@ public class UserInput {
                 attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.defenceCountryId], attacker.getCsc());
                 attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.attackCountryId], attacker.getCsc());
             }
-            game.uiController.askQuestion("Would you like to invade a country? (yes/no)");
+            if(checkInvasionIsAvailable(attacker))
+                game.uiController.askQuestion("Would you like to invade a country? (yes/no)");
+            else
+                battle("no", attacker, defender);
         } else {
             game.uiController.output.appendText("Invalid number of troops\n");
             game.uiController.askQuestion("Do you want to move any additional troops to your new territory?");
@@ -259,8 +262,10 @@ public class UserInput {
 
             if (battle.invasionLoss) {
                 game.uiController.output.appendText("You have lost the battle.\n");
-
-                game.uiController.askQuestion("Would you like to invade a country? (yes/no)");
+                if(checkInvasionIsAvailable(attacker))
+                    game.uiController.askQuestion("Would you like to invade a country? (yes/no)");
+                else
+                    battle("no", attacker, defender);
             }
             //if we win the battle
             else if (battle.invasionVictory) {
@@ -593,9 +598,21 @@ public class UserInput {
             } else {
                 if (game.isOnline)
                     handleOnlineReinforcement(player, nextPlayer);
-                game.uiController.askQuestion("Would you like to invade a country? (yes/no)");
+                if(checkInvasionIsAvailable(player))
+                    game.uiController.askQuestion("Would you like to invade a country? (yes/no)");
+                else
+                    battle("no", player, nextPlayer);
             }
         }
+    }
+
+    private boolean checkInvasionIsAvailable(Player player) {
+        for(int i = 0; i < Constants.NUM_COUNTRIES; i++) {
+            if(game.logic.getTroop_count()[i] > 1 && game.logic.getCountry_owner()[i] == player.getColour())
+                return true;
+        }
+
+        return false;
     }
 
     private void handleOnlineReinforcement(Player player, Player nextPlayer) {
