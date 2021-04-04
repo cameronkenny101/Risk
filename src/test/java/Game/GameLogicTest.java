@@ -97,17 +97,6 @@ public class GameLogicTest extends TestCase {
     }
 
     @Test
-    public void testSetRandomCountries() {
-        GameLogic logic = new GameLogic();
-        ArrayList<Integer> list = new ArrayList<>();
-        logic.setRandomCountries();
-        assertNotNull(list);
-        assertTrue(list.get(0) >= 0 && list.get(0) <= 2);
-        assertTrue(list.get(1) >= 0 && list.get(1) <= 2);
-        assertTrue(list.get(2) >= 0 && list.get(2) <= 2);
-    }
-
-    @Test
     public void testTakeCountryTroops() {
         GameLogic logic = new GameLogic();
         for(int i = 0; i < 42;i++){
