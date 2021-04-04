@@ -129,13 +129,14 @@ public class UserInput {
         }
 
         if(num < 1 || num > Sets.validSet) {
-            game.uiController.output.appendText("> Invalid set number. Try again");
+            game.uiController.output.appendText("> Invalid set number. Try again\n");
             game.uiController.askQuestion("Enter the number for the set you want to exchange");
         } else {
             player.exchangeCards(num);
             player.updateTroops(Sets.getSetsValue());
             game.uiController.output.appendText("> You have exchanged your cards and got " + Sets.getSetsValue() + " troops \n");
             Sets.updateSetsValue();
+            game.uiController.output.appendText(player.printCardHand());
             switchTurn(player, nextPlayer);
         }
     }
@@ -201,7 +202,10 @@ public class UserInput {
                 attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.defenceCountryId], attacker.getCsc());
                 attacker.onlineGameHandler.sendInt(game.logic.getTroop_count()[battle.attackCountryId], attacker.getCsc());
             }
-            game.uiController.askQuestion("Would you like to invade a country? (yes/no)");
+            if(checkInvasionIsAvailable(attacker))
+                game.uiController.askQuestion("Would you like to invade a country? (yes/no)");
+            else
+                battle("no", attacker, defender);
         } else {
             game.uiController.output.appendText("Invalid number of troops\n");
             game.uiController.askQuestion("Do you want to move any additional troops to your new territory?");
@@ -258,8 +262,10 @@ public class UserInput {
 
             if (battle.invasionLoss) {
                 game.uiController.output.appendText("You have lost the battle.\n");
-
-                game.uiController.askQuestion("Would you like to invade a country? (yes/no)");
+                if(checkInvasionIsAvailable(attacker))
+                    game.uiController.askQuestion("Would you like to invade a country? (yes/no)");
+                else
+                    battle("no", attacker, defender);
             }
             //if we win the battle
             else if (battle.invasionVictory) {
@@ -592,9 +598,21 @@ public class UserInput {
             } else {
                 if (game.isOnline)
                     handleOnlineReinforcement(player, nextPlayer);
-                game.uiController.askQuestion("Would you like to invade a country? (yes/no)");
+                if(checkInvasionIsAvailable(player))
+                    game.uiController.askQuestion("Would you like to invade a country? (yes/no)");
+                else
+                    battle("no", player, nextPlayer);
             }
         }
+    }
+
+    private boolean checkInvasionIsAvailable(Player player) {
+        for(int i = 0; i < Constants.NUM_COUNTRIES; i++) {
+            if(game.logic.getTroop_count()[i] > 1 && game.logic.getCountry_owner()[i] == player.getColour())
+                return true;
+        }
+
+        return false;
     }
 
     private void handleOnlineReinforcement(Player player, Player nextPlayer) {
@@ -672,7 +690,7 @@ public class UserInput {
                 Card card = game.logic.deck.removeCard();
                 game.uiController.output.appendText("> You selected a " + card.toString() + ".\n");
                 player.addCardToHand(card);
-                game.uiController.output.appendText("> " + player.printCardHand());
+                game.uiController.output.appendText(player.printCardHand());
                 player.setConquerTerritory(false); //resetting it to false
             }
             if(player.getCardsInHand() >= 5) {
@@ -689,7 +707,7 @@ public class UserInput {
     private void switchTurn(Player player, Player nextPlayer) {
         userInputLogic.nextTurn(player, nextPlayer);
         game.uiController.output.appendText("> It is now " + nextPlayer.getName() + " turn\n");
-        nextPlayer.setTroops(game.logic.calculateReinforcements(nextPlayer));
+        nextPlayer.updateTroops(game.logic.calculateReinforcements(nextPlayer));
         game.uiController.output.appendText("> You have a total of " + nextPlayer.getTroops() + " troops to place\n");
         game.uiController.askQuestion("How many troops do you want to place");
     }

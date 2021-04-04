@@ -9,6 +9,9 @@ public class Deck {
     private ArrayList<Integer> shuffle = new ArrayList<>();
     private int cardsRemoved;
 
+    /**
+     * Constructor for the deck
+     */
     public Deck() {
         cards = new ArrayList<Card>();
         shuffleDeck();
@@ -17,13 +20,19 @@ public class Deck {
         setCardsRemoved(0);
     }
 
+    /**
+     * function used for shuffling
+     */
     private void shuffleDeck() {
         for(int i = 0; i < 44; i++)
             shuffle.add(i);
         Collections.shuffle(shuffle);
     }
 
-
+    /**
+     * Used to remove a card from the deck
+     * @return the removed cards
+     */
     public Card removeCard() {
         Card removedCard = cards.remove(getCardsRemoved());
         setCardsRemoved(getCardsRemoved() + 1);

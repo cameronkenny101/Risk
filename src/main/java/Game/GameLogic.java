@@ -157,21 +157,23 @@ public class GameLogic {
         return ownedOrange;
     }
 
-    //I ADDED IN THESE SETTERS FOR TESTING ONLY.
-    protected void setOwnedGreen(int index,int value){
+    /**
+     * I ADDED IN THESE SETTERS FOR TESTING ONLY.
+     */
+    protected void setOwnedGreenTest(int index,int value){
         if(index == getOwnedGreen().size()){ownedGreen.add(index, value);}
         if(index < getOwnedGreen().size()){ownedGreen.set(index, value);} }
 
-    protected void setOwnedGray(int index,int value){
+    protected void setOwnedGrayTest(int index,int value){
         if(index == getOwnedGray().size()){ownedGray.add(index, value);}
         if(index < getOwnedGray().size()){ownedGray.set(index, value);}
     }
 
-    protected void setOwnedPurple(int index,int value){
+    protected void setOwnedPurpleTest(int index,int value){
         if(index == getOwnedPurple().size()){ownedPurple.add(index, value);}
         if(index < getOwnedPurple().size()){ownedPurple.set(index, value);} }
 
-    protected void setOwnedOrange(int index,int value){
+    protected void setOwnedOrangeTest(int index,int value){
         if(index == getOwnedOrange().size()){ownedOrange.add(index, value);}
         if(index < getOwnedOrange().size()){ownedOrange.set(index, value);}
     }

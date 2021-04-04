@@ -122,28 +122,20 @@ public class Player {
         this.conquerTerritory = conquerTerritory;
     }
 
+    /**
+     * Used to addCard a card into the players inventory of cards
+     * @param card the card that will be added to the players inventory
+     */
     public void addCardToHand(Card card) {
         cardsInHand++;
-        insignias[card.getInsignia()] ++;
+        insignias[card.getInsignia()] += 4;
     }
 
     public String printCardHand() {
-        return "Cards in hand:\n" + "Infantry: " + insignias[0] + "\n"
+        return "> Cards in hand:\n" + "Infantry: " + insignias[0] + "\n"
                 + "Cavalry: " + insignias[1] + "\n"
                 + "Artillery: " + insignias[2] + "\n"
                 + "Wild Card: " + insignias[3] + "\n";
-    }
-
-    private boolean isAvailableCards(int[] insigniasID) {
-        int[] insigniaCopy = insignias.clone();//Copy of the insignia count
-
-        for (int i = 0; i < Sets.SET_SIZE; i++) {
-            if (insigniaCopy[insigniasID[i]]-- < 0) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     public int[] getInsignias() {
@@ -160,7 +152,7 @@ public class Player {
         int hand = 1;
         int i = 0;
         for (int[] possibleSet : Sets.POSSIBLE_SETS) {
-            if ((insignias[0] == possibleSet[0]) && (insignias[1] == possibleSet[1]) && (insignias[2] == possibleSet[2])) {
+            if ((insignias[0] >= possibleSet[0]) && (insignias[1] >= possibleSet[1]) && (insignias[2] >= possibleSet[2]) && insignias[3] >= possibleSet[3]) {
                 if(num == hand) {
                     removeCards(Sets.POSSIBLE_SETS[i]);
                 } else
@@ -170,7 +162,7 @@ public class Player {
         }
     }
 
-    private void removeCards(int[] cardsToRemove) {
+    protected void removeCards(int[] cardsToRemove) {
         for(int i = 0; i < insignias.length; i++) {
             insignias[i] -= cardsToRemove[i];
         }

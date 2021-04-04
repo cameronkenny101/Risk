@@ -409,7 +409,8 @@ public class GameScreenController {
         text.setText("" + troop_count);
         if (troop_count >= 10) {
             circle.setRadius(15);    //makes circle bigger if the troop count is too large
-        }
+        } else
+            circle.setRadius(10);
         circle.setId("circle");
         circle.getStyleClass().clear();
         switch (Colour) {        //similar to switch in setRegion, this assigns the css classes of the bubbles displaying the troop count
