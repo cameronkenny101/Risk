@@ -102,7 +102,7 @@ public class UserInput {
             case "How many troops do you want to move":
                 troopsToFortify(input, player, nextPlayer);
                 break;
-            case "Do you want to exchange any of your cards?":
+            case "Do you want to exchange any of your cards? (yes/no)":
                 askToPlayCards(player, nextPlayer, input);
                 break;
             case "Enter the number for the set you want to exchange" :
@@ -115,7 +115,10 @@ public class UserInput {
     private void askToPlayCards(Player player, Player nextPlayer, String answer) {
         if (answer.equals("yes")) {
             game.uiController.output.appendText(Sets.setsToPlay(player.getInsignias()));
-            game.uiController.askQuestion("Enter the number for the set you want to exchange");
+            if(Sets.validSet == 1)
+                exchangeCards(player, nextPlayer, "1");
+            else
+                game.uiController.askQuestion("Enter the number for the set you want to exchange");
         } else {
             switchTurn(player, nextPlayer);
         }
@@ -698,7 +701,7 @@ public class UserInput {
                 game.uiController.output.appendText("> You have 5 or more cards. You must exchange your cards\n");
                 askToPlayCards(player, nextPlayer, "yes");
             } else if(Sets.isValidSet(player.getInsignias()))
-                game.uiController.askQuestion("Do you want to exchange any of your cards?");
+                game.uiController.askQuestion("Do you want to exchange any of your cards? (yes/no)");
             else {
                 switchTurn(player, nextPlayer);
             }
