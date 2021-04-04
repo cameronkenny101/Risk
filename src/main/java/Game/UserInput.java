@@ -829,7 +829,7 @@ public class UserInput {
         if (isThere) {
             game.uiController.askQuestion("How many troops do you want to move?");
         } else {
-            game.uiController.output.appendText("> You do not own \n" + Constants.COUNTRY_NAMES.get(adjacentIndex));
+            game.uiController.output.appendText("> You do not own " + Constants.COUNTRY_NAMES.get(adjacentIndex) + "\n");
             game.uiController.askQuestion("What country will fortify your country");
         }
     }
