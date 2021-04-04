@@ -114,7 +114,7 @@ public class UserInput {
 
     private void askToPlayCards(Player player, Player nextPlayer, String answer) {
         if (answer.equals("yes")) {
-            Sets.setsToPlay(player.getInsignias());
+            game.uiController.output.appendText(Sets.setsToPlay(player.getInsignias()));
             game.uiController.askQuestion("Enter the number for the set you want to exchange");
         } else {
             switchTurn(player, nextPlayer);
@@ -837,11 +837,11 @@ public class UserInput {
                     game.logic.getTroop_count()[attackCountryId]--;
                     numAttackUnits--;
                 }
-                if (numDefenceUnits == 0) {
+                if (numDefenceUnits == 0 && game.logic.getTroop_count()[defenceCountryId] == 0) {
                     invasionVictory = true;
                     break;
                 }
-                if (numAttackUnits == 0) {
+                if (numAttackUnits == 0 && game.logic.getTroop_count()[attackCountryId] == 1) {
                     invasionLoss = true;
                     break;
                 }
