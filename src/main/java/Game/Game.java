@@ -3,7 +3,6 @@ package Game;
 import Online.OnlineGameHandler;
 import UI.GameScreen.GameScreenController;
 import javafx.application.Platform;
-import org.graalvm.compiler.lir.LIRInstruction;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -491,12 +490,12 @@ public class Game {
     /**
      * @param p is either gonna be player 1 or 2
      * @param arrayOfCountries this is the country_owner array from GameLogic, i had to pass it in
-     *                         manually because the testisWinner would give me a null pointer if i didnt pass it in
+     *                         manually because the testisLoser would give me a null pointer if i didnt pass it in
      * @return a boolean value if the player has successfully taken over all the countries
      */
-    public boolean isWinner(Player p, Constants.PLAYER_COLOUR[] arrayOfCountries) {
-        for (Constants.PLAYER_COLOUR arrayOfCountry : arrayOfCountries) {
-            if (arrayOfCountry != p.getColour()) {
+    public boolean isLoser(Player p, Constants.PLAYER_COLOUR[] arrayOfCountries) {
+        for (Constants.PLAYER_COLOUR country : arrayOfCountries) {
+            if (country == p.getColour()) {
                 return false;
             }
         }

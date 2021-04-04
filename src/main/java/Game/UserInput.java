@@ -275,11 +275,15 @@ public class UserInput {
                 //Set Troop Counts:
                 game.logic.getTroop_count()[battle.defenceCountryId] = battle.numAttackUnits;
                 game.logic.getTroop_count()[battle.attackCountryId] -= battle.numAttackUnits;
-                System.out.println("def: " + game.logic.getTroop_count()[battle.defenceCountryId]);
-                System.out.println("att: " + game.logic.getTroop_count()[battle.attackCountryId]);
 
                 //Set Owner
                 game.logic.getCountry_owner()[battle.defenceCountryId] = attacker.getColour();
+
+                if (game.isLoser(defender, game.logic.country_owner)) {
+                    game.uiController.output.appendText("> " + defender.getName() + " has been annihilated\n");
+                    game.uiController.output.appendText("> " + attacker.getName() + " has won!");
+
+                }
 
                 if (game.isOnline) {
                     System.out.println("def: " + game.logic.getTroop_count()[battle.defenceCountryId]);
@@ -582,9 +586,6 @@ public class UserInput {
             game.uiController.output.appendText("> You have " + player.getTroops() + " troops left to move \n");
             game.uiController.askQuestion("How many troops do you want to place");
         } else {
-            if (game.isWinner(player, game.logic.country_owner)) {
-                game.uiController.output.appendText(player.getName() + " has won!");
-            }
             //Todo: check logic of next player
             if (game.logic.getInitPhase()) {
                 userInputLogic.nextTurn(player, nextPlayer);
