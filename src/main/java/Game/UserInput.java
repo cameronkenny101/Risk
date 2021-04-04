@@ -114,7 +114,7 @@ public class UserInput {
 
     private void askToPlayCards(Player player, Player nextPlayer, String answer) {
         if (answer.equals("yes")) {
-            Sets.setsToPlay(player.getInsignias());
+            game.uiController.output.appendText(Sets.setsToPlay(player.getInsignias()));
             game.uiController.askQuestion("Enter the number for the set you want to exchange");
         } else {
             switchTurn(player, nextPlayer);
@@ -122,7 +122,12 @@ public class UserInput {
     }
 
     private void exchangeCards(Player player, Player nextPlayer, String input) {
-        int num = Integer.parseInt(input);
+        int num = catchIntException(input);
+        if(num == -1) {
+            game.uiController.askQuestion("Enter the number for the set you want to exchange");
+            return;
+        }
+
         if(num < 1 || num > Sets.validSet) {
             game.uiController.output.appendText("> Invalid set number. Try again");
             game.uiController.askQuestion("Enter the number for the set you want to exchange");
@@ -135,8 +140,24 @@ public class UserInput {
         }
     }
 
+    private int catchIntException(String input) {
+        int num;
+        try {
+            num = Integer.parseInt(input);
+        } catch (Exception e) {
+            game.uiController.output.appendText("> Invalid entry. Try again\n");
+            return -1;
+        }
+        return num;
+    }
+
     public void attackerChoice(String input, Player player, Player nextPlayer) {
-        int num = Integer.parseInt(input);
+        int num = catchIntException(input);
+        if(num == -1) {
+            game.uiController.askQuestion("Would you like to:\n1, continue the invasion.\n2, invade a new territory.\n3, end combat.");
+            return;
+        }
+
         switch (num) {
             case 1:
                 continueInvasion(player);
@@ -163,7 +184,12 @@ public class UserInput {
     }
 
     public void moveTroops(String troops, Player attacker, Player defender) {
-        int num = Integer.parseInt(troops);
+        int num = catchIntException(troops);
+        if(num == -1) {
+            game.uiController.askQuestion("How many troops do you want to add? (There must still be 1 troop left in your original territory)");
+            return;
+        }
+
         if (game.logic.getTroop_count()[battle.attackCountryId] - num >= 1) {
             game.logic.getTroop_count()[battle.attackCountryId] -= num;
             game.logic.getTroop_count()[battle.defenceCountryId] += num;
@@ -281,7 +307,11 @@ public class UserInput {
     }
 
     public void setDefenceUnits(String troops, Player attacker, Player defender) {
-        battle.numDefenceUnits = Integer.parseInt(troops);
+        battle.numDefenceUnits = catchIntException(troops);
+        if(battle.numDefenceUnits == -1) {
+            game.uiController.askQuestion("How many units do you wish to defend for you?");
+            return;
+        }
         boolean valid = battle.assertValidDefenders();
         if (!valid) {
             game.uiController.output.appendText("You chose an invalid number of troops. You may only choose between 1 and 2. \n");
@@ -350,7 +380,12 @@ public class UserInput {
     }
 
     public void setAttackUnits(String troops, Player attacker, Player defender) {
-        battle.numAttackUnits = Integer.parseInt(troops);
+        battle.numAttackUnits = catchIntException(troops);
+        if(battle.numAttackUnits == -1) {
+            game.uiController.askQuestion("How many units do you wish to attack for you?");
+            return;
+        }
+
         boolean valid = battle.assertValidAttackers();
         if (!valid) {
             game.uiController.output.appendText("You chose an invalid number of troops. You have " + game.logic.getTroop_count()[battle.attackCountryId] + " troops available and you may only choose between 1 and 3. \n");
@@ -473,14 +508,11 @@ public class UserInput {
      * @param player the player placing them
      */
     private void placeTroops(String input, Player player) {
-        try {
-            troops = Integer.parseInt(input);
-        } catch (Exception e) {
-            game.uiController.output.appendText("> Invalid number\n");
+        troops = catchIntException(input);
+        if(troops == -1) {
             game.uiController.askQuestion("How many troops do you want to place");
             return;
         }
-        troops = Integer.parseInt(input);
 
         if (troops < 0 || troops > player.getTroops())
             incorrectNumber();
@@ -714,7 +746,11 @@ public class UserInput {
      * @param player player instance
      */
     private void troopsToFortify(String input, Player player, Player nextPlayer) {
-        int troops = Integer.parseInt(input);
+        int troops = catchIntException(input);
+        if(troops == -1) {
+            game.uiController.askQuestion("How many troops do you want to move");
+            return;
+        }
         if (troops < 0 || troops >= game.logic.getTroop_count()[Constants.ADJACENT[countryIndex][adjacentIndex]])
             incorrectNumber();
         else {
@@ -801,11 +837,11 @@ public class UserInput {
                     game.logic.getTroop_count()[attackCountryId]--;
                     numAttackUnits--;
                 }
-                if (numDefenceUnits == 0) {
+                if (numDefenceUnits == 0 && game.logic.getTroop_count()[defenceCountryId] == 0) {
                     invasionVictory = true;
                     break;
                 }
-                if (numAttackUnits == 0) {
+                if (numAttackUnits == 0 && game.logic.getTroop_count()[attackCountryId] == 1) {
                     invasionLoss = true;
                     break;
                 }
