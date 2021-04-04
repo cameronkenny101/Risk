@@ -10,12 +10,12 @@
       prefHeight="444.0" prefWidth="1023.0" stylesheets="UI/NameScreen/NameScreen.css" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml" fx:controller="UI.NameScreen.NameScreenController">
     <children>
-        <Text fill="WHITE" layoutX="370.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ENTER YOUR NAME"
+        <Text fill="WHITE" layoutX="355.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ENTER YOUR NAME"
               styleClass="title"/>
         <TextField fx:id="username" alignment="CENTER" layoutX="390.0" layoutY="115.0" prefHeight="34.0"
                    prefWidth="202.0" styleClass="text-field">
         </TextField>
 
-        <Button onAction="#ButtonClicked" layoutX="538.0" layoutY="226.0" text="Continue"/>
+        <Button fx:id="button" onAction="#ButtonClicked" layoutX="455.0" layoutY="226.0" text="Continue"/>
     </children>
 </Pane>

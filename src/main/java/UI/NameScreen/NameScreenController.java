@@ -8,8 +8,10 @@ import UI.GameScreen.GameScreenController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -17,6 +19,8 @@ public class NameScreenController {
 
     @FXML
     private TextField username;
+    @FXML
+    Button button;
     String[] name = new String[Constants.NUM_PLAYERS];
     int playerNum = 0;
     UserInput input;
@@ -25,6 +29,13 @@ public class NameScreenController {
 
     public void setOnline() {
         isOnline = true;
+    }
+
+    @FXML
+    public void initialize() {
+        //1023 444
+        Bounds bounds = button.getBoundsInLocal();
+        System.out.println("MaxWidth: " + bounds.getWidth());
     }
 
     @FXML
@@ -37,7 +48,7 @@ public class NameScreenController {
     public void TextField() throws Exception {
         if (username.getText().equals("")) {
             username.clear();
-        } else if(isOnline) {
+        } else if (isOnline) {
             name[playerNum] = username.getText();
             writingDetailsForPlayers();
         } else {
@@ -54,7 +65,7 @@ public class NameScreenController {
         Parent root = (Parent) loader.load();
         GameScreenController gameScreenController = loader.getController();
 
-        if(isOnline) {
+        if (isOnline) {
             Player player = new Player(name[0], Constants.PLAYER_COLOUR.RED, true);
             Scene scene = new Scene(root, 1320, 700);
             stage.setScene(scene);
