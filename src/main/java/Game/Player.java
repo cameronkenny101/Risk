@@ -128,7 +128,7 @@ public class Player {
      */
     public void addCardToHand(Card card) {
         cardsInHand++;
-        insignias[card.getInsignia()]++;
+        insignias[card.getInsignia()] += 4;
     }
 
     public String printCardHand() {
