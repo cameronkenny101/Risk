@@ -15,11 +15,13 @@ public class GameLogicTest extends TestCase {
     @Test
     public void testTakeCountryLogic() {
         GameLogic logic = new GameLogic();
-        Constants.PLAYER_COLOUR[] country_owner = {Constants.PLAYER_COLOUR.RED, Constants.PLAYER_COLOUR.ORANGE};
+        for(int i = 0; i < logic.country_owner.length; i++) {
+            logic.country_owner[i] = Constants.PLAYER_COLOUR.BLUE;
+        }
         logic.takeCountryLogic(0, Constants.PLAYER_COLOUR.GREEN, 2);
         logic.takeCountryLogic(1, Constants.PLAYER_COLOUR.GREY, 2);
-        assertEquals(Constants.PLAYER_COLOUR.GREEN,country_owner[0]);
-        assertEquals(Constants.PLAYER_COLOUR.GREY,country_owner[1]);
+        assertEquals(Constants.PLAYER_COLOUR.GREEN,logic.country_owner[0]);
+        assertEquals(Constants.PLAYER_COLOUR.GREY,logic.country_owner[1]);
     }
 
     @Test
@@ -108,14 +110,16 @@ public class GameLogicTest extends TestCase {
     @Test
     public void testTakeCountryTroops() {
         GameLogic logic = new GameLogic();
-        Constants.PLAYER_COLOUR[] country_owner = {Constants.PLAYER_COLOUR.RED, Constants.PLAYER_COLOUR.ORANGE, Constants.PLAYER_COLOUR.PURPLE};
+        for(int i = 0; i < 42;i++){
+            logic.troop_count[i] = 0;
+        }
         int[] troopCount = {0, 0, 0};
-        logic.takeCountryLogic(0, Constants.PLAYER_COLOUR.GREY, 3);
+        logic.takeCountryLogic(0, Constants.PLAYER_COLOUR.GREY, 2);
         logic.takeCountryLogic(1, Constants.PLAYER_COLOUR.GREY, 3);
         logic.takeCountryLogic(2, Constants.PLAYER_COLOUR.GREY, 5);
-        assertEquals(2, troopCount[0]);
-        assertEquals(3, troopCount[1]);
-        assertEquals(5, troopCount[2]);
+        assertEquals(2, logic.troop_count[0]);
+        assertEquals(3, logic.troop_count[1]);
+        assertEquals(5, logic.troop_count[2]);
     }
 
     @Test
