@@ -160,6 +160,11 @@
     -fx-font-weight: bold;
 }
 
+.adjacency-lines{
+    -fx-stroke: #2b2626;
+    -fx-stroke-width: 2;
+}
+
 .image {
     -fx-background-image: url("../NameScreen/PlayerImages/Nap2-removebg-preview.png");
     -fx-background-position: left top;
