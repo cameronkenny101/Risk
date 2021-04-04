@@ -455,6 +455,7 @@ public class GameScreenController {
      * Close the Game after a victory
      */
     public void closeGame() {
+        input.setDisable(true);
         output.appendText("> Exiting Game in 3\n");
         try {
             Thread.sleep(1000);
@@ -464,7 +465,7 @@ public class GameScreenController {
             Thread.sleep(1000);
             output.appendText("> GG\n");
             Thread.sleep(500);
-            Stage stage = (Stage) input.getScene().getWindow();
+            Stage stage = (Stage) output.getScene().getWindow();
             stage.close();
         } catch (Exception e) {
             System.out.println("Sleep Exception");
