@@ -47,4 +47,49 @@ public class PlayerTest extends TestCase {
         player.setInitTroops(2);
         assertEquals(player.getInitTroops(), 2);
     }
+
+    @Test
+    public void TestAddCardToHand(){
+        Player player = new Player("MARK", Constants.PLAYER_COLOUR.RED);
+        Card card = new Card(0,1);
+        assertEquals(player.getCardsInHand(),0);
+        player.addCardToHand(card);
+        assertEquals(1,player.getCardsInHand());
+
+        for(int i = 2; i < 27;i++){
+            player.addCardToHand(new Card(i % 3,i));
+        }
+        assertEquals(26,player.getCardsInHand());
+
+    }
+
+    @Test
+    public void TestUpdateTroops(){
+        Player player = new Player("Mark" , Constants.PLAYER_COLOUR.BLUE);
+        player.setTroops(5);
+        assertEquals(5,player.getTroops());
+        player.updateTroops(10);
+        assertEquals(15,player.getTroops());
+
+        player.updateTroops(-10);
+        assertEquals(player.getTroops(),5);
+    }
+
+    @Test
+    public void TestRemoveCards(){
+        Player player = new Player("Mark", Constants.PLAYER_COLOUR.RED);
+
+        for(int i = 0; i < 10; i++){
+            player.addCardToHand(new Card(0,0));
+            player.addCardToHand(new Card(1,1));
+            player.addCardToHand(new Card(2,2));
+        }
+
+        assertEquals(30,player.getCardsInHand());
+
+        int[] cardsToRemove = {0,1,2};
+        player.removeCards(cardsToRemove);
+        assertEquals(17,player.getCardsInHand());
+    }
+
 }

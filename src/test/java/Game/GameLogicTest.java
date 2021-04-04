@@ -152,7 +152,7 @@ public class GameLogicTest extends TestCase {
     public void testgetOwnedColours(){
         GameLogic logic = new GameLogic();
         for(int i = 0; i < 10 ; i++) {
-            logic.setOwnedGray(i, i);
+            logic.setOwnedGrayTest(i, i);
         }
         assertEquals(1,logic.getOwnedGray().get(1).intValue());
         assertEquals(4,logic.getOwnedGray().get(4).intValue());
@@ -160,7 +160,7 @@ public class GameLogicTest extends TestCase {
         assertEquals(5,logic.getOwnedGray().get(5).intValue());
 
         for(int i = 0; i < 10 ; i++) {
-            logic.setOwnedGreen(i, i);
+            logic.setOwnedGreenTest(i, i);
         }
         assertEquals(1,logic.getOwnedGreen().get(1).intValue());
         assertEquals(2,logic.getOwnedGreen().get(2).intValue());
@@ -168,7 +168,7 @@ public class GameLogicTest extends TestCase {
         assertEquals(9,logic.getOwnedGreen().get(9).intValue());
 
         for(int i = 0; i < 10 ; i++) {
-            logic.setOwnedPurple(i, i);
+            logic.setOwnedPurpleTest(i, i);
         }
         assertEquals(1,logic.getOwnedPurple().get(1).intValue());
         assertEquals(3,logic.getOwnedPurple().get(3).intValue());
@@ -176,7 +176,7 @@ public class GameLogicTest extends TestCase {
         assertEquals(7,logic.getOwnedPurple().get(7).intValue());
 
         for(int i = 0; i < 10 ; i++) {
-            logic.setOwnedOrange(i, i);
+            logic.setOwnedOrangeTest(i, i);
         }
         assertEquals(4,logic.getOwnedOrange().get(4).intValue());
         assertEquals(2,logic.getOwnedOrange().get(2).intValue());
@@ -185,12 +185,12 @@ public class GameLogicTest extends TestCase {
 
 
         //These below tests the conditional statements of the setters
-        logic.setOwnedOrange(8,9);
+        logic.setOwnedOrangeTest(8,9);
         assertEquals(9,logic.getOwnedOrange().get(8).intValue());
         assertEquals(9,logic.getOwnedOrange().get(9).intValue());
 
         System.out.println(logic.getOwnedGreen().size());
-        logic.setOwnedGreen(10,3);
+        logic.setOwnedGreenTest(10,3);
         assertEquals(3,logic.getOwnedGreen().get(10).intValue());
 
     }

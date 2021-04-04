@@ -3,9 +3,14 @@ package Game;
 public class Card {
 
     private int insignia;// 0 for infantry, 1 for cavalry, 2 for battalion, 3 for wildcard
-    private int cardIndex;
+    private int cardIndex; //the index correlating to the country it represents
     private boolean wildCard;
 
+    /**
+     * Constructor for Card
+     * @param insignia      the role the card will play .i.e infantry , cavalry , battalion , wildcard
+     * @param cardIndex     //the index correlating to the country it represents
+     */
     public Card(int insignia, int cardIndex) {
         setInsignia(insignia);
         setCardIndex(cardIndex);
