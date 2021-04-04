@@ -31,6 +31,8 @@ public class Constants {
             "Venezuela", "Peru", "Brazil", "Argentina",
             "Congo", "North Africa", "South Africa", "Egypt", "East Africa", "Madagascar"));  // for reference
 
+    //the countries that are beside the country of a given index .i.e 1 = quebec and the surrounding countries are
+    // 4 = greenland , 5 = Eastern United States , 0 = Ontario
     public static final int[][] ADJACENT = {
             {4, 1, 5, 6, 3, 2},    // 0
             {4, 5, 0},
