@@ -47,4 +47,31 @@ public class PlayerTest extends TestCase {
         player.setInitTroops(2);
         assertEquals(player.getInitTroops(), 2);
     }
+
+    @Test
+    public void TestAddCardToHand(){
+        Player player = new Player("MARK", Constants.PLAYER_COLOUR.RED);
+        Card card = new Card(0,1);
+        assertEquals(player.getCardsInHand(),0);
+        player.addCardToHand(card);
+        assertEquals(1,player.getCardsInHand());
+
+        for(int i = 2; i < 27;i++){
+            player.addCardToHand(new Card(i % 3,i));
+        }
+        assertEquals(26,player.getCardsInHand());
+
+    }
+
+    @Test
+    public void TestUpdateTroops(){
+        Player player = new Player("Mark" , Constants.PLAYER_COLOUR.BLUE);
+        player.setTroops(5);
+        assertEquals(5,player.getTroops());
+        player.updateTroops(10);
+        assertEquals(15,player.getTroops());
+
+        player.updateTroops(-10);
+        assertEquals(player.getTroops(),5);
+    }
 }

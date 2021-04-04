@@ -122,6 +122,10 @@ public class Player {
         this.conquerTerritory = conquerTerritory;
     }
 
+    /**
+     * Used to addCard a card into the players inventory of cards
+     * @param card the card that will be added to the players inventory
+     */
     public void addCardToHand(Card card) {
         cardsInHand++;
         insignias[card.getInsignia()]++;
