@@ -10,6 +10,6 @@
         <Text fill="WHITE" layoutX="375.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="ENTER YOUR NAME" />
         <TextField fx:id="username" alignment="CENTER" layoutX="411.0" layoutY="137.0" prefHeight="34.0" prefWidth="202.0" styleClass="text-field">
         </TextField>
-        <Button fx:id="button" alignment="CENTER" layoutX="480.0" layoutY="210.0" onAction="#ButtonClicked" text="Continue" />
+        <Button fx:id="button" id="button" alignment="CENTER" layoutX="480.0" layoutY="210.0" onAction="#ButtonClicked" text="Continue" />
     </children>
 </Pane>
