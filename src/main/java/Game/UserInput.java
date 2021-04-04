@@ -70,13 +70,13 @@ public class UserInput {
                 fortifyCountry(input, player, nextPlayer);
                 break;
             case "What country do you want to fortify":
-                askToFortify(input, player);
+                askToFortify(input, player, nextPlayer);
                 break;
             case "What country will fortify your country":
                 countryToGive(input, player);
                 break;
             case "Would you like to invade a country? (yes/no)":
-                askToBattle(input, player);
+                askToBattle(input, player, nextPlayer);
                 break;
             case "What country do you wish to attack from?":
                 battleFrom(input, player);
@@ -172,7 +172,7 @@ public class UserInput {
                 break;
             case 2:
                 if(checkInvasionIsAvailable(player))
-                    askToBattle("yes", player);
+                    askToBattle("yes", player, nextPlayer);
                 else {
                     game.uiController.output.appendText("> You have no territories ready to attack. Try again\n");
                     game.uiController.askQuestion("Would you like to:\n1, continue the invasion.\n2, invade a new territory.\n3, end combat.");
@@ -181,9 +181,21 @@ public class UserInput {
             default:
                 if (game.isOnline)
                     player.getCsc().writeBoolean(false);
-                game.uiController.askQuestion("Do you want to fortify your territories");
+                if(checkIfFortifyWorks(player))
+                    game.uiController.askQuestion("Do you want to fortify your territories");
+                else
+                    fortifyCountry("no", player, nextPlayer);
                 break;
         }
+    }
+
+    private boolean checkIfFortifyWorks(Player player) {
+        for(int i = 0; i < 42; i++) {
+            if(player.getColour() == game.logic.country_owner[i] && game.logic.getTroop_count()[i] > 1)
+                return true;
+        }
+
+        return false;
     }
 
     private void continueInvasion(Player player) {
@@ -474,7 +486,7 @@ public class UserInput {
      *
      * @param input yes or no string to start battle
      */
-    private void askToBattle(String input, Player player) {
+    private void askToBattle(String input, Player player, Player nextPlayer) {
         if (input.equals("yes")) {
             resetBattle();
             game.uiController.askQuestion("What country do you wish to attack from?");
@@ -483,7 +495,10 @@ public class UserInput {
         } else {
             //END OF BATTLE
             game.uiController.output.appendText("> You chose not to battle.\n");
-            game.uiController.askQuestion("Do you want to fortify your territories");
+            if(checkIfFortifyWorks(player))
+                game.uiController.askQuestion("Do you want to fortify your territories");
+            else
+                fortifyCountry("no", player, nextPlayer);
             if (game.isOnline)
                 player.getCsc().writeBoolean(false);
 
@@ -731,11 +746,11 @@ public class UserInput {
      * @param country user input of a country
      * @param player  the current player instance
      */
-    private void askToFortify(String country, Player player) {
+    private void askToFortify(String country, Player player, Player nextPlayer) {
         setCountryIndex(userInputLogic.shortCountryName(country));
         if (game.logic.getCountry_owner()[countryIndex] == player.getColour()) {
             game.uiController.output.appendText("> You selected the country " + Constants.COUNTRY_NAMES.get(countryIndex) + " to fortify.\n");
-            countriesThatCanFortify(player);
+            countriesThatCanFortify(player, nextPlayer);
         } else {
             game.uiController.output.appendText(Constants.COUNTRY_NAMES.get(countryIndex) + " You choose a country you do not own. \n");
             game.uiController.askQuestion("What country do you want to fortify");
@@ -747,7 +762,7 @@ public class UserInput {
      *
      * @param player the current player instance
      */
-    private void countriesThatCanFortify(Player player) {
+    private void countriesThatCanFortify(Player player, Player nextPlayer) {
         int count = 0;
         for (int i = 0; i < Constants.ADJACENT[countryIndex].length; i++) {
             Constants.PLAYER_COLOUR color = game.logic.getCountry_owner()[Constants.ADJACENT[countryIndex][i]];
@@ -762,7 +777,10 @@ public class UserInput {
         }
         if (count == 0) {
             game.uiController.output.appendText("> There are no adjacent countries you own \n");
-            game.uiController.askQuestion("Do you want to fortify your territories");
+            if(checkIfFortifyWorks(player))
+                game.uiController.askQuestion("Do you want to fortify your territories");
+            else
+                fortifyCountry("no", player, nextPlayer);
         } else if (count == 1) {
             game.uiController.askQuestion("How many troops do you want to move");
         } else {
