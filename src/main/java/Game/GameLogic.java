@@ -13,7 +13,7 @@ public class GameLogic {
     private final ArrayList<Integer> ownedGray = new ArrayList<>(); // Countries Gray neutral owns
     private int countryIndex = 0;
     private boolean initPhase = true;
-    private ArrayList<Integer> randomCountries = new ArrayList<>();
+    protected ArrayList<Integer> randomCountries = new ArrayList<>();
     Deck deck;
 
     /**

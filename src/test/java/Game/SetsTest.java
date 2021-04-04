@@ -66,11 +66,12 @@ class SetsTest extends TestCase {
         int[] sets5 = {0, 41, 2, 1};
         int[] sets6 = {2, 0, 0, 1};
 
-        assertEquals("> You can exchange the following: \n1. [INFANTRY , INFANTRY, INFANTRY]",setsToPlay(sets));
-        assertEquals("> You can exchange the following: \n2. [INFANTRY , CAVALRY , ARTILLERY]",setsToPlay(sets2));
-        assertEquals("> You can exchange the following: \n3. [INFANTRY , INFANTRY , WILD_CARD]",setsToPlay(sets3));
-        assertEquals("> You can exchange the following: \n4. [INFANTRY , ARTILLERY , WILD_CARD]",setsToPlay(sets4));
-        assertEquals("> You can exchange the following: \n",setsToPlay(sets5));
-        assertEquals("> You can exchange the following: \n5. [INFANTRY , INFANTRY , WILD_CARD]",setsToPlay(sets6)); //Tests the validSet functionality
+        System.out.println(setsToPlay(sets));
+
+        assertEquals("> You can exchange the following: \n2. [INFANTRY, INFANTRY, INFANTRY]\n",setsToPlay(sets));
+        assertEquals("> You can exchange the following: \n3. [INFANTRY, CAVALRY, ARTILLERY]\n",setsToPlay(sets2));
+        assertEquals("> You can exchange the following: \n4. [INFANTRY, INFANTRY, WILD CARD]\n",setsToPlay(sets3));
+        assertEquals("> You can exchange the following: \n5. [INFANTRY, ARTILLERY, WILD CARD]\n",setsToPlay(sets4));
+        assertEquals("> You can exchange the following: \n6. [INFANTRY, INFANTRY, WILD CARD]\n",setsToPlay(sets6)); //Tests the validSet functionality
     }
 }
